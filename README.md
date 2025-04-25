@@ -68,10 +68,10 @@ import matplotlib.pyplot as plt
 from obspy.taup import TauPyModel
 from obspy import Stream
 from dsmpy import seismicmodel_Mars
-from dsmpy.synthetics_function import generate_synthetics, apply_filter, calculate_variation, calculate_moment_tensor
+from dsmpy.synthetics_function import generate_synthetics, apply_filter
 from dsmpy.event_Mars import Event, MomentTensor
 from dsmpy.station_Mars import Station
-from dsmpy.denoising import polarization_filter, enz2rtql
+from dsmpy.denoising import polarization_filter
 from obspy import read, UTCDateTime
 from scipy.signal import correlate
 import glob
@@ -255,13 +255,11 @@ for i, (comp, synthetic, real_data) in enumerate(zip(components, synthetics, rea
     axs[i, 2].axvline(x=0, linestyle='--', color='black', label='P-wave')
     axs[i, 2].axvline(x=shift_real_s - shift_real_p, linestyle='--', color='magenta', label='S-wave')
     axs[i, 2].set_xlim([-10, 10])
-    #axs[i, 2].set_xticks(np.arange(-10, 15, 5))  # Espaçamento de 5 em 5 no eixo x
     axs[i, 2].set_ylim(-0.1, 0.1)
     axs[i, 2].set_xlabel('Time (s)')
     axs[i, 2].set_ylabel('Normalized Amplitude')
     axs[i, 2].set_title(f'Cross Correlation ({comp} Component)')
     axs[i, 2].legend(loc='lower right')
-    #axs[i, 2].text(0.05, 0.95, f'Correlation: {corr_coefficient:10f}', transform=axs[i, 2].transAxes, fontsize=12, verticalalignment='top')
     axs[i, 2].text(0.05, 0.95, f'Corr: {corr_coefficient_limited:.2f}', transform=axs[i, 2].transAxes)
 
     xlim_min, xlim_max = 355, 370
@@ -283,11 +281,10 @@ for i, (comp, synthetic, real_data) in enumerate(zip(components, synthetics, rea
     axs[i, 3].set_ylabel('Normalized Amplitude')
     axs[i, 3].set_title(f'Detail View ({comp} Component)')
     axs[i, 3].legend(loc='lower right')
-    #axs[i, 3].text(0.05, 0.95, f'Correlation: {corr_coefficient:10f}', transform=axs[i, 3].transAxes, fontsize=12, verticalalignment='top')
     axs[i, 3].text(0.05, 0.95, f'Corr: {corr_coefficient_limited:.2f}', transform=axs[i, 3].transAxes)
 
 # Ajustar espaçamento para destacar axs[i, 2]
-plt.subplots_adjust(hspace=0.4, wspace=0.3)  # Espaçamento entre subplots
+plt.subplots_adjust(hspace=0.4, wspace=0.3)
 plt.tight_layout()
 plt.savefig('figs/output_cross_correlation.png')
 
