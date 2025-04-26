@@ -89,8 +89,9 @@ pyswarm
 scipy
 ```
 
-> Recomenda-se Python 3.8 ou superior. Certifique-se de que o DSMpy está corretamente instalado a partir do repositório oficial: [https://github.com/afeborgeaud/dsmpy]
-> Imenso agradecimento ao Anselme Borgeaud @afeborgeaud, desenvolvedor do DSMpy.
+Recomenda-se Python 3.8 ou superior. Certifique-se de que o DSMpy está corretamente instalado a partir do repositório oficial: [https://github.com/afeborgeaud/dsmpy]
+
+Imenso agradecimento ao Anselme Borgeaud @afeborgeaud, desenvolvedor do DSMpy!
 
 
 ## 🪐 Como usar
@@ -144,9 +145,7 @@ event = Event(
 )
 
 # Defina a estação ELYSE
-stations = [
-    Station(name='ELYSE', network='XB', latitude=4.502384, longitude=135.623447),
-]
+stations = [Station(name='ELYSE', network='XB', latitude=4.502384, longitude=135.623447)]
 
 # Carregue o modelo sísmico
 seismic_model = seismicmodel_Mars.SeismicModel.test()
@@ -211,34 +210,30 @@ u_Z_ELYSE_XB = output['Z', 'ELYSE_XB'][:max_idx]
 u_R_ELYSE_XB = output['R', 'ELYSE_XB'][:max_idx]
 u_T_ELYSE_XB = output['T', 'ELYSE_XB'][:max_idx]
 ts = ts[:max_idx]
-
-# Garantir que os dados reais também estejam cortados corretamente
 for i in range(len(real_data_list)):
     real_data_list[i].data = real_data_list[i].data[:max_idx]
 
-# Aplicar filtros
+# Bandpass filter
 u_Z_ELYSE_XB_filtered = apply_filter(u_Z_ELYSE_XB, sampling_hz)
 u_R_ELYSE_XB_filtered = apply_filter(u_R_ELYSE_XB, sampling_hz)
 u_T_ELYSE_XB_filtered = apply_filter(u_T_ELYSE_XB, sampling_hz)
 for i in range(len(real_data_list)):
     real_data_list[i].data = apply_filter(real_data_list[i].data, sampling_hz)
 
-#synthetic_data = [u_Z_ELYSE_XB, u_R_ELYSE_XB, u_T_ELYSE_XB]
+# Polarization filter
 synthetic_data = [u_Z_ELYSE_XB_filtered, u_R_ELYSE_XB_filtered, u_T_ELYSE_XB_filtered]
 filtered_synthetic_data = polarization_filter(synthetic_data, sampling_hz)
 u_Z_ELYSE_XB_filtered = filtered_synthetic_data[2]
 u_R_ELYSE_XB_filtered = filtered_synthetic_data[0]
 u_T_ELYSE_XB_filtered = filtered_synthetic_data[1]
-#for i in range(len(real_data_list)):
-#    real_data_list[i].data = polarization_filter(real_data_list[i].data, sampling_hz)
+for i in range(len(real_data_list)):
+    real_data_list[i].data = polarization_filter(real_data_list[i].data, sampling_hz)
 
-# Plotando dados sintéticos e reais para cada componente
+# Plotting synthetic and real seismograms by component
 synthetics = [u_Z_ELYSE_XB_filtered, u_R_ELYSE_XB_filtered, u_T_ELYSE_XB_filtered]
-#synthetics = [normalize(output[comp, 'ELYSE_XB']) for comp in ['Z', 'R', 'T']]
-#synthetics = [u_Z_ELYSE_XB, u_R_ELYSE_XB, u_T_ELYSE_XB]
 components = ['Z', 'R', 'T']
 
-fig, axs = plt.subplots(3, 4, figsize=(28, 12))
+fig, axs = plt.subplots(3, 2, figsize=(28, 12))
 for i, (comp, synthetic, real_data) in enumerate(zip(components, synthetics, real_data_list)):
     synthetic_norm = synthetic / np.max(np.abs(synthetic))
     real_data_norm = real_data.data / np.max(np.abs(real_data.data))
@@ -246,33 +241,6 @@ for i, (comp, synthetic, real_data) in enumerate(zip(components, synthetics, rea
         raise ValueError(f"Os dados sintéticos normalizados contêm valores NaN na componente {comp}.")
     if np.isnan(real_data_norm).any():
         raise ValueError(f"Os dados reais normalizados contêm valores NaN na componente {comp}.")
-    
-    cross_corr = correlate(synthetic_norm, real_data_norm, mode='full')
-    cross_corr /= np.max(cross_corr)  # Normalize cross-correlation
-    lags = np.arange(-len(synthetic_norm) + 1, len(synthetic_norm))
-    corr_coefficient = np.corrcoef(synthetic_norm, real_data_norm)[0, 1]
-
-    # Plotar dados sintéticos com o tempo ajustado
-    axs[i, 0].plot(ts_adjusted[:max_idx], synthetic_norm[:max_idx], label=f'Synthetic {comp}', color='silver', alpha=0.7)
-    axs[i, 0].axvline(x=travel_time_p, linestyle='--', color='black', label='P-wave')
-    axs[i, 0].axvline(x=travel_time_s, linestyle='--', color='magenta', label='S-wave')
-    axs[i, 0].set_xlim([-100, 700])
-    axs[i, 0].set_xlabel('Time (s)')
-    axs[i, 0].set_ylabel('Normalized Amplitude')
-    axs[i, 0].set_title(f'Synthetic Component {comp}')
-    axs[i, 0].legend(loc='lower right')
-    axs[i, 0].text(0.05, 0.95, f'Correlation: {corr_coefficient:2f}', transform=axs[i, 0].transAxes, fontsize=12, verticalalignment='top')
-    
-    # Plotar dados reais com o tempo ajustado
-    axs[i, 1].plot(real_data.times_shifted_p[:max_idx], real_data_norm[:max_idx], label=f'Real {comp}', color='red', alpha=0.7)
-    axs[i, 1].axvline(x=0, linestyle='--', color='black', label='P-wave')
-    axs[i, 1].axvline(x=shift_real_s - shift_real_p, linestyle='--', color='magenta', label='S-wave')
-    axs[i, 1].set_xlim([-100, 700])
-    axs[i, 1].set_xlabel('Time (s)')
-    axs[i, 1].set_ylabel('Normalized Amplitude')
-    axs[i, 1].set_title(f'Real Component {comp}')
-    axs[i, 1].legend(loc='lower right')
-    axs[i, 1].text(0.05, 0.95, f'Correlation: {corr_coefficient:2f}', transform=axs[i, 1].transAxes, fontsize=12, verticalalignment='top')
     
     xlim_min, xlim_max = -5, 5
     idx_min = max(0, int((xlim_min - ts_adjusted[0]) / (ts_adjusted[1] - ts_adjusted[0])))
@@ -332,7 +300,7 @@ O método foi aplicado com sucesso ao evento S0185a, obtendo uma profundidade de
 
 Se usar este código, por favor cite:
 
-> Villanova & Genda, 2025. *AresWave: Estimation of marsquake source parameters by waveform fitting with stochastic optimization*. [Link para o preprint ou DOI]
+> Villanova & Genda, 2025. *AresWave: AresWave: Estimation of marsquake source parameters by waveform fitting with stochastic optimization*. [Link DOI]
 
 
 ## 🪐 Contato
