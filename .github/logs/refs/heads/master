@@ -1,9 +1,0 @@
-0000000000000000000000000000000000000000 f4aaa55c5393034977ff3cffea063b0638649239 lyara <lyara@Lyara> 1716875124 +0900	clone: from https://github.com/afeborgeaud/dsmpy
-f4aaa55c5393034977ff3cffea063b0638649239 f171078d5b8a3d6c5326c7ce2fe916829bb7c59b Lyara <lyaravillanova@yahoo.com> 1724146311 +0900	commit: Add modelparameters_Mars module
-f171078d5b8a3d6c5326c7ce2fe916829bb7c59b cd4e4258fbe8898a0d3bbbd759fd774d1c8273c8 Lyara <lyaravillanova@yahoo.com> 1724146505 +0900	commit: Add Mars-related modules and utils
-cd4e4258fbe8898a0d3bbbd759fd774d1c8273c8 749d4bd703bf53a23f4cad987eb10fe7adb4e416 Lyara <lyaravillanova@yahoo.com> 1724668405 +0900	commit: Add Mars-related modules and utils
-749d4bd703bf53a23f4cad987eb10fe7adb4e416 9775cb44ac61d4890153ae19859b4e14fd7ae405 Lyara <lyaravillanova@yahoo.com> 1724822417 +0900	commit: Add Mars-related modules and utils
-9775cb44ac61d4890153ae19859b4e14fd7ae405 412c5c4fb4edb1ad8dbaf2bbed262dd700bf8a40 Lyara <lyaravillanova@yahoo.com> 1724825570 +0900	commit: new file: FCC.CN.200707211534A.R.sac
-412c5c4fb4edb1ad8dbaf2bbed262dd700bf8a40 dc45d9d13f114806f2eec5c6af6adc6c457e8927 Lyara <lyaravillanova@yahoo.com> 1724828767 +0900	commit: modified: dsmpy/seismicmodel_Mars.py
-dc45d9d13f114806f2eec5c6af6adc6c457e8927 4fef9d86636df89daf74b6f860def9707352eda1 Lyara <lyaravillanova@yahoo.com> 1724844689 +0900	commit: modified: dsmpy/seismicmodel_Mars.py
-4fef9d86636df89daf74b6f860def9707352eda1 20aef9c0043a20dced8696a5fac372aa4c0beb53 Lyara <lyaravillanova@yahoo.com> 1725240904 +0900	commit: Add Mars-related modules and utils
