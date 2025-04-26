@@ -8,7 +8,7 @@
 O AresWave é um pacote Python para a estimativa de profundidade e mecanismo focal de eventos sísmicos marcianos (marsquakes), combinando modelagem de forma de onda (via DSMpy) com otimização estocástica por Particle Swarm Optimization (PSO). O código também inclui ferramentas para ajuste de modelos 1D e estimativas bayesianas de profundidade com base em tempos S–P.
 
 
-## ✨ Funcionalidades
+## 🪐 Funcionalidades
 
 - Geração de formas de onda sintéticas com DSMpy
 - Comparação de formas de onda reais e sintéticas (P e S)
@@ -18,49 +18,82 @@ O AresWave é um pacote Python para a estimativa de profundidade e mecanismo foc
 - Teste com o evento S0185a (SEIS/InSight dataset)
 
 
-## 📦 Instalação
+## 🪐 Instalação
 
-Clone o repositório:
+It is recommended the use of Visual Studio Code (https://code.visualstudio.com/) since it simplifies package management and usage. Additionally, install Ubuntu for Windows users (https://ubuntu.com/desktop/wsl). Once it is installed, run the following commands (tested on Windows 10 and 11 systems, with Python 3.10.12):
 
+
+1) Open a PowerShell (in admin mode)
+
+2) In the PowerShell, type
+```
+wsl --install
+```
+
+3) From the Ubuntu terminal, install python, gcc and openmpi
+```
+sudo apt-get update && apt-get install -y python3 python3-pip
+sudo apt install python-is-python3
+sudo apt-get install gcc
+sudo apt-get install -y openmpi-bin libopenmpi-dev
+```
+
+4) Create a directory for a new python project (rename new_project as your preference), and open it in Visual Studio Code
+```
+cd ~/git
+mkdir new_project
+code new_project
+```
+
+5) Clone the repository
 ```
 git clone https://github.com/LyaraVillanova/AresWave.git
-cd AresWave
 ```
 
-Crie e ative um ambiente virtual (recomendado):
-
+6) Install requirements
 ```
-python -m venv .venv
-source .venv/bin/activate   # Linux/macOS
-.venv\Scripts\activate      # Windows
+python3 -m pip install -r requirements.txt
 ```
 
-Instale as dependências:
-
+7) Install [*build*](https://pypi.org/project/build/),
 ```
-pip install -r requirements.txt
+pip install build
+```
+
+8) From the root directory ```dsmpy``` run
+```
+python -m build .
+```
+9) Now it can be installed with
+```
+pip install dist/*.tar.gz
 ```
 
 
-## 🧪 Requisitos
+## 🪐 Requisitos
 
 AresWave requer as seguintes bibliotecas:
 
 ```
-numpy
-scipy
-matplotlib
-obspy
-pymc
 arviz
-DSMpy
+concurrent.futures
+dsmpy
+glob
+matplotlib
+numpy
+obspy
+os
+pandas
+pymc
+pyswarm
+scipy
 ```
 
 > Recomenda-se Python 3.8 ou superior. Certifique-se de que o DSMpy está corretamente instalado a partir do repositório oficial: [https://github.com/afeborgeaud/dsmpy]
 > Imenso agradecimento ao Anselme Borgeaud @afeborgeaud, desenvolvedor do DSMpy.
 
 
-## 🚀 Como usar
+## 🪐 Como usar
 
 ```python
 import numpy as np
@@ -91,12 +124,12 @@ time_s = UTCDateTime("2019-06-05T02:19:47")
 centroid_time = UTCDateTime((time_p.timestamp + time_s.timestamp) / 2)
 
 # Tensor de Momento
-Mrr = -2.8e20 #12
-Mrt = -1.9e20 #13
-Mrp = -1.3e20 #13
-Mtt = -1.4e20 #13
-Mtp = -5.3e20 #12
-Mpp = 1.8e20 #13
+Mrr = -2.8e12
+Mrt = -1.9e13
+Mrp = -1.3e13
+Mtt = -1.4e13
+Mtp = -5.3e12
+Mpp = 1.8e13
 mt = MomentTensor(Mrr, Mrt, Mrp, Mtt, Mtp, Mpp)
 
 # Crie o objeto Event
@@ -205,7 +238,7 @@ synthetics = [u_Z_ELYSE_XB_filtered, u_R_ELYSE_XB_filtered, u_T_ELYSE_XB_filtere
 #synthetics = [u_Z_ELYSE_XB, u_R_ELYSE_XB, u_T_ELYSE_XB]
 components = ['Z', 'R', 'T']
 
-fig, axs = plt.subplots(3, 4, figsize=(28, 12))  # 4 colunas para incluir axs[i, 3]
+fig, axs = plt.subplots(3, 4, figsize=(28, 12))
 for i, (comp, synthetic, real_data) in enumerate(zip(components, synthetics, real_data_list)):
     synthetic_norm = synthetic / np.max(np.abs(synthetic))
     real_data_norm = real_data.data / np.max(np.abs(real_data.data))
@@ -282,34 +315,27 @@ for i, (comp, synthetic, real_data) in enumerate(zip(components, synthetics, rea
     axs[i, 3].set_title(f'Detail View ({comp} Component)')
     axs[i, 3].legend(loc='lower right')
     axs[i, 3].text(0.05, 0.95, f'Corr: {corr_coefficient_limited:.2f}', transform=axs[i, 3].transAxes)
-
-# Ajustar espaçamento para destacar axs[i, 2]
 plt.subplots_adjust(hspace=0.4, wspace=0.3)
 plt.tight_layout()
 plt.savefig('figs/output_cross_correlation.png')
-
-print(f"Synthetic data length: {len(ts)}")
-print(f"Real data length: {len(real_data)}")
-print(f"Synthetic sampling rate: {1 / (ts[1] - ts[0])}")
-print(f"Real sampling rate: {real_data.stats.sampling_rate}")
 ```
 
 Scripts de exemplo e notebooks estão disponíveis na pasta `examples/`.
 
 
-## 📊 Resultados
+## 🪐 Resultados
 
 O método foi aplicado com sucesso ao evento S0185a, obtendo uma profundidade de ~39 km e mecanismo focal normal. Veja detalhes no artigo (link abaixo).
 
 
-## 📄 Publicação
+## 🪐 Publicação
 
 Se usar este código, por favor cite:
 
 > Villanova & Genda, 2025. *AresWave: Estimation of marsquake source parameters by waveform fitting with stochastic optimization*. [Link para o preprint ou DOI]
 
 
-## 📫 Contato
+## 🪐 Contato
 
 Para dúvidas ou colaborações, envie um e-mail para: [villanova@elsi.jp]
 
