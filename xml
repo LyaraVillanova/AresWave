@@ -1,0 +1,71 @@
+from obspy import read_events
+import pandas as pd
+
+# Substitua pelo caminho correto para o seu arquivo .xml
+catalog_path = '/home/lyara/my_project/dsmpy-1/SAC/events_extended_multiorigin_v14_2023-01-01.xml'
+
+# Carregue o catálogo de eventos
+catalog = read_events(catalog_path)
+
+# Lista para armazenar os dados dos eventos
+event_data = []
+
+# Itere pelos eventos no catálogo e extraia as informações necessárias
+for event in catalog:
+    event_id = event.resource_id.id.split('/')[-1]
+    origin = event.origins[0]  # Usando a primeira origem (pode haver mais de uma)
+    latitude = origin.latitude
+    longitude = origin.longitude
+    depth = origin.depth / 1000 if origin.depth is not None else None  # Converte profundidade de metros para km se disponível
+    magnitude = event.magnitudes[0].mag if event.magnitudes else None
+    
+    # Inicializa os valores do tensor de momento como None
+    mt_values = {
+        'mrr': None,
+        'mtt': None,
+        'mpp': None,
+        'mrt': None,
+        'mrp': None,
+        'mtp': None
+    }
+    
+    # Verifica se há mecanismos focais e se o tensor de momento está presente
+    if event.focal_mechanisms and event.focal_mechanisms[0].moment_tensor:
+        mt = event.focal_mechanisms[0].moment_tensor.tensor
+        if mt is not None:
+            mt_values = {
+                'mrr': mt.m_rr,
+                'mtt': mt.m_tt,
+                'mpp': mt.m_pp,
+                'mrt': mt.m_rt,
+                'mrp': mt.m_rp,
+                'mtp': mt.m_tp
+            }
+    
+    centroid_time = origin.time.strftime('%Y-%m-%d %H:%M:%S')  # Tempo do centróide formatado
+    event_row = {
+        'Event ID': event_id,
+        'Latitude': latitude,
+        'Longitude': longitude,
+        'Depth (km)': depth,
+        'Magnitude': magnitude,
+        'Centroid Time': centroid_time,
+        'Mrr': mt_values['mrr'],
+        'Mtt': mt_values['mtt'],
+        'Mpp': mt_values['mpp'],
+        'Mrt': mt_values['mrt'],
+        'Mrp': mt_values['mrp'],
+        'Mtp': mt_values['mtp']
+    }
+    
+    # Adiciona o evento à lista
+    event_data.append(event_row)
+
+# Converte a lista de eventos em um DataFrame pandas
+df = pd.DataFrame(event_data)
+
+# Salva o DataFrame em um arquivo Excel
+excel_path = '/home/lyara/my_project/dsmpy-1/SAC/arquivo.xlsx'
+df.to_excel(excel_path, index=False)
+
+print(f"Dados do catálogo salvos em {excel_path}")

@@ -1,0 +1,220 @@
+import numpy as np
+from obspy.taup import TauPyModel
+from obspy import Stream, read, UTCDateTime
+from obspy.imaging.beachball import beach
+from dsmpy import seismicmodel_Mars
+from dsmpy.synthetics_function import generate_synthetics, calculate_moment_tensor, apply_filter
+from dsmpy.event_Mars import Event, MomentTensor
+from dsmpy.station_Mars import Station
+from dsmpy.denoising import polarization_filter
+import glob
+from pyswarm import pso
+import matplotlib.pyplot as plt
+
+# Definindo valores do evento
+event_id = 'mqs2019kxjd'
+name = 'S0185a'
+latitude, longitude, distance, depth = 41.59816, 90.13083, 59.8, 30 #24.1
+magnitude = 3.1
+time_p = UTCDateTime("2019-06-05T02:13:48.7")
+time_s = UTCDateTime("2019-06-05T02:19:46")
+centroid_time = UTCDateTime((time_p.timestamp + time_s.timestamp) / 2)
+
+# Tensor de Momento inicial
+mt = MomentTensor(Mrr=-2.8e20, Mrt=-1.9e20, Mrp=-1.3e20, Mtt=-1.4e20, Mtp=-5.3e20, Mpp=1.8e20)
+
+event = Event(
+    event_id=event_id,
+    latitude=latitude,
+    longitude=longitude,
+    depth=depth,
+    mt=mt,
+    centroid_time=centroid_time.timestamp,
+    source_time_function=None
+)
+
+stations = [
+    Station(name='ELYSE', network='XB', latitude=4.502384, longitude=135.623447),
+]
+
+# Modelo sísmico
+seismic_model = seismicmodel_Mars.SeismicModel.text()
+tlen, nspc, sampling_hz = 3276.8, 1256, 20  # Configurações dos sintéticos
+
+# Carregar arquivos .SAC
+sac_folder_path = '/home/lyara/my_project/dsmpy-1/SAC'
+sac_files = glob.glob(f"{sac_folder_path}/*.sac")
+if not sac_files:
+    raise FileNotFoundError(f"Não há arquivos .SAC na pasta: {sac_folder_path}")
+
+# Pré-processar dados reais
+stream = Stream()
+for sac_file in sac_files:
+    trace = read(sac_file)[0]
+    trace.detrend('linear')
+    trace.taper(max_percentage=0.05)
+    trace.resample(sampling_hz)
+    stream += trace
+
+real_data_list = [trace for trace in stream]
+
+# Validar sincronização dos tempos P e S
+if not (time_p < time_s):
+    raise ValueError("O tempo de chegada da onda P deve ser anterior ao tempo da onda S.")
+
+# Parâmetros de otimização
+depth_range, strike_range, dip_range, rake_range = (0, 50), (0, 360), (0, 90), (-180, 180)
+
+def is_valid_solution(depth, strike, dip, rake):
+    return depth >= 5.0
+
+def cost_function(params):
+    depth, strike, dip, rake = params
+    if not is_valid_solution(depth, strike, dip, rake):
+        print(f"Parâmetros inválidos: depth={depth}, strike={strike}, dip={dip}, rake={rake}")
+        return 1e6
+    print(f"Testando: depth={depth:.2f}, strike={strike:.2f}, dip={dip:.2f}, rake={rake:.2f}")
+
+    try:
+        # Atualizar tensor de momento e evento
+        mt = calculate_moment_tensor(magnitude, strike, dip, rake, depth, distance,
+                                     frequency_range=(0.1, 1.0), interval=0.1)[0]['moment_tensor']
+        event.mt = MomentTensor(Mrr=mt.mrr, Mtt=mt.mtt, Mpp=mt.mpp, Mrt=mt.mrt, Mrp=mt.mrp, Mtp=mt.mtp)
+        event.depth = depth
+
+        # Gerar sintéticos
+        output = generate_synthetics(event, stations, seismic_model, tlen, nspc, sampling_hz)
+        synthetic_data = output.us
+
+        max_time = min(1500, ts[-1])
+        max_idx = np.searchsorted(ts, max_time)
+
+        # Ajustar as formas de onda para o comprimento máximo
+        u_Z_ELYSE_XB = output['Z', 'ELYSE_XB'][:max_idx]
+        u_R_ELYSE_XB = output['R', 'ELYSE_XB'][:max_idx]
+        u_T_ELYSE_XB = output['T', 'ELYSE_XB'][:max_idx]
+        ts = ts[:max_idx]
+
+        # Garantir que os dados reais também estejam cortados corretamente
+        for i in range(len(real_data_list)):
+            real_data_list[i].data = real_data_list[i].data[:max_idx]
+
+        # Aplicar filtros
+        u_Z_ELYSE_XB_filtered = apply_filter(u_Z_ELYSE_XB, sampling_hz)
+        u_R_ELYSE_XB_filtered = apply_filter(u_R_ELYSE_XB, sampling_hz)
+        u_T_ELYSE_XB_filtered = apply_filter(u_T_ELYSE_XB, sampling_hz)
+        synthetic_data = [u_Z_ELYSE_XB_filtered, u_R_ELYSE_XB_filtered, u_T_ELYSE_XB_filtered]
+        filtered_synthetic_data = polarization_filter(synthetic_data, sampling_hz)
+        u_Z_ELYSE_XB_filtered = filtered_synthetic_data[0]
+        u_R_ELYSE_XB_filtered = filtered_synthetic_data[1]
+        u_T_ELYSE_XB_filtered = filtered_synthetic_data[2]
+
+        total_variation = 0
+        margin = int(10 * sampling_hz)
+
+        for i, real_data in enumerate(real_data_list):
+            synthetic_trace = synthetic_data[i][:len(real_data.data)]
+
+            # Índices P e S
+            t_p_idx = int((time_p.timestamp - real_data.stats.starttime.timestamp) * sampling_hz)
+            t_s_idx = int((time_s.timestamp - real_data.stats.starttime.timestamp) * sampling_hz)
+
+            print(f"Canal {i}: t_p_idx={t_p_idx}, t_s_idx={t_s_idx}, len(real_data)={len(real_data.data)}")
+
+            # Garantir que os índices estejam dentro dos limites
+            if not (0 <= t_p_idx < len(real_data.data) and 0 <= t_s_idx < len(real_data.data)):
+                print(f"Índices fora dos limites: t_p_idx={t_p_idx}, t_s_idx={t_s_idx}, len(real_data)={len(real_data.data)}")
+                total_variation += 1  # Penalidade para índices inválidos
+                continue
+
+            # Definir janelas P e S
+            p_window = slice(max(t_p_idx - margin, 0), min(t_p_idx + margin, len(synthetic_trace)))
+            s_window = slice(max(t_s_idx - margin, 0), min(t_s_idx + margin, len(synthetic_trace)))
+
+            synthetic_p, real_p = synthetic_trace[p_window], real_data.data[p_window]
+            synthetic_s, real_s = synthetic_trace[s_window], real_data.data[s_window]
+
+            if len(synthetic_p) < 1 or len(real_p) < 1 or len(synthetic_s) < 1 or len(real_s) < 1:
+                print(f"Janelas inválidas no canal {i}:")
+                print(f"P: Real={len(real_p)}, Sintético={len(synthetic_p)}")
+                print(f"S: Real={len(real_s)}, Sintético={len(synthetic_s)}")
+                total_variation += 1  # Penalidade para janelas inválidas
+                continue
+
+            # Normalizar e calcular métricas
+            synthetic_norm = synthetic_p / np.max(np.abs(synthetic_p)) if np.max(np.abs(synthetic_p)) != 0 else synthetic_p
+            real_norm = real_p / np.max(np.abs(real_p)) if np.max(np.abs(real_p)) != 0 else real_p
+
+            corr_coefficient = np.corrcoef(synthetic_norm, real_norm)[0, 1]
+            mse = np.mean((synthetic_norm - real_norm) ** 2)
+            total_variation += 0.5 * (1 - corr_coefficient) + 0.5 * mse
+
+            print(f"Canal {i} - Correlação: {corr_coefficient:.3f}, MSE: {mse:.3f}")
+
+        return total_variation
+    except Exception as e:
+        print(f"Erro: {e}")
+        return 1e6
+
+lb = [depth_range[0], strike_range[0], dip_range[0], rake_range[0]]
+ub = [depth_range[1], strike_range[1], dip_range[1], rake_range[1]]
+best_params, best_cost = pso(cost_function, lb, ub, swarmsize=10, maxiter=5)
+
+mt_best = calculate_moment_tensor(magnitude, best_params[1], best_params[2], best_params[3], best_params[0], distance, frequency_range=(0.1, 1.0), interval=0.1)[0]['moment_tensor']
+best_mt = MomentTensor(Mrr=mt_best.mrr, Mtt=mt_best.mtt, Mpp=mt_best.mpp, Mrt=mt_best.mrt, Mrp=mt_best.mrp, Mtp=mt_best.mtp)
+event.mt = best_mt
+event.depth = best_params[0]
+
+print(f"Melhores parâmetros encontrados: {best_params}")
+print(f"Melhor custo: {best_cost}")
+print(f"Melhor profundidade: {event.depth}")
+print(f"Melhor MT: {event.mt}")
+
+# Gerar e salvar a figura com o melhor resultado
+output = generate_synthetics(event, stations, seismic_model, tlen, nspc, sampling_hz)
+synthetic_data = output.us
+
+plt.figure(figsize=(15, 10))
+for i, real_data in enumerate(real_data_list):
+    synthetic_trace = synthetic_data[i][:len(real_data.data)]
+
+    # Índices P e S
+    t_p_idx = int((time_p.timestamp - real_data.stats.starttime.timestamp) * sampling_hz)
+    t_s_idx = int((time_s.timestamp - real_data.stats.starttime.timestamp) * sampling_hz)
+
+    # Validar índices
+    if not (0 <= t_p_idx < len(real_data.data) and 0 <= t_s_idx < len(real_data.data)):
+        print(f"Índices fora dos limites no canal {i}. Figura não será gerada para este canal.")
+        continue
+
+    # Definir janelas
+    margin = int(10 * sampling_hz)
+    p_window = slice(max(t_p_idx - margin, 0), min(t_p_idx + margin, len(synthetic_trace)))
+    synthetic_p, real_p = synthetic_trace[p_window], real_data.data[p_window]
+
+    # Normalizar para facilitar comparação
+    synthetic_norm = synthetic_p / np.max(np.abs(synthetic_p)) if np.max(np.abs(synthetic_p)) != 0 else synthetic_p
+    real_norm = real_p / np.max(np.abs(real_p)) if np.max(np.abs(real_p)) != 0 else real_p
+
+    # Plotar resultados
+    plt.subplot(len(real_data_list), 1, i + 1)
+    plt.plot(real_norm, label='Real (Normalizado)', color='black', linewidth=1.5)
+    plt.plot(synthetic_norm, label='Sintético (Normalizado)', color='magenta', linestyle='dashed', linewidth=1.2)
+    plt.title(f'Comparação entre Dados Reais e Sintéticos - Canal {i}', fontsize=12)
+    plt.xlabel('Amostras', fontsize=10)
+    plt.ylabel('Amplitude Normalizada', fontsize=10)
+    plt.legend()
+plt.tight_layout()
+plt.savefig("figs/comparacao_melhor_resultado.png", dpi=300)
+
+# Plotar beachball do melhor MT
+fig, ax = plt.subplots(figsize=(4, 4))
+mt_array = [mt_best.mrr, mt_best.mtt, mt_best.mpp, mt_best.mrt, mt_best.mrp, mt_best.mtp]
+bball = beach(mt_array, size=200, linewidth=1, facecolor='b', edgecolor='k', nofill=False)
+ax.add_collection(bball)
+ax.set_xlim(-1, 1)
+ax.set_ylim(-1, 1)
+ax.set_aspect('equal')
+ax.axis('off')
+plt.title('Beachball - Melhor Solução')
+plt.savefig("figs/beachball_melhor_resultado.png", dpi=300)

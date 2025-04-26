@@ -1,0 +1,306 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from obspy.taup import TauPyModel
+from obspy import Stream
+from dsmpy import seismicmodel_Mars
+#from #dsmpy.dsm_Mars.PyDSMInput import filter, get_traces, window_spcs, _normalize
+from dsmpy.synthetics_function import generate_synthetics, generate_synthetics_parallel, apply_filter, apply_filterl, calculate_variation, calculate_moment_tensor
+from dsmpy.event_Mars import Event, MomentTensor
+from dsmpy.station_Mars import Station
+#from denoising import polarization_filter
+from obspy import read, UTCDateTime
+from scipy.signal import correlate
+import glob
+import os
+
+# Definindo valores do evento
+event_id = 'mqs2019kxjd'
+name = 'S0185a'
+latitude = 41.59816
+longitude = 90.13083
+distance = 59.8
+baz = 322.7
+magnitude = 3.1
+depth = 24.1
+time_p = UTCDateTime("2019-06-05T02:13:40")
+time_s = UTCDateTime("2019-06-05T02:19:42")
+centroid_time = UTCDateTime((time_p.timestamp + time_s.timestamp) / 2)
+
+# Tensor de Momento
+Mrr = -2.8e20 #12
+Mrt = -1.9e20 #13
+Mrp = -1.3e20 #13
+Mtt = -1.4e20 #13
+Mtp = -5.3e20 #12
+Mpp = 1.8e20 #13
+mt = MomentTensor(Mrr, Mrt, Mrp, Mtt, Mtp, Mpp)
+
+# Crie o objeto Event
+event = Event(
+    event_id=event_id,
+    latitude=latitude,
+    longitude=longitude,
+    depth=depth,
+    mt=mt,
+    centroid_time=centroid_time.timestamp,
+    source_time_function=None
+)
+
+# Defina a estação ELYSE
+stations = [
+    Station(name='ELYSE', network='XB', latitude=4.502384, longitude=135.623447),
+]
+
+# Carregue o modelo sísmico
+seismic_model = seismicmodel_Mars.SeismicModel.tayak()
+tlen = 1276.8  # duração dos sintéticos (s)
+nspc = 256  # número de pontos no domínio da frequência
+sampling_hz = 20  # frequência de amostragem para os sintéticos
+
+# Caminho para os arquivos .sac
+sac_folder_path = '/home/lyara/my_project/dsmpy-1/SAC'
+sac_files = glob.glob(os.path.join(sac_folder_path, '*.sac'))
+if not sac_files:
+    raise FileNotFoundError(f"Nenhum arquivo .sac encontrado na pasta: {sac_folder_path}")
+
+# Lista para armazenar os dados reais
+real_data_list = []
+stream = Stream()
+for sac_file in sac_files:
+    real_data = read(sac_file)[0]
+    real_data.detrend('linear')
+    real_data.taper(max_percentage=0.05)
+    real_data.resample(sampling_hz)
+    stream += real_data  # Add the trace to the stream
+    real_data_list.append(real_data)
+Z_trace = stream.select(channel='BHZ')
+R_trace = stream.select(channel='BHR')
+T_trace = stream.select(channel='BHT')
+Z_trace = Z_trace[0]
+R_trace = R_trace[0]
+T_trace = T_trace[0]
+
+output = generate_synthetics(event, stations, seismic_model, tlen, nspc, sampling_hz)
+us = output.us  # synthetics. us.shape = (3,nr,tlen)
+ts = output.ts  # time points [0, tlen]
+output.write(root_path='synthetics/.', format='sac')
+
+# Ajuste nos dados sintéticos
+model = TauPyModel(model='TAYAK')
+arrivals = model.get_travel_times(source_depth_in_km=depth, distance_in_degree=distance, phase_list=['P', 'S'])
+print(f"Depth: {depth} km - Arrivals: {arrivals}")
+if arrivals:
+    travel_time_p = arrivals[0].time
+    travel_time_s = arrivals[1].time
+else:
+    raise ValueError('Não foi possível calcular o tempo de chegada da onda P.')
+ts_adjusted = ts - travel_time_p
+tss_adjusted = ts - travel_time_s
+
+# Ajuste para os dados reais
+for i in range(len(real_data_list)):
+    trace_start_time = real_data_list[i].stats.starttime
+    shift_real_p = (time_p - trace_start_time)
+    shift_real_s = (time_s - trace_start_time)
+    real_data_list[i].times_shifted_p = real_data_list[i].times() - shift_real_p
+    real_data_list[i].times_shifted_s = real_data_list[i].times() - shift_real_s
+
+# Limitar as séries temporais para o comprimento dos dados reais
+max_time = min(1500, ts[-1])
+max_idx = np.searchsorted(ts, max_time)
+
+# Ajustar as formas de onda para o comprimento máximo
+u_Z_ELYSE_XB = output['Z', 'ELYSE_XB'][:max_idx]
+u_R_ELYSE_XB = output['R', 'ELYSE_XB'][:max_idx]
+u_T_ELYSE_XB = output['T', 'ELYSE_XB'][:max_idx]
+ts = ts[:max_idx]
+
+# Garantir que os dados reais também estejam cortados corretamente
+for i in range(len(real_data_list)):
+    real_data_list[i].data = real_data_list[i].data[:max_idx]
+
+# Aplicar filtros
+u_Z_ELYSE_XB_filtered = apply_filterl(u_Z_ELYSE_XB, sampling_hz)
+u_R_ELYSE_XB_filtered = apply_filterl(u_R_ELYSE_XB, sampling_hz)
+u_T_ELYSE_XB_filtered = apply_filterl(u_T_ELYSE_XB, sampling_hz)
+for i in range(len(real_data_list)):
+    real_data_list[i].data = apply_filter(real_data_list[i].data, sampling_hz)
+
+# Plotando dados sintéticos e reais para cada componente
+synthetics = [u_Z_ELYSE_XB_filtered, u_R_ELYSE_XB_filtered, u_T_ELYSE_XB_filtered]
+#synthetics = [normalize(output[comp, 'ELYSE_XB']) for comp in ['Z', 'R', 'T']]
+#synthetics = [u_Z_ELYSE_XB, u_R_ELYSE_XB, u_T_ELYSE_XB]
+components = ['Z', 'R', 'T']
+
+fig, axs = plt.subplots(3, 3, figsize=(24, 12))
+for i, (comp, synthetic, real_data) in enumerate(zip(components, synthetics, real_data_list)):
+    synthetic_norm = synthetic / np.max(np.abs(synthetic))
+    real_data_norm = real_data.data / np.max(np.abs(real_data.data))
+    if np.isnan(synthetic_norm).any():
+        raise ValueError(f"Os dados sintéticos normalizados contêm valores NaN na componente {comp}.")
+    if np.isnan(real_data_norm).any():
+        raise ValueError(f"Os dados reais normalizados contêm valores NaN na componente {comp}.")
+    
+    # Plotar dados sintéticos com o tempo ajustado
+    axs[i, 0].plot(ts_adjusted[:max_idx], synthetic_norm[:max_idx], label=f'Synthetic {comp}', color='silver', alpha=0.7)
+    axs[i, 0].axvline(x=0, linestyle='--', color='black', label='P-wave')
+    axs[i, 0].axvline(x=shift_real_s - shift_real_p, linestyle='--', color='magenta', label='S-wave')
+    axs[i, 0].set_xlim([-100, 700])
+    axs[i, 0].set_xlabel('Time (s)')
+    axs[i, 0].set_ylabel('Normalized Amplitude')
+    axs[i, 0].set_title(f'Synthetic Component {comp}')
+    axs[i, 0].legend(loc='lower right')
+    
+    # Plotar dados reais com o tempo ajustado
+    axs[i, 1].plot(real_data.times_shifted_p[:max_idx], real_data_norm[:max_idx], label=f'Real {comp}', color='red', alpha=0.7)
+    axs[i, 1].axvline(x=0, linestyle='--', color='black', label='P-wave')
+    axs[i, 1].axvline(x=shift_real_s - shift_real_p, linestyle='--', color='magenta', label='S-wave')
+    axs[i, 1].set_xlim([-100, 700])
+    axs[i, 1].set_xlabel('Time (s)')
+    axs[i, 1].set_ylabel('Normalized Amplitude')
+    axs[i, 1].set_title(f'Real Component {comp}')
+    axs[i, 1].legend(loc='lower right')
+    
+    # Compute cross-correlation
+    cross_corr = correlate(synthetic_norm, real_data_norm, mode='full')
+    cross_corr /= np.max(cross_corr)  # Normalize cross-correlation
+    lags = np.arange(-len(synthetic_norm) + 1, len(synthetic_norm))
+    max_corr_idx = cross_corr.argmax()
+    max_corr = cross_corr[max_corr_idx]
+    corr_coefficient = np.corrcoef(synthetic_norm, real_data_norm)[0, 1]
+    
+    axs[i, 2].plot(ts_adjusted[:max_idx], synthetic_norm[:max_idx], label=f'Synthetic {comp}', alpha=0.7, color='silver')
+    axs[i, 2].plot(real_data.times_shifted_p[:max_idx], real_data_norm[:max_idx], label=f'Real {comp}', alpha=0.7, color='red')
+    axs[i, 2].axvline(x=0, linestyle='--', color='black', label='P-wave')
+    axs[i, 2].axvline(x=shift_real_s - shift_real_p, linestyle='--', color='magenta', label='S-wave')
+    axs[i, 2].axvline(x=travel_time_p - shift_real_p, linestyle='--', color='black', label='P-wave')
+    axs[i, 2].axvline(x=travel_time_s - (shift_real_s - shift_real_p), linestyle='--', color='magenta', label='S-wave')
+    axs[i, 2].set_xlim([-75, 75])
+    axs[i, 2].set_xlabel('Time (s)')
+    axs[i, 2].set_ylabel('Normalized Amplitude')
+    axs[i, 2].set_title(f'Cross Correlation ({comp} Component)')
+    axs[i, 2].legend(loc='lower right')
+    axs[i, 2].text(0.05, 0.95, f'Correlation: {corr_coefficient:10f}', transform=axs[i, 2].transAxes, fontsize=12, verticalalignment='top')
+
+plt.tight_layout()
+plt.savefig('figs/output_cross_correlation.png')
+
+print(f"Synthetic data length: {len(ts)}")
+print(f"Real data length: {len(real_data)}")
+print(f"Synthetic sampling rate: {1 / (ts[1] - ts[0])}")
+print(f"Real sampling rate: {real_data.stats.sampling_rate}")
+
+
+# Busca em grade para encontrar melhor profundidade
+depth_range = np.arange(5, 100, 5)  # Profundidade em km (busca em grade)
+strike_range = np.arange(0, 360, 60)  # Variando de 0 a 360 graus com passo de 60
+dip_range = np.arange(0, 90, 30)       # Variando de 0 a 90 graus com passo de 30
+rake_range = np.arange(-180, 180, 60)  # Variando de -180 a 180 graus com passo de 60
+frequency_range = (0.1, 1.0)
+frequency_interval = 0.1
+
+min_variation = float('inf')
+best_params = {'depth': None, 'strike': None, 'dip': None, 'rake': None}
+fig, axs = plt.subplots(len(depth_range), 6, figsize=(48, len(depth_range) * 4))
+
+for idx_depth, depth in enumerate(depth_range):
+    for strike in strike_range:
+        for dip in dip_range:
+            for rake in rake_range:
+                # Calcular o tensor de momento para as frequências na faixa especificada
+                mt_list = calculate_moment_tensor(magnitude, strike, dip, rake, depth, distance, frequency_range=(0.1, 1.0), interval=frequency_interval)
+                
+                for mt in mt_list:
+                    frequency = mt['frequency']
+                    tensor = mt['moment_tensor']
+                    # Print dos componentes do tensor para a frequência atual
+                    print(f"Frequency: {frequency:.2f} Hz, "
+                          f"Mrr: {tensor.mrr}, Mtt: {tensor.mtt}, Mpp: {tensor.mpp}, "
+                          f"Mrt: {tensor.mrt}, Mrp: {tensor.mrp}, Mtp: {tensor.mtp}, "
+                          f"Strike: {strike}, Dip: {dip}, Rake: {rake}")
+
+                event.depth = depth
+                # Calcular os dados sintéticos com os parâmetros atuais
+                output = generate_synthetics(event, stations, seismic_model, tlen, nspc, sampling_hz)
+                arrivals = model.get_travel_times(source_depth_in_km=depth, distance_in_degree=distance, phase_list=['P', 'S'])
+                print(f"Depth: {depth} km - Arrivals: {arrivals}")
+
+                sampling_rate = real_data_list[0].stats.sampling_rate
+                start_time = real_data_list[0].stats.starttime
+                time_p = time_p
+                time_s = time_s
+
+                variation, pzr_idx, prr_idx, szr_idx, str_idx, pzs_idx, prs_idx, szs_idx, sts_idx, real_data_PZ_norm, synthetic_data_PZ_norm, real_data_PR_norm, synthetic_data_PR_norm, real_data_SZ_norm, synthetic_data_SZ_norm, real_data_ST_norm, synthetic_data_ST_norm = calculate_variation(Z_trace, u_Z_ELYSE_XB, R_trace, u_R_ELYSE_XB, 
+                                                    Z_trace, u_Z_ELYSE_XB, T_trace, u_T_ELYSE_XB,
+                                                    time_p, time_s, magnitude, sampling_rate, start_time, window_size=10.0)
+
+                print(f"Variação calculada: {variation}, Tipo: {type(variation)}")
+                #print(f"Depth: {depth} km, Synthetic Data PZ: {synthetic_data_PZ_norm[:3]}, Real Data PZ: {real_data_PZ_norm[:3]}")
+                #print(f"Depth: {depth} km, Synthetic Data PR: {synthetic_data_PR_norm[:3]}, Real Data PR: {real_data_PR_norm[:3]}")
+                #print(f"Depth: {depth} km, Synthetic Data SZ: {synthetic_data_SZ_norm[:3]}, Real Data SZ: {real_data_SZ_norm[:3]}")
+                #print(f"Depth: {depth} km, Synthetic Data ST: {synthetic_data_ST_norm[:3]}, Real Data ST: {real_data_ST_norm[:3]}")
+
+                if variation < min_variation:
+                    min_variation = variation
+                    best_depth = depth
+                    best_strike = strike
+                    best_dip = dip
+                    best_rake = rake
+                    best_synthetic_data = {
+                        'PZ': pzr_idx - pzs_idx,
+                        'PR': prr_idx - prs_idx,
+                        'SZ': szr_idx - szs_idx,
+                        'ST': str_idx - sts_idx,
+                        'pzr_idx': pzr_idx,
+                        'prr_idx': prr_idx,
+                        'szr_idx': szr_idx,
+                        'str_idx': str_idx,
+                        'pzs_idx': pzs_idx,
+                        'prs_idx': prs_idx,
+                        'szs_idx': szs_idx,
+                        'sts_idx': sts_idx}
+
+                components = ['Z', 'R', 'T']
+                for j, comp in enumerate(components):
+                    synthetic_data = output[comp, 'ELYSE_XB']
+                    min_len = min(len(synthetic_data), len(real_data_list[j].data))  # Encontra o menor comprimento
+                    synthetic_norm = synthetic_data[:min_len] / np.max(np.abs(synthetic_data[:min_len]))
+                    real_norm = real_data_list[j].data[:min_len] / np.max(np.abs(real_data_list[j].data[:min_len]))
+
+                    # Compute cross-correlation
+                    cross_corr = correlate(synthetic_norm, real_norm, mode='full')
+                    cross_corr /= np.max(cross_corr)  # Normalize cross-correlation
+                    lags = np.arange(-len(synthetic_norm) + 1, len(synthetic_norm))
+                    max_corr_idx = cross_corr.argmax()
+                    max_corr = cross_corr[max_corr_idx]
+                    corr_coefficient = np.corrcoef(synthetic_norm, real_norm)[0, 1]
+
+                    # Plot P-wave
+                    axs[idx_depth, j].plot(ts[:len(synthetic_norm)], synthetic_norm, label=f'Synthetic {comp}', alpha=0.7, color='silver')
+                    axs[idx_depth, j].plot(ts[:len(real_norm)], real_norm, label=f'Real {comp}', alpha=0.7, color='red')
+                    axs[idx_depth, j].axvline(x=0, linestyle='--', color='black', label='P-wave')
+                    axs[idx_depth, j].set_xlim([-10, 10])
+                    axs[idx_depth, j].set_xlabel('Time (s)')
+                    axs[idx_depth, j].set_ylabel('Normalized Amplitude')
+                    axs[idx_depth, j].set_title(f'Component {comp}, Depth: {depth} km, Corr: {corr_coefficient:.10f}')
+                    axs[idx_depth, j].legend(loc='lower right')
+
+                    # Plot S-wave
+                    axs[idx_depth, j+3].plot(ts[:len(synthetic_norm)], synthetic_norm, label=f'Synthetic {comp}', alpha=0.7, color='silver')
+                    axs[idx_depth, j+3].plot(ts[:len(real_norm)], real_norm, label=f'Real {comp}', alpha=0.7, color='red')
+                    axs[idx_depth, j+3].axvline(x=time_s - time_p, linestyle='--', color='magenta', label='S-wave')
+                    axs[idx_depth, j+3].set_xlim([(time_s - time_p)-10, (time_s - time_p)+25])
+                    axs[idx_depth, j+3].set_xlabel('Time (s)')
+                    axs[idx_depth, j+3].set_ylabel('Normalized Amplitude')
+                    axs[idx_depth, j+3].set_title(f'Component {comp}, Depth: {depth} km, Corr: {corr_coefficient:.10f}')
+                    axs[idx_depth, j+3].legend(loc='lower right')
+
+plt.tight_layout()
+plt.savefig('figs/output_cross_correlation_depths.png')
+                    
+print(f"Best Depth: {best_depth} km, Variation: {min_variation}")
+print(f"Strike: {best_strike}, Dip: {best_dip}, Rake: {best_rake}")
+print(f"PZ real: {best_synthetic_data['pzr_idx']}, PR real: {best_synthetic_data['prr_idx']}, "
+      f"SZ real: {best_synthetic_data['szr_idx']}, ST real: {best_synthetic_data['str_idx']}. "
+      f"PZ synthetic: {best_synthetic_data['pzs_idx']}, PR synthetic: {best_synthetic_data['prs_idx']}, "
+      f"SZ synthetic: {best_synthetic_data['szs_idx']}, ST synthetic: {best_synthetic_data['sts_idx']}")

@@ -1,0 +1,150 @@
+import os
+import numpy as np
+import matplotlib.pyplot as plt
+from obspy import read, UTCDateTime
+
+# ===== CONFIGURAÇÕES =====
+SYNTHETICS_FOLDER = '/home/lyara/my_project/dsmpy-1/synthetics'
+INITIAL_MODELS_FOLDER = '/home/lyara/.local/lib/python3.10/site-packages/obspy/taup/data/dt2'
+SAVE_MODELS_DIR = '/home/lyara/my_project/dsmpy-1/figs'
+PLOTS_DIR = '/home/lyara/my_project/dsmpy-1/figs'
+MISFIT_TYPE = 'cc'  # 'cc', 'l2', 'mae'
+N_ITER = 5
+ZOOM_DEPTH = (800, 1600)
+
+# ===== TEMPOS DE FASE (Ex: chegada da fase P) =====
+P_ARRIVAL_TIME_UTC = UTCDateTime("2019-06-05T02:13:48")
+S_ARRIVAL_TIME_UTC = UTCDateTime("2019-06-05T02:19:46")
+WINDOW = (10.0, 10.0)  # antes e depois da chegada, em segundos
+
+# ===== FUNÇÕES =====
+def read_synthetics(folder):
+    st = []
+    for file in sorted(os.listdir(folder)):
+        if file.endswith(".sac"):
+            st.append(read(os.path.join(folder, file))[0])
+    return st  # retorna lista de traces
+
+def read_nd_model(filepath):
+    data = np.loadtxt(filepath)
+    depth = 3389.5 - data[:, 0]
+    return {
+        'depth': depth,
+        'rho': data[:, 1],
+        'vp': data[:, 2],
+        'vs': data[:, 3]
+    }
+
+def save_nd_model(filepath, depth, rho, vp, vs):
+    radius = 3389.5 - depth
+    data = np.column_stack([radius, rho, vp, vs])
+    np.savetxt(filepath, data, fmt='%10.4f')
+
+def apply_time_window(trace, arrival_utc, pre, post):
+    start = trace.stats.starttime
+    arrival = arrival_utc - start
+    fs = trace.stats.sampling_rate
+    start_idx = int((arrival - pre) * fs)
+    end_idx = int((arrival + post) * fs)
+    return trace.data[start_idx:end_idx]
+
+def cross_correlation(a, b):
+    return np.mean([np.corrcoef(ai, bi)[0, 1] for ai, bi in zip(a, b)])
+
+def misfit(observed, synthetic, kind="cc", phase="P"):
+    if phase == "P":
+        arrival_time = P_ARRIVAL_TIME_UTC
+    elif phase == "S":
+        arrival_time = S_ARRIVAL_TIME_UTC
+    else:
+        raise ValueError(f"Fase inválida: {phase}")
+    
+    obs_win = [apply_time_window(tr, arrival_time, *WINDOW) for tr in observed]
+    syn_win = [apply_time_window(tr, arrival_time, *WINDOW) for tr in synthetic]
+
+    if kind == "cc":
+        return 1 - cross_correlation(obs_win, syn_win)
+    elif kind == "l2":
+        return np.mean([(o - s) @ (o - s) for o, s in zip(obs_win, syn_win)])
+    elif kind == "mae":
+        return np.mean([np.mean(np.abs(o - s)) for o, s in zip(obs_win, syn_win)])
+    else:
+        raise ValueError(f"Tipo de misfit inválido: {kind}")
+
+def compute_gradient(obs, syn, model):
+    return {
+        'rho': -0.01 * np.ones_like(model['rho']),
+        'vp': -0.02 * np.ones_like(model['vp']),
+        'vs': -0.03 * np.ones_like(model['vs'])
+    }
+
+def update_model(model, grad, alpha=0.5):
+    return {
+        'depth': model['depth'],
+        'rho': model['rho'] + alpha * grad['rho'],
+        'vp': model['vp'] + alpha * grad['vp'],
+        'vs': model['vs'] + alpha * grad['vs']
+    }
+
+def plot_model_com_erro(model_history, depth, zoom, model_name, error_history):
+    fig, axs = plt.subplots(2, 2, figsize=(12, 8))
+    labels = [f'iter {i}' for i in range(len(model_history))]
+
+    for param, ax in zip(['vp', 'vs', 'rho'], axs.flat[:3]):
+        for i, model in enumerate(model_history):
+            mask = (depth >= zoom[0]) & (depth <= zoom[1])
+            ax.plot(model[param][mask], depth[mask], label=labels[i])
+        ax.set_ylabel("Profundidade (km)")
+        ax.set_xlabel(param.upper())
+        ax.invert_yaxis()
+        ax.legend()
+        ax.grid()
+
+    axs[1, 1].plot(range(len(error_history)), error_history, '-o')
+    axs[1, 1].set_xlabel("Iteração")
+    axs[1, 1].set_ylabel("Erro")
+    axs[1, 1].set_title("Evolução do erro")
+    axs[1, 1].grid()
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(PLOTS_DIR, f"{model_name}.png"))
+    plt.close()
+
+# ===== EXECUÇÃO PRINCIPAL =====
+os.makedirs(SAVE_MODELS_DIR, exist_ok=True)
+os.makedirs(PLOTS_DIR, exist_ok=True)
+
+observed = read_synthetics(SYNTHETICS_FOLDER)
+synthetic = read_synthetics(SYNTHETICS_FOLDER)  # substitua futuramente por forward()
+
+initial_models = sorted([f for f in os.listdir(INITIAL_MODELS_FOLDER) if f.endswith(".nd")])
+
+for model_file in initial_models:
+    print(f"\n Iniciando inversão para modelo: {model_file}")
+    model_path = os.path.join(INITIAL_MODELS_FOLDER, model_file)
+    model = read_nd_model(model_path)
+    depth = model['depth']
+    model_history = [model]
+    error_history = []
+
+    for i in range(N_ITER):
+        print(f"Iteração {i+1} | Modelo {model_file}")
+
+        # Misfit para fase P
+        erro_P = misfit(observed, synthetic, MISFIT_TYPE, phase="P")
+        # Misfit para fase S
+        erro_S = misfit(observed, synthetic, MISFIT_TYPE, phase="S")
+        # Média do erro
+        erro_total = (erro_P + erro_S) / 2
+        error_history.append(erro_total)
+        print(f"Misfit P: {erro_P:.4f} | Misfit S: {erro_S:.4f} | Média: {erro_total:.4f}")
+
+        save_nd_model(f"{SAVE_MODELS_DIR}/{model_file[:-3]}_iter_{i}.nd", depth, model['rho'], model['vp'], model['vs'])
+
+        grad = compute_gradient(observed, synthetic, model)
+        model = update_model(model, grad)
+        model_history.append(model)
+
+        plot_model_com_erro(model_history, depth, ZOOM_DEPTH, f"{model_file[:-3]}_iter_{i}", error_history)
+
+    print(f"Inversão concluída para: {model_file}")
