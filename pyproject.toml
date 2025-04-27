@@ -2,7 +2,8 @@
 requires = [
     "arviz",
     "concurrent.futures",
-    'glob',
+    'dsmpy',
+    'glob',    
     'matplotlib',
     'numpy',
     'obspy',
