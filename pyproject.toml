@@ -1,33 +1,34 @@
 [build-system]
 requires = [
-    "setuptools",
-    "wheel",
-    'obspy',
-    'mpi4py',
-    'pandas',
+    "arviz",
+    "concurrent.futures",
+    'glob',
     'matplotlib',
-    'geographiclib',
-    "numpy",
-    "joblib",
+    'numpy',
+    'obspy',
+    'os',
+    "pandas",
+    "pymc",
+    "pyswarm",
+    "scipy",      
 ]
 build-backend = 'setuptools.build_meta'
 
 [project]
-name = "dsmpy"
-version = "1.0a5"
+name = "AresWave"
+version = "1.0"
 authors = [
-  { name="Anselme Borgeaud", email="aborgeaud@gmail.com" },
-  { name="Kensuke Konishi", email="" },
+  { name="Lyara Villanova", email="lyaravillanova@yahoo.com" },
 ]
-description = "Python wrapper for DSM"
+description = "PSO optimization for seismic analysis"
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
+    "License :: MIT License",
+    "Operating System :: Windows",
 ]
 
 [project.urls]
-Homepage = "https://github.com/afeborgeaud/dsmpy"
+Homepage = "https://github.com/LyaraVillanova/AresWave"
 
