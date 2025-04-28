@@ -133,7 +133,7 @@ Mtp = -5.3e12
 Mpp = 1.8e13
 mt = MomentTensor(Mrr, Mrt, Mrp, Mtt, Mtp, Mpp)
 
-# Create the objetc Event
+# Create the object Event
 event = Event(
     event_id=event_id,
     latitude=latitude,
@@ -149,9 +149,9 @@ stations = [Station(name='ELYSE', network='XB', latitude=4.502384, longitude=135
 
 # Upload the initial model
 seismic_model = seismicmodel_Mars.SeismicModel.test()
-tlen = 1276.8  # duração dos sintéticos (s)
-nspc = 1256  # número de pontos no domínio da frequência
-sampling_hz = 20  # frequência de amostragem para os sintéticos
+tlen = 1276.8  # duration of the synthetics (s)
+nspc = 1256  # number of points in the frequency domain
+sampling_hz = 20  # sampling frequency
 
 # Path to the .sac files
 sac_folder_path = '/home/lyara/my_project/dsmpy-1/SAC'
@@ -181,7 +181,7 @@ us = output.us  # synthetics. us.shape = (3,nr,tlen)
 ts = output.ts  # time points [0, tlen]
 output.write(root_path='synthetics/.', format='sac')
 
-# Ajust in the synthetic seismograms
+# Adjust in the synthetic seismograms
 model = TauPyModel(model="cd_model1")
 arrivals = model.get_travel_times(source_depth_in_km=depth, distance_in_degree=distance, phase_list=['P', 'S'])
 print(f"Depth: {depth} km - Arrivals: {arrivals}")
@@ -201,7 +201,7 @@ for i in range(len(real_data_list)):
     real_data_list[i].times_shifted_p = real_data_list[i].times() - shift_real_p
     real_data_list[i].times_shifted_s = real_data_list[i].times() - shift_real_s
 
-# Limit the synthetics to the same lengh of real seismograms
+# Limit the synthetics to the same length of real seismograms
 max_time = min(1500, ts[-1])
 max_idx = np.searchsorted(ts, max_time)
 u_Z_ELYSE_XB = output['Z', 'ELYSE_XB'][:max_idx]
@@ -289,7 +289,7 @@ plt.savefig('figs/output_cross_correlation.png')
 
 ## 🪐 Results
 
-O método foi aplicado com sucesso ao evento S0185a, obtendo uma profundidade de ~39 km e mecanismo focal normal. Veja detalhes no artigo (link abaixo).
+O método foi aplicado com sucesso ao evento S0185a, obtendo uma profundidade de ~xx km e mecanismo focal normal. Veja detalhes no artigo (link abaixo).
 
 
 ## 🪐 Publication
