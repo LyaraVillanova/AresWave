@@ -8,7 +8,7 @@
 O AresWave é um pacote Python para a estimativa de profundidade e mecanismo focal de eventos sísmicos marcianos (marsquakes), combinando modelagem de forma de onda (via DSMpy) com otimização estocástica por Particle Swarm Optimization (PSO). O código também inclui ferramentas para ajuste de modelos 1D e estimativas bayesianas de profundidade com base em tempos S–P.
 
 
-## 🪐 Funcionalidades
+## 🪐 Functions
 
 - Geração de formas de onda sintéticas com DSMpy
 - Comparação de formas de onda reais e sintéticas (P e S)
@@ -18,7 +18,7 @@ O AresWave é um pacote Python para a estimativa de profundidade e mecanismo foc
 - Teste com o evento S0185a (SEIS/InSight dataset)
 
 
-## 🪐 Instalação
+## 🪐 Instalation
 
 It is recommended the use of Visual Studio Code (https://code.visualstudio.com/) since it simplifies package management and usage. Additionally, install Ubuntu for Windows users (https://ubuntu.com/desktop/wsl). Once it is installed, run the following commands (tested on Windows 10 and 11 systems, with Python 3.10.12):
 
@@ -70,7 +70,7 @@ pip install dist/*.tar.gz
 ```
 
 
-## 🪐 Requisitos
+## 🪐 Requirements
 
 AresWave requer as seguintes bibliotecas:
 
@@ -94,7 +94,7 @@ Recomenda-se Python 3.8 ou superior. Certifique-se de que o DSMpy está corretam
 Imenso agradecimento ao Anselme Borgeaud @afeborgeaud, desenvolvedor do DSMpy!
 
 
-## 🪐 Como usar
+## 🪐 How to use
 
 ```python
 import numpy as np
@@ -117,14 +117,14 @@ name = 'S0185a'
 latitude = 41.59816
 longitude = 90.13083
 distance = 59.8
-baz = 92.0 #322.7
+baz = 92.0
 magnitude = 3.1
 depth = 30 #24.1
 time_p = UTCDateTime("2019-06-05T02:13:48")
 time_s = UTCDateTime("2019-06-05T02:19:47")
 centroid_time = UTCDateTime((time_p.timestamp + time_s.timestamp) / 2)
 
-# Tensor de Momento
+# Moment tensor
 Mrr = -2.8e12
 Mrt = -1.9e13
 Mrp = -1.3e13
@@ -133,7 +133,7 @@ Mtp = -5.3e12
 Mpp = 1.8e13
 mt = MomentTensor(Mrr, Mrt, Mrp, Mtt, Mtp, Mpp)
 
-# Crie o objeto Event
+# Create the objetc Event
 event = Event(
     event_id=event_id,
     latitude=latitude,
@@ -144,22 +144,22 @@ event = Event(
     source_time_function=None
 )
 
-# Defina a estação ELYSE
+# Define the station
 stations = [Station(name='ELYSE', network='XB', latitude=4.502384, longitude=135.623447)]
 
-# Carregue o modelo sísmico
+# Upload the initial model
 seismic_model = seismicmodel_Mars.SeismicModel.test()
 tlen = 1276.8  # duração dos sintéticos (s)
 nspc = 1256  # número de pontos no domínio da frequência
 sampling_hz = 20  # frequência de amostragem para os sintéticos
 
-# Caminho para os arquivos .sac
+# Path to the .sac files
 sac_folder_path = '/home/lyara/my_project/dsmpy-1/SAC'
 sac_files = glob.glob(os.path.join(sac_folder_path, '*.sac'))
 if not sac_files:
     raise FileNotFoundError(f"Nenhum arquivo .sac encontrado na pasta: {sac_folder_path}")
 
-# Lista para armazenar os dados reais
+# Stream to the real data
 real_data_list = []
 stream = Stream()
 for sac_file in sac_files:
@@ -181,7 +181,7 @@ us = output.us  # synthetics. us.shape = (3,nr,tlen)
 ts = output.ts  # time points [0, tlen]
 output.write(root_path='synthetics/.', format='sac')
 
-# Ajuste nos dados sintéticos
+# Ajust in the synthetic seismograms
 model = TauPyModel(model="cd_model1")
 arrivals = model.get_travel_times(source_depth_in_km=depth, distance_in_degree=distance, phase_list=['P', 'S'])
 print(f"Depth: {depth} km - Arrivals: {arrivals}")
@@ -193,7 +193,7 @@ else:
 ts_adjusted = ts - travel_time_p
 tss_adjusted = ts - travel_time_s
 
-# Ajuste para os dados reais
+# Ajust in the real seismograms
 for i in range(len(real_data_list)):
     trace_start_time = real_data_list[i].stats.starttime
     shift_real_p = (time_p - trace_start_time)
@@ -201,11 +201,9 @@ for i in range(len(real_data_list)):
     real_data_list[i].times_shifted_p = real_data_list[i].times() - shift_real_p
     real_data_list[i].times_shifted_s = real_data_list[i].times() - shift_real_s
 
-# Limitar as séries temporais para o comprimento dos dados reais
+# Limit the synthetics to the same lengh of real seismograms
 max_time = min(1500, ts[-1])
 max_idx = np.searchsorted(ts, max_time)
-
-# Ajustar as formas de onda para o comprimento máximo
 u_Z_ELYSE_XB = output['Z', 'ELYSE_XB'][:max_idx]
 u_R_ELYSE_XB = output['R', 'ELYSE_XB'][:max_idx]
 u_T_ELYSE_XB = output['T', 'ELYSE_XB'][:max_idx]
@@ -288,26 +286,19 @@ plt.tight_layout()
 plt.savefig('figs/output_cross_correlation.png')
 ```
 
-Scripts de exemplo e notebooks estão disponíveis na pasta `examples/`.
 
-
-## 🪐 Resultados
+## 🪐 Results
 
 O método foi aplicado com sucesso ao evento S0185a, obtendo uma profundidade de ~39 km e mecanismo focal normal. Veja detalhes no artigo (link abaixo).
 
 
-## 🪐 Publicação
+## 🪐 Publication
 
 Se usar este código, por favor cite:
 
 > Villanova & Genda, 2025. *AresWave: AresWave: Estimation of marsquake source parameters by waveform fitting with stochastic optimization*. [Link DOI]
 
 
-## 🪐 Contato
+## 🪐 Contact
 
 Para dúvidas ou colaborações, envie um e-mail para: [villanova@elsi.jp]
-
-
-## 🪐 Licença
-
-Este projeto está licenciado sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
