@@ -1,0 +1,35 @@
+[build-system]
+requires = [
+    "arviz",
+    "concurrent.futures",
+    'dsmpy',
+    'glob',    
+    'matplotlib',
+    'numpy',
+    'obspy',
+    'os',
+    "pandas",
+    "pymc",
+    "pyswarm",
+    "scipy",      
+]
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = "AresWave"
+version = "1.0"
+authors = [
+  { name="Lyara Villanova", email="lyaravillanova@yahoo.com" },
+]
+description = "PSO optimization for seismic analysis"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: MIT License",
+    "Operating System :: Windows",
+]
+
+[project.urls]
+Homepage = "https://github.com/LyaraVillanova/AresWave"
+

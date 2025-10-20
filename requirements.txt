@@ -1,0 +1,12 @@
+arviz
+concurrent.futures
+dsmpy
+glob
+matplotlib
+numpy
+obspy
+os
+pandas
+pymc
+pyswarm
+scipy

@@ -1,0 +1,137 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from obspy.taup import TauPyModel
+from obspy import UTCDateTime
+from dsmpy.event_Mars import Event, MomentTensor
+from dsmpy.station_Mars import Station
+import pandas as pd
+from concurrent.futures import ThreadPoolExecutor
+import os
+
+# Definindo valores do evento
+event_id = ' mqs2019hdxw'
+latitude = 4.5024
+longitude = 135.6234
+distance = 88.5
+magnitude = 3.1
+depth = 0.0
+time_p = UTCDateTime("2019-04-12T18:14:14") #x1
+time_s = UTCDateTime("2019-04-12T18:17:55")
+centroid_time = UTCDateTime((time_p.timestamp + time_s.timestamp) / 2)
+
+# Tensor de Momento
+Mrr, Mrt, Mrp, Mtt, Mtp, Mpp = -2.8e20, -1.9e20, -1.3e20, -1.4e20, -5.3e20, 1.8e20
+mt = MomentTensor(Mrr, Mrt, Mrp, Mtt, Mtp, Mpp)
+
+# Evento e estação
+event = Event(
+    event_id=event_id, latitude=latitude, longitude=longitude,
+    depth=depth, mt=mt, centroid_time=centroid_time.timestamp, source_time_function=None
+)
+stations = [Station(name='ELYSE', network='XB', latitude=4.502384, longitude=135.623447)]
+
+# Diretório dos modelos
+model_directory = "/home/lyara/.local/lib/python3.10/site-packages/obspy/taup/data/"
+
+# Definir velocidades reais
+def process_model(model_name):
+    try:
+        tau_model = TauPyModel(model=os.path.join(model_directory, f"{model_name}"))
+        arrivals = tau_model.get_travel_times(source_depth_in_km=depth, distance_in_degree=distance, phase_list=['P', 'S'])
+        print(f"Modelo {model_name}: {arrivals}")  # Depuração
+        return [(model_name, arr.name, arr.time) for arr in arrivals]
+    except Exception as e:
+        print(f"Erro no modelo {model_name}: {e}")
+        return []
+
+# Modelos e cores
+model_colors = {
+    **dict.fromkeys(["dwak", "dwthot", "dwthotcrust1", "dwthotcrust1b", "eh45tcold", "eh45tcoldcrust1", "eh45tcoldcrust1b", "lfak", "sanak", 
+                     "tayak", "maak", "gudkova"], "plum"),
+    **dict.fromkeys(["MD_model1", "MD_model50", "MD_model100"], "mediumorchid"),
+    **dict.fromkeys(["CD_model1", "CD_model50", "CD_model100"], "rebeccapurple"),
+    **dict.fromkeys(["AK_model2", "AK_model50", "AK_model100", "ceylan", "KKS21GP_blue_model", "KKS21GP_red_model", 
+                     "Geophysical_model1", "Geophysical_model100", "Geophysical_model200",
+                     "Geophysical_model300", "Geophysical_model400", "Geophysical_model500", "Geophysical_model600", 
+                     "Geophysical_model700", "Geophysical_model800", "Geophysical_model900", "Geophysical_model1000"], "slateblue")
+}
+ordered_models = list(model_colors.keys())
+
+# Executar modelos em paralelo
+with ThreadPoolExecutor() as executor:
+    results = sum(executor.map(process_model, ordered_models), [])
+
+# Criar DataFrame
+df = pd.DataFrame(results, columns=["Model", "Phase", "Travel_Time"])
+
+# Adiciona tempos reais
+df = pd.concat([df, pd.DataFrame({
+    "Model": ["Real Data", "Real Data"],
+    "Phase": ["P", "S"],
+    "Travel_Time": [time_p.timestamp, time_s.timestamp]
+})], ignore_index=True)
+print(df[df["Model"] == "Real Data"])
+
+# Remover duplicatas
+df = df.drop_duplicates(subset=["Model", "Phase"])
+
+# Pivotar a tabela
+df = df.pivot(index="Model", columns="Phase", values="Travel_Time").reset_index()
+
+# Calcular tempos S-P
+df["SP_Times"] = df["S"] - df["P"]
+
+# Calcular profundidades
+def calculate_depth(sp_time, vp, vs, sigma_vp, sigma_vs):
+    if sp_time > 0:
+        depth = sp_time / 100 / (1 / vs - 1 / vp)
+        error = sp_time * np.sqrt((sigma_vs / vs**2)**2 + (sigma_vp / vp**2)**2)
+        return depth, error
+    return np.nan, np.nan
+
+vp, vs, sigma_vp, sigma_vs = 5.6, 2.9, 0.05, 0.1
+df[["Depth (km)", "Error (km)"]] = df["SP_Times"].apply(lambda x: pd.Series(calculate_depth(x, vp, vs, sigma_vp, sigma_vs)))
+
+# Exibir resultados
+print(df)
+
+mean_sp = df["SP_Times"].mean()
+mean_depth = df["Depth (km)"].mean()
+mean_error = df["Error (km)"].mean()
+
+# Garantir que todos os valores de "Model" sejam strings
+df["Model"] = df["Model"].astype(str)
+
+# Ordenar o DataFrame com base na ordem de 'ordered_models'
+df["Model"] = pd.Categorical(df["Model"], categories=ordered_models, ordered=True)
+df = df.sort_values(by="Model")
+
+# Gráficos
+fig, axes = plt.subplots(2, 1, figsize=(12, 8), sharex=True)
+
+# Plot do tempo S-P
+colors = [model_colors.get(m, "black") for m in df["Model"]]
+axes[0].bar(df["Model"].astype(str), df["SP_Times"], color=colors, alpha=0.5)  # Garantir que "Model" seja string
+axes[0].bar("Average", mean_sp, color="teal", alpha=0.5, label=f"Average S-P time: {mean_sp:.2f}s")
+axes[0].set_ylabel("S-P time (s)")
+axes[0].set_title("S-P times for different models")
+axes[0].grid(True, linestyle="--", alpha=0.2)
+axes[0].set_ylim([0, 650])
+for i, (model, sp_time) in enumerate(zip(df["Model"], df["SP_Times"])):
+    axes[0].text(i, sp_time + 0.5, f"{sp_time:.1f}", ha="center", fontsize=9, rotation=90)
+    axes[0].text(len(df), mean_sp + 0.5, f"{mean_sp:.2f}", ha="center", fontsize=9, rotation=90, color="black")
+plt.setp(axes[0].xaxis.get_majorticklabels(), rotation=90)
+
+# Plot da profundidade
+axes[1].errorbar(df["Model"].astype(str), df["Depth (km)"], yerr=df["Error (km)"], fmt="o", color="black", ecolor=colors, alpha=0.5)
+axes[1].errorbar("Average", mean_depth, yerr=mean_error, fmt="o", color="teal", ecolor="turquoise", alpha=0.5, label=f"Average depth: {mean_depth:.1f} km")
+axes[1].set_ylabel("Depth (km)")
+axes[1].set_title("Calculated depth with error")
+axes[1].grid(True, linestyle="--", alpha=0.2)
+for i, (depth, error) in enumerate(zip(df["Depth (km)"], df["Error (km)"])):
+    axes[1].text(i - 0.2, depth + 1, f"{depth:.1f} ± {error:.1f}", ha="right", fontsize=9, rotation=90)
+    axes[1].text(len(df) - 0.2, mean_depth + 1, f"{mean_depth:.1f} ± {mean_error:.1f}", ha="center", fontsize=9, rotation=90, color="teal")
+plt.setp(axes[1].xaxis.get_majorticklabels(), rotation=90)
+
+plt.tight_layout()
+plt.savefig('figs/output_bayesian_depth_with_error.png')
