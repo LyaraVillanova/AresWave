@@ -5,79 +5,108 @@
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-O AresWave é um pacote Python para a estimativa de profundidade e mecanismo focal de eventos sísmicos marcianos (marsquakes), combinando modelagem de forma de onda (via DSMpy) com otimização estocástica por Particle Swarm Optimization (PSO). O código também inclui ferramentas para ajuste de modelos 1D e estimativas bayesianas de profundidade com base em tempos S–P.
+AresWave is a Python package for source parameter estimation of martian seismic events (marsquakes) through waveform fitting between real SEIS data and synthetic seismograms.  
+It provides an end-to-end workflow that includes data preprocessing, synthetic generation, optimization (PSO), Bayesian depth inference, visualization, and result export.
 
 
-## 🪐 Functions
 
-- Geração de formas de onda sintéticas com DSMpy
-- Comparação de formas de onda reais e sintéticas (P e S)
-- Otimização de parâmetros fonte com PSO
-- Estimativa bayesiana de profundidade via PyMC
-- Inversão iterativa de modelos de velocidade 1D
-- Teste com o evento S0185a (SEIS/InSight dataset)
+## Functions
 
-
-## 🪐 Instalation
-
-It is recommended the use of Visual Studio Code (https://code.visualstudio.com/) since it simplifies package management and usage. Additionally, install Ubuntu for Windows users (https://ubuntu.com/desktop/wsl). Once it is installed, run the following commands (tested on Windows 10 and 11 systems, with Python 3.10.12):
+- Preprocess real waveforms (e.g., InSight/SEIS; SAC format)
+- Generate synthetics (DSMpy engine embedded)
+- Compare real vs. synthetic seismograms (P/S windows; correlation/MSE)
+- Optimize focal mechanism & depth via PSO
+- Infer depth uncertainty via Bayesian module (S–P)
+- Visualize: waveforms, beachballs, and fault-plane diagrams
+- Organize outputs: figures, CSV summaries, and synthetic traces
 
 
-1) Open a PowerShell (in admin mode)
 
-2) In the PowerShell, type
+## Instalation
+
+It is strongly recommended to use Visual Studio Code (VSC) (https://code.visualstudio.com/) since it simplifies environment management and workflow execution.
+For Windows users, you must also install Ubuntu via WSL (Windows Subsystem for Linux) (https://ubuntu.com/desktop/wsl).
+These instructions were tested on Windows 10 and 11 systems with Python 3.10.12.
+
+1) Open PowerShell (Administrator mode)
+Click the Windows Start menu, type “PowerShell”, right-click, and choose Run as Administrator.
+
+2) Install Ubuntu (WSL)
+From PowerShell, run:
 ```
 wsl --install
 ```
+Restart your computer after the installation completes.
+Then, open the Ubuntu app: this will be your Linux terminal.
 
-3) From the Ubuntu terminal, install python, gcc and openmpi
+3) Install dependencies inside Ubuntu
+Run the following commands inside Ubuntu terminal:
 ```
-sudo apt-get update && apt-get install -y python3 python3-pip
+sudo apt-get update && sudo apt-get install -y python3 python3-pip
 sudo apt install python-is-python3
-sudo apt-get install gcc
+sudo apt-get install -y gcc gfortran
 sudo apt-get install -y openmpi-bin libopenmpi-dev
 ```
+These packages install:
+- Python and pip (for package management)
+- GCC and GFortran (compilers required to build AresWave’s internal engine)
+- OpenMPI (for parallel processing and compatibility with mpi4py)
 
-4) Create a directory for a new python project (rename new_project as your preference), and open it in Visual Studio Code
+4) Create a working directory and open it in Visual Studio Code
+In Ubuntu:
 ```
-cd ~/git
-mkdir new_project
-code new_project
+cd ~
+mkdir areswave_project
+cd areswave_project
+code .
 ```
+This will open Visual Studio Code within your Ubuntu environment (WSL).
 
-5) Clone the repository
+5) Clone the AresWave repository
+In the Ubuntu terminal inside VSC:
 ```
 git clone https://github.com/LyaraVillanova/AresWave.git
+cd AresWave
 ```
 
 6) Install requirements
 ```
 python3 -m pip install -r requirements.txt
 ```
+This installs Python dependencies required by AresWave and its embedded modules.
 
-7) Install [*build*](https://pypi.org/project/build/),
+7) Install the Python build tool
 ```
 pip install build
 ```
+This is needed to build the internal components before installation.
 
-8) From the root directory ```dsmpy``` run
+8) Build the embedded engine
+From the root directory of AresWave (where setup.py is located):
 ```
 python -m build .
 ```
-9) Now it can be installed with
+This step compiles the embedded Fortran components (from DSMpy-based modules).
+
+9) Install the package
+Once built, install AresWave locally with:
 ```
 pip install dist/*.tar.gz
 ```
 
+You can verify the installation by running:
+```
+python -m areswave --version
+```
 
-## 🪐 Requirements
 
-AresWave requer as seguintes bibliotecas:
 
+## Requirements
+
+AresWave requires the following Python libraries:
 ```
 arviz
 concurrent.futures
-dsmpy
 glob
 matplotlib
 numpy
@@ -88,52 +117,47 @@ pymc
 pyswarm
 scipy
 ```
+The modified DSMpy module used by AresWave is already included in the package — you do not need to install it separately.
+It is recommended to use Python 3.8 or later.
+Special gratitude to Anselme Borgeaud (@afeborgeaud), developer of the original DSMpy package.
 
-Recomenda-se Python 3.8 ou superior. Certifique-se de que o DSMpy está corretamente instalado a partir do repositório oficial: [https://github.com/afeborgeaud/dsmpy]
-
-Imenso agradecimento ao Anselme Borgeaud @afeborgeaud, desenvolvedor do DSMpy!
 
 
-## 🪐 How to use
-
+## How to use
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
 from obspy.taup import TauPyModel
-from obspy import Stream
+from obspy import Stream, read, UTCDateTime
 from dsmpy import seismicmodel_Mars
-from dsmpy.synthetics_function import generate_synthetics, apply_filter
+from areswave.synthetics_function import generate_synthetics, apply_filter
 from dsmpy.event_Mars import Event, MomentTensor
 from dsmpy.station_Mars import Station
-from dsmpy.denoising import polarization_filter
-from obspy import read, UTCDateTime
+from areswave.denoising import polarization_filter
 from scipy.signal import correlate
-import glob
 import os
 
-# Definindo valores do evento
+# EVENT
 event_id = 'mqs2019kxjd'
 name = 'S0185a'
-latitude = 41.59816
-longitude = 90.13083
+latitude = 41.6
+longitude = 90.1
 distance = 59.8
 baz = 92.0
 magnitude = 3.1
-depth = 30 #24.1
+depth = 30.37
 time_p = UTCDateTime("2019-06-05T02:13:48")
 time_s = UTCDateTime("2019-06-05T02:19:47")
 centroid_time = UTCDateTime((time_p.timestamp + time_s.timestamp) / 2)
 
-# Moment tensor
-Mrr = -2.8e12
-Mrt = -1.9e13
-Mrp = -1.3e13
-Mtt = -1.4e13
-Mtp = -5.3e12
-Mpp = 1.8e13
+Mrr = 3.04e20
+Mrt = -2.16e19
+Mrp = -3.26e20
+Mtt = -1.21e20
+Mtp = -1.23e20
+Mpp = -7.31e19
 mt = MomentTensor(Mrr, Mrt, Mrp, Mtt, Mtp, Mpp)
 
-# Create the object Event
 event = Event(
     event_id=event_id,
     latitude=latitude,
@@ -144,161 +168,171 @@ event = Event(
     source_time_function=None
 )
 
-# Define the station
-stations = [Station(name='ELYSE', network='XB', latitude=4.502384, longitude=135.623447)]
+# STATION
+stations = [
+    Station(name='ELYSE', network='XB', latitude=4.502384, longitude=135.623447),
+]
 
-# Upload the initial model
-seismic_model = seismicmodel_Mars.SeismicModel.test()
-tlen = 1276.8  # duration of the synthetics (s)
-nspc = 1256  # number of points in the frequency domain
-sampling_hz = 20  # sampling frequency
+# SEISMIC MODEL
+seismic_model = seismicmodel_Mars.SeismicModel.tayak()
+tlen = 1276.8
+nspc = 1256
+sampling_hz = 20
 
-# Path to the .sac files
-sac_folder_path = '/home/lyara/my_project/dsmpy-1/SAC'
-sac_files = glob.glob(os.path.join(sac_folder_path, '*.sac'))
-if not sac_files:
-    raise FileNotFoundError(f"Nenhum arquivo .sac encontrado na pasta: {sac_folder_path}")
+# REAL DATA
+sac_folder_path = '/SAC'
+sac_files = [
+    os.path.join(sac_folder_path, 'S0185a_trlq_denois03.Z.sac'),
+    os.path.join(sac_folder_path, 'S0185a_trlq_denois04.T.sac'),
+    os.path.join(sac_folder_path, 'S0185a_trlq_denois05.R.sac')
+]
 
-# Stream to the real data
-real_data_list = []
+if not all(os.path.exists(f) for f in sac_files):
+    raise FileNotFoundError("Um ou mais arquivos SAC não foram encontrados. Verifique o caminho: " + sac_folder_path)
+
+real_data_dict = {}
 stream = Stream()
 for sac_file in sac_files:
-    real_data = read(sac_file)[0]
-    real_data.detrend('linear')
-    real_data.taper(max_percentage=0.05)
-    real_data.resample(sampling_hz)
-    stream += real_data  # Add the trace to the stream
-    real_data_list.append(real_data)
-Z_trace = stream.select(channel='BHZ')
-R_trace = stream.select(channel='BHR')
-T_trace = stream.select(channel='BHT')
-Z_trace = Z_trace[0]
-R_trace = R_trace[0]
-T_trace = T_trace[0]
+    tr = read(sac_file)[0]
+    tr.detrend('linear')
+    tr.taper(max_percentage=0.05)
+    tr.resample(sampling_hz)
+    stream += tr
+    if sac_file.endswith(".Z.sac"):
+        real_data_dict['Z'] = tr
+    elif sac_file.endswith(".R.sac"):
+        real_data_dict['R'] = tr
+    elif sac_file.endswith(".T.sac"):
+        real_data_dict['T'] = tr
 
+real_data_list = [real_data_dict['Z'], real_data_dict['R'], real_data_dict['T']]
+
+# SYNTHETICS
 output = generate_synthetics(event, stations, seismic_model, tlen, nspc, sampling_hz)
-us = output.us  # synthetics. us.shape = (3,nr,tlen)
-ts = output.ts  # time points [0, tlen]
-output.write(root_path='synthetics/.', format='sac')
+ts = output.ts
+output.write(root_path='/synthetics/', format='sac')
 
-# Adjust in the synthetic seismograms
-model = TauPyModel(model="cd_model1")
-arrivals = model.get_travel_times(source_depth_in_km=depth, distance_in_degree=distance, phase_list=['P', 'S'])
-print(f"Depth: {depth} km - Arrivals: {arrivals}")
-if arrivals:
-    travel_time_p = arrivals[0].time
-    travel_time_s = arrivals[1].time
-else:
-    raise ValueError('Não foi possível calcular o tempo de chegada da onda P.')
-ts_adjusted = ts - travel_time_p
-tss_adjusted = ts - travel_time_s
+u_Z_ELYSE_XB = output['Z', 'ELYSE_XB']
+u_R_ELYSE_XB = output['R', 'ELYSE_XB']
+u_T_ELYSE_XB = output['T', 'ELYSE_XB']
 
-# Ajust in the real seismograms
-for i in range(len(real_data_list)):
-    trace_start_time = real_data_list[i].stats.starttime
-    shift_real_p = (time_p - trace_start_time)
-    shift_real_s = (time_s - trace_start_time)
-    real_data_list[i].times_shifted_p = real_data_list[i].times() - shift_real_p
-    real_data_list[i].times_shifted_s = real_data_list[i].times() - shift_real_s
-
-# Limit the synthetics to the same length of real seismograms
 max_time = min(1500, ts[-1])
 max_idx = np.searchsorted(ts, max_time)
-u_Z_ELYSE_XB = output['Z', 'ELYSE_XB'][:max_idx]
-u_R_ELYSE_XB = output['R', 'ELYSE_XB'][:max_idx]
-u_T_ELYSE_XB = output['T', 'ELYSE_XB'][:max_idx]
 ts = ts[:max_idx]
-for i in range(len(real_data_list)):
-    real_data_list[i].data = real_data_list[i].data[:max_idx]
 
-# Bandpass filter
+u_Z_ELYSE_XB = u_Z_ELYSE_XB[:max_idx]
+u_R_ELYSE_XB = u_R_ELYSE_XB[:max_idx]
+u_T_ELYSE_XB = u_T_ELYSE_XB[:max_idx]
+
 u_Z_ELYSE_XB_filtered = apply_filter(u_Z_ELYSE_XB, sampling_hz)
 u_R_ELYSE_XB_filtered = apply_filter(u_R_ELYSE_XB, sampling_hz)
 u_T_ELYSE_XB_filtered = apply_filter(u_T_ELYSE_XB, sampling_hz)
-for i in range(len(real_data_list)):
-    real_data_list[i].data = apply_filter(real_data_list[i].data, sampling_hz)
 
-# Polarization filter
 synthetic_data = [u_Z_ELYSE_XB_filtered, u_R_ELYSE_XB_filtered, u_T_ELYSE_XB_filtered]
-filtered_synthetic_data = polarization_filter(synthetic_data, sampling_hz)
-u_Z_ELYSE_XB_filtered = filtered_synthetic_data[2]
-u_R_ELYSE_XB_filtered = filtered_synthetic_data[0]
-u_T_ELYSE_XB_filtered = filtered_synthetic_data[1]
-for i in range(len(real_data_list)):
-    real_data_list[i].data = polarization_filter(real_data_list[i].data, sampling_hz)
+synthetic_data = polarization_filter(synthetic_data, sampling_hz)
+synthetics = [synthetic_data[0], synthetic_data[1], synthetic_data[2]]
 
-# Plotting synthetic and real seismograms by component
-synthetics = [u_Z_ELYSE_XB_filtered, u_R_ELYSE_XB_filtered, u_T_ELYSE_XB_filtered]
+# TEMPORAL ALIGNMENT
+model = TauPyModel(model="/home/lyara/areswave/models/TAYAK.npz")
+arrivals = model.get_travel_times(source_depth_in_km=depth, distance_in_degree=distance, phase_list=['P', 'S'])
+if not arrivals:
+    raise ValueError('Não foi possível calcular o tempo de chegada da onda P.')
+travel_time_p = arrivals[0].time
+travel_time_s = arrivals[1].time
+ts_adjusted = ts - travel_time_p
+tss_adjusted = ts - travel_time_s
+for tr in real_data_list:
+    trace_start_time = tr.stats.starttime
+    tr.data = tr.data[:max_idx]
+    shift_real_p = (time_p - trace_start_time)
+    shift_real_s = (time_s - trace_start_time)
+    tr.times_shifted_p = tr.times() - shift_real_p
+    tr.times_shifted_s = tr.times() - shift_real_s
+    tr.data = apply_filter(tr.data, sampling_hz)
+real_data_dict = {
+    'R': real_data_list[0],
+    'Z': real_data_list[1],
+    'T': real_data_list[2]
+}
+real_data_list = [real_data_dict['Z'], real_data_dict['R'], real_data_dict['T']]
+synthetic_dict = {
+    'Z': synthetics[0],
+    'T': synthetics[1],
+    'R': synthetics[2]
+}
+synthetics = [synthetic_dict['Z'], synthetic_dict['R'], synthetic_dict['T']]
 components = ['Z', 'R', 'T']
 
-fig, axs = plt.subplots(3, 2, figsize=(28, 12))
+# PLOT
+components = ['Z', 'R', 'T']
+fig, axs = plt.subplots(3, 4, figsize=(28, 12))
 for i, (comp, synthetic, real_data) in enumerate(zip(components, synthetics, real_data_list)):
     synthetic_norm = synthetic / np.max(np.abs(synthetic))
     real_data_norm = real_data.data / np.max(np.abs(real_data.data))
-    if np.isnan(synthetic_norm).any():
-        raise ValueError(f"Os dados sintéticos normalizados contêm valores NaN na componente {comp}.")
-    if np.isnan(real_data_norm).any():
-        raise ValueError(f"Os dados reais normalizados contêm valores NaN na componente {comp}.")
-    
+    cross_corr = correlate(synthetic_norm, real_data_norm, mode='full')
+    cross_corr /= np.max(cross_corr)
+    corr_coefficient = np.corrcoef(synthetic_norm, real_data_norm)[0, 1]
+
+    axs[i, 0].plot(ts_adjusted, synthetic_norm, label=f'Synthetic {comp}', color='blue', alpha=0.7)
+    axs[i, 0].axvline(x=travel_time_p, linestyle='--', color='black', label='P-wave')
+    axs[i, 0].axvline(x=travel_time_s, linestyle='--', color='black', label='S-wave')
+    axs[i, 0].set_xlim([-100, 700])
+    axs[i, 0].set_title(f'Synthetic Component {comp}')
+    axs[i, 0].legend(loc='lower right')
+    axs[i, 0].text(0.05, 0.95, f'Correlation: {corr_coefficient:.2f}', transform=axs[i, 0].transAxes)
+    axs[i, 1].plot(real_data.times_shifted_p, real_data_norm, label=f'Real {comp}', color='red', alpha=0.7)
+    axs[i, 1].axvline(x=0, linestyle='--', color='black', label='P-wave')
+    axs[i, 1].axvline(x=shift_real_s - shift_real_p, linestyle='--', color='black', label='S-wave')
+    axs[i, 1].set_xlim([-100, 700])
+    axs[i, 1].set_title(f'Real Component {comp}')
+    axs[i, 1].legend(loc='lower right')
+
+    # Zoom - P arrival
     xlim_min, xlim_max = -5, 5
     idx_min = max(0, int((xlim_min - ts_adjusted[0]) / (ts_adjusted[1] - ts_adjusted[0])))
     idx_max = min(len(ts_adjusted), int((xlim_max - ts_adjusted[0]) / (ts_adjusted[1] - ts_adjusted[0])))
-    synthetic_norm_limited = synthetic_norm[idx_min:idx_max]
-    real_data_norm_limited = real_data_norm[idx_min:idx_max]
-    cross_corr_limited = correlate(synthetic_norm_limited, real_data_norm_limited, mode='full')
-    cross_corr_limited /= np.max(cross_corr_limited)  # Normalize cross-correlation
-    corr_coefficient_limited = np.corrcoef(synthetic_norm_limited, real_data_norm_limited)[0, 1]
-
-    axs[i, 2].plot(ts_adjusted[:max_idx], synthetic_norm[:max_idx], label=f'Synthetic {comp}', alpha=0.7, color='silver')
-    axs[i, 2].plot(real_data.times_shifted_p[:max_idx], real_data_norm[:max_idx], label=f'Real {comp}', alpha=0.7, color='red')
-    axs[i, 2].axvline(x=0, linestyle='--', color='black', label='P-wave')
-    axs[i, 2].axvline(x=shift_real_s - shift_real_p, linestyle='--', color='magenta', label='S-wave')
+    corr_zoom = np.corrcoef(synthetic_norm[idx_min:idx_max], real_data_norm[idx_min:idx_max])[0, 1]
+    axs[i, 2].plot(ts_adjusted, synthetic_norm, color='blue', alpha=0.7)
+    axs[i, 2].plot(real_data.times_shifted_p, real_data_norm, color='red', alpha=0.7)
+    axs[i, 2].axvspan(xlim_min, xlim_max, color='gray', alpha=0.2)
     axs[i, 2].set_xlim([-10, 10])
     axs[i, 2].set_ylim(-0.1, 0.1)
-    axs[i, 2].set_xlabel('Time (s)')
-    axs[i, 2].set_ylabel('Normalized Amplitude')
-    axs[i, 2].set_title(f'Cross Correlation ({comp} Component)')
+    axs[i, 2].set_title(f'Cross Correlation ({comp})\nCorr: {corr_zoom:.2f}')
     axs[i, 2].legend(loc='lower right')
-    axs[i, 2].text(0.05, 0.95, f'Corr: {corr_coefficient_limited:.2f}', transform=axs[i, 2].transAxes)
 
+    # Zoom - S arrival
     xlim_min, xlim_max = 355, 370
     idx_min = max(0, int((xlim_min - ts_adjusted[0]) / (ts_adjusted[1] - ts_adjusted[0])))
     idx_max = min(len(ts_adjusted), int((xlim_max - ts_adjusted[0]) / (ts_adjusted[1] - ts_adjusted[0])))
-    synthetic_norm_limited = synthetic_norm[idx_min:idx_max]
-    real_data_norm_limited = real_data_norm[idx_min:idx_max]
-    cross_corr_limited = correlate(synthetic_norm_limited, real_data_norm_limited, mode='full')
-    cross_corr_limited /= np.max(cross_corr_limited)  # Normalize cross-correlation
-    corr_coefficient_limited = np.corrcoef(synthetic_norm_limited, real_data_norm_limited)[0, 1]
-
-    axs[i, 3].plot(ts_adjusted[:max_idx], synthetic_norm[:max_idx], label=f'Synthetic {comp}', alpha=0.7, color='silver')
-    axs[i, 3].plot(real_data.times_shifted_p[:max_idx], real_data_norm[:max_idx], label=f'Real {comp}', alpha=0.7, color='red')
-    axs[i, 3].axvline(x=0, linestyle='--', color='black', label='P-wave')
-    axs[i, 3].axvline(x=shift_real_s - shift_real_p, linestyle='--', color='magenta', label='S-wave')
-    axs[i, 3].set_xlim([355, 375])  # Limites do eixo x entre 350 e 375
+    corr_zoom = np.corrcoef(synthetic_norm[idx_min:idx_max], real_data_norm[idx_min:idx_max])[0, 1]
+    axs[i, 3].plot(ts_adjusted, synthetic_norm, color='blue', alpha=0.7)
+    axs[i, 3].plot(real_data.times_shifted_p, real_data_norm, color='red', alpha=0.7)
+    axs[i, 3].axvspan(xlim_min, xlim_max, color='gray', alpha=0.2)
+    axs[i, 3].set_xlim([350, 380])
     axs[i, 3].set_ylim(-0.5, 0.5)
-    axs[i, 3].set_xlabel('Time (s)')
-    axs[i, 3].set_ylabel('Normalized Amplitude')
-    axs[i, 3].set_title(f'Detail View ({comp} Component)')
+    axs[i, 3].set_title(f'Detail View ({comp})\nCorr: {corr_zoom:.2f}')
     axs[i, 3].legend(loc='lower right')
-    axs[i, 3].text(0.05, 0.95, f'Corr: {corr_coefficient_limited:.2f}', transform=axs[i, 3].transAxes)
+
 plt.subplots_adjust(hspace=0.4, wspace=0.3)
 plt.tight_layout()
-plt.savefig('figs/output_cross_correlation.png')
+plt.savefig('/figs/output_cross_correlation.png')
 ```
 
 
-## 🪐 Results
 
+## Results
 O método foi aplicado com sucesso ao evento S0185a, obtendo uma profundidade de ~xx km e mecanismo focal normal. Veja detalhes no artigo (link abaixo).
 
 
-## 🪐 Publication
 
-Se usar este código, por favor cite:
-
-> Villanova & Genda, 2025. *AresWave: AresWave: Estimation of marsquake source parameters by waveform fitting with stochastic optimization*. [Link DOI]
+## Publication
+Villanova, L., & Genda, H. (2025). AresWave: Source parameter estimation of martian seismic events using DSM and stochastic optimization. (submitted) [Link DOI]
 
 
-## 🪐 Contact
 
-Para dúvidas ou colaborações, envie um e-mail para: [villanova@elsi.jp]
+## Contact
+If you have any questions, find a bug, or would like to collaborate, feel free to reach out!
+
+**Lyara S. Villanova**  
+villanova@elsi.jp  
+[GitHub Issues](https://github.com/LyaraVillanova/AresWave/issues) — open a ticket or suggest improvements  
