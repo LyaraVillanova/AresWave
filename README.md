@@ -31,6 +31,7 @@ These instructions were tested on Windows 10 and 11 systems with Python 3.10.12.
 1) Open PowerShell (Administrator mode)
 Click the Windows Start menu, type “PowerShell”, right-click, and choose Run as Administrator.
 
+
 2) Install Ubuntu (WSL)
 From PowerShell, run:
 ```
@@ -38,6 +39,7 @@ wsl --install
 ```
 Restart your computer after the installation completes.
 Then, open the Ubuntu app: this will be your Linux terminal.
+
 
 3) Install dependencies inside Ubuntu
 Run the following commands inside Ubuntu terminal:
@@ -52,6 +54,7 @@ These packages install:
 - GCC and GFortran (compilers required to build AresWave’s internal engine)
 - OpenMPI (for parallel processing and compatibility with mpi4py)
 
+
 4) Create a working directory and open it in Visual Studio Code
 In Ubuntu:
 ```
@@ -62,6 +65,7 @@ code .
 ```
 This will open Visual Studio Code within your Ubuntu environment (WSL).
 
+
 5) Clone the AresWave repository
 In the Ubuntu terminal inside VSC:
 ```
@@ -69,17 +73,20 @@ git clone https://github.com/LyaraVillanova/AresWave.git
 cd AresWave
 ```
 
+
 6) Install requirements
 ```
 python3 -m pip install -r requirements.txt
 ```
 This installs Python dependencies required by AresWave and its embedded modules.
 
+
 7) Install the Python build tool
 ```
 pip install build
 ```
 This is needed to build the internal components before installation.
+
 
 8) Build the embedded engine
 From the root directory of AresWave (where setup.py is located):
@@ -88,11 +95,13 @@ python -m build .
 ```
 This step compiles the embedded Fortran components (from DSMpy-based modules).
 
+
 9) Install the package
 Once built, install AresWave locally with:
 ```
 pip install dist/*.tar.gz
 ```
+
 
 You can verify the installation by running:
 ```
@@ -317,11 +326,6 @@ plt.subplots_adjust(hspace=0.4, wspace=0.3)
 plt.tight_layout()
 plt.savefig('/figs/output_cross_correlation.png')
 ```
-
-
-
-## Results
-O método foi aplicado com sucesso ao evento S0185a, obtendo uma profundidade de ~xx km e mecanismo focal normal. Veja detalhes no artigo (link abaixo).
 
 
 
