@@ -32,8 +32,7 @@ These instructions were tested on Windows 10 and 11 systems with Python 3.10.12.
 Click the Windows Start menu, type “PowerShell”, right-click, and choose Run as Administrator.
 
 
-2) Install Ubuntu (WSL)
-From PowerShell, run:
+2) Install Ubuntu (WSL). From PowerShell, run:
 ```
 wsl --install
 ```
@@ -41,8 +40,7 @@ Restart your computer after the installation completes.
 Then, open the Ubuntu app: this will be your Linux terminal.
 
 
-3) Install dependencies inside Ubuntu
-Run the following commands inside Ubuntu terminal:
+3) Install dependencies inside Ubuntu. Run the following commands inside Ubuntu terminal:
 ```
 sudo apt-get update && sudo apt-get install -y python3 python3-pip
 sudo apt install python-is-python3
@@ -55,8 +53,7 @@ These packages install:
 - OpenMPI (for parallel processing and compatibility with mpi4py)
 
 
-4) Create a working directory and open it in Visual Studio Code
-In Ubuntu:
+4) Create a working directory and open it in Visual Studio Code. In Ubuntu:
 ```
 cd ~
 mkdir areswave_project
@@ -66,8 +63,7 @@ code .
 This will open Visual Studio Code within your Ubuntu environment (WSL).
 
 
-5) Clone the AresWave repository
-In the Ubuntu terminal inside VSC:
+5) Clone the AresWave repository. In the Ubuntu terminal inside VSC:
 ```
 git clone https://github.com/LyaraVillanova/AresWave.git
 cd AresWave
@@ -88,16 +84,14 @@ pip install build
 This is needed to build the internal components before installation.
 
 
-8) Build the embedded engine
-From the root directory of AresWave (where setup.py is located):
+8) Build the embedded engine. From the root directory of AresWave (where setup.py is located):
 ```
 python -m build .
 ```
 This step compiles the embedded Fortran components (from DSMpy-based modules).
 
 
-9) Install the package
-Once built, install AresWave locally with:
+9) Install the package. Once built, install AresWave locally with:
 ```
 pip install dist/*.tar.gz
 ```
