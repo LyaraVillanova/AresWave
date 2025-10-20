@@ -1,0 +1,11 @@
+name: dsm
+dependencies:
+  - python=3.8
+  - pytest
+  - numpy
+  - mpi4py
+  - matplotlib
+  - pandas
+  - conda-forge::obspy
+  - conda-forge::geographiclib
+  - cartopy
