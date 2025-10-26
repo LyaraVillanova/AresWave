@@ -324,7 +324,7 @@ plt.savefig('/figs/output_cross_correlation.png')
 
 
 ## Publication
-Villanova, L., & Genda, H. (2025). AresWave: Source parameter estimation of martian seismic events using DSM and stochastic optimization. (submitted) [Link DOI]
+Villanova, L., & Genda, H. (2025). AresWave: Estimation of marsquake source parameters by waveform fitting with stochastic optimization. (submitted) [Link DOI]
 
 
 
