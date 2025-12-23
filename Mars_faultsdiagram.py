@@ -39,3 +39,31 @@ plot_and_save_fault(strike=256.43, dip=47.58, rake=72.21, depth=59.85, cost=0.14
                    model_name="S1415a_Model_X", output_dir=output_dir)
 
 
+
+
+plot_and_save_fault(strike=187, dip=67, rake=104, depth=32, cost=0,
+                   model_name="Earth_real", output_dir=output_dir)
+
+plot_and_save_fault(strike=190.56, dip=7.63, rake=54.88, depth=42.28, cost=0.0506,
+                   model_name="Earth_calculated", output_dir=output_dir)
+
+
+
+
+plot_and_save_fault(strike=301.75, dip=34.76, rake=55.95, depth=24.70, cost=0.0407,
+                   model_name="S0133a_TAYAK", output_dir=output_dir)
+
+plot_and_save_fault(strike=247.61, dip=62.08, rake=-123.79, depth=31.72, cost=0.0434,
+                   model_name="S0133a_Model_X", output_dir=output_dir)
+
+plot_and_save_fault(strike=299.02, dip=45.08, rake=-47.82, depth=26.04, cost=0.1514,
+                   model_name="S0152a_TAYAK", output_dir=output_dir)
+
+plot_and_save_fault(strike=243.06, dip=21.62, rake=-24.59, depth=20.75, cost=0.1377,
+                   model_name="S0152a_Model_X", output_dir=output_dir)
+
+plot_and_save_fault(strike=179.94, dip=64.93, rake=172.06, depth=13.45, cost=0.0673,
+                   model_name="S0345a_TAYAK", output_dir=output_dir) 				
+
+#plot_and_save_fault(strike=243.06, dip=21.62, rake=-24.59, depth=20.75, cost=0.1377,
+#                   model_name="S0345a_Model_X", output_dir=output_dir)

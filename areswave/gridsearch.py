@@ -2,7 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from obspy import Stream, read, UTCDateTime
 from dsmpy import seismicmodel_Mars
-from areswave.synthetics_function import generate_synthetics, apply_filter, calculate_variation, calculate_moment_tensor
+from areswave.synthetics_function import generate_synthetics, apply_filter, calculate_variation, calculate_moment_tensor, normalize, align_by_correlation
+from areswave.denoising import polarization_filter
 from dsmpy.event_Mars import Event, MomentTensor
 from dsmpy.station_Mars import Station
 from scipy.signal import correlate
@@ -37,85 +38,169 @@ def load_and_process_sac_data(sac_folder_path, sampling_hz, time_p, time_s):
         real_data_list[i].times_shifted_s = real_data_list[i].times() - shift_real_s
     return real_data_list, Z_trace, R_trace, T_trace
 
-def run_grid_search(model, event_lat, event_lon, origin_time, depth_values, strike_values, dip_values, rake_values,
-                    Z_trace, R_trace, T_trace, station_lat, station_lon, station_name, filter_freqs, sampling_hz):
+def reorder_traces(traces):
+    trace_dict = {}
+    for tr in traces:
+        if tr.stats.channel.endswith("Z"):
+            trace_dict["Z"] = tr
+        elif tr.stats.channel.endswith("R"):
+            trace_dict["R"] = tr
+        elif tr.stats.channel.endswith("T"):
+            trace_dict["T"] = tr
+    return [trace_dict[c] for c in ["Z", "R", "T"]]
 
-    ts = Z_trace.times()
-    max_time = min(1500, ts[-1])
-    max_idx = np.searchsorted(ts, max_time)
-    ts = ts[:max_idx]  # corta o vetor de tempo
 
-    # Real data cortado
-    real_PZ_full = Z_trace.data[:max_idx]
-    real_PR_full = R_trace.data[:max_idx]
-    real_SZ_full = Z_trace.data[:max_idx]
-    real_ST_full = T_trace.data[:max_idx]
+def run_grid_search(
+    event, stations, seismic_model, tlen, nspc, sampling_hz,
+    real_data_list, Z_trace, R_trace, T_trace,
+    time_p, time_s, magnitude, distance,
+    depth_range, strike_range, dip_range, rake_range,
+    frequency_range, frequency_interval,
+    output_grid_search_fig_path=None
+):
 
-    misfit_values = []
-    tested_params = []
+    real_data_list = reorder_traces(real_data_list)
 
-    for depth in depth_values:
-        for strike in strike_values:
-            for dip in dip_values:
-                for rake in rake_values:
+    tested_depths = []
+    tested_strikes = []
+    tested_dips = []
+    tested_rakes = []
+    tested_costs = []
 
-                    mt = compute_moment_tensor(strike, dip, rake)
-                    origin = obspy.UTCDateTime(origin_time)
+    max_shift_samples = int(2.0 * sampling_hz)
+    n_samples = len(real_data_list[0].data)
 
-                    output = generate_synthetics(model=model,
-                                                 origin_time=origin,
-                                                 event_lat=event_lat,
-                                                 event_lon=event_lon,
-                                                 event_depth_km=depth,
-                                                 mt=mt,
-                                                 station_lat=station_lat,
-                                                 station_lon=station_lon,
-                                                 station_name=station_name,
-                                                 components=["Z", "R", "T"],
-                                                 duration=1500,
-                                                 sampling_hz=sampling_hz)
+    start_time = real_data_list[0].stats.starttime
+    p_idx = int((time_p - start_time) * sampling_hz)
+    s_idx = int((time_s - start_time) * sampling_hz)
 
-                    print("compute PSV")
-                    output.compute("PSV")
-                    print("compute SH")
-                    output.compute("SH")
+    real_Z = normalize(real_data_list[0].data[:n_samples])
+    real_R = normalize(real_data_list[1].data[:n_samples])
+    real_T = normalize(real_data_list[2].data[:n_samples])
 
-                    print("generate_and_adjust_synthetics - ts length:", len(ts))
-                    synthetic_PZ = apply_filter(output['Z', station_name], sampling_hz)[:max_idx]
-                    synthetic_PR = apply_filter(output['R', station_name], sampling_hz)[:max_idx]
-                    synthetic_SZ = apply_filter(output['Z', station_name], sampling_hz)[:max_idx]
-                    synthetic_ST = apply_filter(output['T', station_name], sampling_hz)[:max_idx]
+    syn_times = np.arange(n_samples) / sampling_hz
 
-                    print("generate_and_adjust_synthetics - synthetic Z length:", len(synthetic_PZ))
-                    print("generate_and_adjust_synthetics - synthetic R length:", len(synthetic_PR))
-                    print("generate_and_adjust_synthetics - synthetic T length:", len(synthetic_ST))
+    best_cost = np.inf
+    best_params = None
 
-                    # Garante que todos os arrays têm o mesmo tamanho
-                    assert len(real_PZ_full) == len(synthetic_PZ)
-                    assert len(real_PR_full) == len(synthetic_PR)
-                    assert len(real_SZ_full) == len(synthetic_SZ)
-                    assert len(real_ST_full) == len(synthetic_ST)
+    for dpt in depth_range:
+        for stke in strike_range:
+            for dp in dip_range:
+                for rk in rake_range:
+                    tested_depths.append(float(dpt))
+                    tested_strikes.append(float(stke))
+                    tested_dips.append(float(dp))
+                    tested_rakes.append(float(rk))
 
-                    # Calcula misfit (exemplo com L2 norm)
-                    misfit_PZ = np.linalg.norm(real_PZ_full - synthetic_PZ)
-                    misfit_PR = np.linalg.norm(real_PR_full - synthetic_PR)
-                    misfit_SZ = np.linalg.norm(real_SZ_full - synthetic_SZ)
-                    misfit_ST = np.linalg.norm(real_ST_full - synthetic_ST)
+                    if dpt < 10 or dpt > 560:
+                        tested_costs.append(1e6)
+                        continue
 
-                    total_misfit = misfit_PZ + misfit_PR + misfit_SZ + misfit_ST
+                    try:
+                        mts = calculate_moment_tensor(
+                            magnitude, stke, dp, rk, dpt, distance,
+                            frequency_range=frequency_range, interval=frequency_interval
+                        )
+                        if mts is None or len(mts) == 0:
+                            raise ValueError("calculate_moment_tensor retornou vazio/None.")
 
-                    misfit_values.append(total_misfit)
-                    tested_params.append((depth, strike, dip, rake))
+                        Mrr = np.mean([m["moment_tensor"].Mrr for m in mts])
+                        Mtt = np.mean([m["moment_tensor"].Mtt for m in mts])
+                        Mpp = np.mean([m["moment_tensor"].Mpp for m in mts])
+                        Mrt = np.mean([m["moment_tensor"].Mrt for m in mts])
+                        Mrp = np.mean([m["moment_tensor"].Mrp for m in mts])
+                        Mtp = np.mean([m["moment_tensor"].Mtp for m in mts])
+                        event.mt = MomentTensor(Mrr, Mrt, Mrp, Mtt, Mtp, Mpp)
+                        event.depth = float(dpt)
+                    except Exception as e:
+                        print(f"Error to calculate the moment tensor (grid): {e}")
+                        tested_costs.append(1e6)
+                        continue
 
-    best_idx = np.argmin(misfit_values)
-    best_params = tested_params[best_idx]
-    best_misfit = misfit_values[best_idx]
+                    try:
+                        output = generate_synthetics(event, stations, seismic_model, tlen, nspc, sampling_hz)
+                    except Exception as e:
+                        print(f"Error to generate the synthetics (grid): {e}")
+                        tested_costs.append(1e6)
+                        continue
 
-    print(f"Melhor combinação: depth={best_params[0]}, strike={best_params[1]}, dip={best_params[2]}, rake={best_params[3]}")
-    print(f"Misfit mínimo: {best_misfit:.4f}")
+                    ts = output.ts
+                    max_idx = np.searchsorted(ts, tlen)
 
-    return best_params, best_misfit, misfit_values, tested_params
+                    u_Z = output["Z", "ELYSE_XB"][:max_idx]
+                    u_R = output["R", "ELYSE_XB"][:max_idx]
+                    u_T = output["T", "ELYSE_XB"][:max_idx]
 
+                    if u_Z.size == 0 or u_R.size == 0 or u_T.size == 0:
+                        tested_costs.append(1e6)
+                        continue
+
+                    u_Z_f = apply_filter(u_Z, sampling_hz)
+                    u_R_f = apply_filter(u_R, sampling_hz)
+                    u_T_f = apply_filter(u_T, sampling_hz)
+                    filtered = polarization_filter([u_Z_f, u_R_f, u_T_f], sampling_hz)
+
+                    syn_Z_raw = normalize(filtered[0][:n_samples])
+                    syn_R_raw = normalize(filtered[1][:n_samples])
+                    syn_T_raw = normalize(filtered[2][:n_samples])
+
+                    syn_Z = align_by_correlation(real_Z, syn_Z_raw, max_shift_samples)
+                    syn_R = align_by_correlation(real_R, syn_R_raw, max_shift_samples)
+                    syn_T = align_by_correlation(real_T, syn_T_raw, max_shift_samples)
+
+                    try:
+                        cost = calculate_variation(
+                            real_Z, syn_Z,
+                            real_R, syn_R,
+                            real_Z, syn_Z,
+                            real_T, syn_T,
+                            syn_times, magnitude, sampling_hz,
+                            p_idx, s_idx
+                        )
+                    except Exception as e:
+                        print(f"Erro na calculate_variation (grid): {e}")
+                        cost = 1e6
+
+                    tested_costs.append(float(cost))
+
+                    if cost < best_cost:
+                        best_cost = float(cost)
+                        best_params = (float(dpt), float(stke), float(dp), float(rk))
+                        print(f"New best: depth={best_params[0]:.2f}, strike={best_params[1]:.2f}, "
+                              f"dip={best_params[2]:.2f}, rake={best_params[3]:.2f} | cost={best_cost:.3e}")
+
+    if best_params is None:
+        raise RuntimeError("Grid search falhou: nenhuma combinação válida produziu sintéticos/custo.")
+
+    print(f"\nMelhor combinação (grid): depth={best_params[0]}, strike={best_params[1]}, dip={best_params[2]}, rake={best_params[3]}")
+    print(f"Misfit mínimo (grid): {best_cost:.4e}")
+
+    if output_grid_search_fig_path:
+        try:
+            import pandas as pd
+            out_csv = os.path.splitext(output_grid_search_fig_path)[0] + ".csv"
+            df = pd.DataFrame({
+                "Depth (km)": tested_depths,
+                "Strike (°)": tested_strikes,
+                "Dip (°)": tested_dips,
+                "Rake (°)": tested_rakes,
+                "Cost": tested_costs
+            })
+            df.to_csv(out_csv, index=False)
+
+            plt.figure(figsize=(10, 5))
+            x = np.arange(len(tested_costs))
+            plt.scatter(x, tested_costs, s=10, alpha=0.5)
+            plt.xlabel("Evaluation (grid)")
+            plt.ylabel("Cost")
+            plt.title("Grid search costs")
+            plt.tight_layout()
+            plt.savefig(output_grid_search_fig_path)
+            plt.close()
+        except Exception as e:
+            print(f"Warning: falha ao salvar CSV/fig da grid search: {e}")
+
+    return best_params, best_cost
 
 def generate_and_adjust_synthetics(event, stations, seismic_model, tlen, nspc, sampling_hz, depth, distance, time_p, time_s):
     output = generate_synthetics(event, stations, seismic_model, tlen, nspc, sampling_hz)
@@ -195,7 +280,6 @@ def main_analysis(
     frequency_range, frequency_interval,
     output_waveform_fig_path, output_grid_search_fig_path
 ):
-    # Monta o evento com tensor de momento
     mt = MomentTensor(Mrr, Mrt, Mrp, Mtt, Mtp, Mpp)
     event = Event(
         event_id=event_id,
@@ -207,21 +291,17 @@ def main_analysis(
         source_time_function=None
     )
 
-    # Define estação única (ELYSE)
     stations = [
         Station(name='ELYSE', network='XB', latitude=4.502384, longitude=135.623447),
     ]
 
-    # Carrega os dados reais (Z, R, T)
     real_data_list, Z_trace, R_trace, T_trace = load_and_process_sac_data(
         sac_folder_path, sampling_hz, time_p, time_s
     )
 
-    # Filtra dados reais
     for i in range(len(real_data_list)):
         real_data_list[i].data = apply_filter(real_data_list[i].data, sampling_hz)
 
-    # Gera sintéticos para plot (não faz parte da gridsearch em si)
     output, ts, ts_adjusted, tss_adjusted, travel_time_p, travel_time_s = generate_and_adjust_synthetics(
         event, stations, seismic_model, tlen, nspc, sampling_hz, depth, distance, time_p, time_s
     )
@@ -235,14 +315,12 @@ def main_analysis(
 
     synthetics = [u_Z_ELYSE_XB, u_R_ELYSE_XB, u_T_ELYSE_XB]
 
-    # Plota formas de onda reais e sintéticas
     plot_waveforms(
         synthetics, real_data_list, ts_adjusted,
         time_s.timestamp - time_p.timestamp, 0, max_idx,
         travel_time_p, travel_time_s, output_waveform_fig_path
     )
 
-    # Executa a grid search com a nova função compatível
     best_params, min_variation = run_grid_search(
         event, stations, seismic_model, tlen, nspc, sampling_hz,
         real_data_list, Z_trace, R_trace, T_trace,

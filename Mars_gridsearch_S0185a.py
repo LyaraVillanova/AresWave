@@ -26,10 +26,10 @@ Mtp = -5.3e20
 Mpp = 1.8e20
 
 # Directories
-sac_folder_path = '/home/lyara/areswave/dsmpy/SAC'
-model_directory = '/home/lyara/areswave/dsmpy/models'
-output_waveform_fig_path = '/home/lyara/areswave/dsmpy/figs/gridsearch_cross_correlation_S0185a.png'
-output_grid_search_fig_path = '/home/lyara/areswave/dsmpy/figs/gridsearch_cross_correlation_depths_S0185a.png'
+sac_folder_path = '/home/lyara/areswave/SAC'
+model_directory = '/home/lyara/areswave/models'
+output_waveform_fig_path = '/home/lyara/areswave/figs/gridsearch_cross_correlation_S0185a.png'
+output_grid_search_fig_path = '/home/lyara/areswave/figs/gridsearch_cross_correlation_depths_S0185a.png'
 os.makedirs(os.path.dirname(output_waveform_fig_path), exist_ok=True)
 os.makedirs(os.path.dirname(output_grid_search_fig_path), exist_ok=True)
 
