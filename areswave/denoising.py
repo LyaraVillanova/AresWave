@@ -88,8 +88,6 @@ def enz2rtql(st,angles):
 def compute_covariance_matrix(components):
     n_components = len(components)
     covariance_matrix = np.zeros((n_components, n_components))
-
-    # Garantir que todos os vetores tenham o mesmo comprimento
     min_length = min(len(comp) for comp in components)
     truncated_components = [comp[:min_length] for comp in components]
 
@@ -98,12 +96,11 @@ def compute_covariance_matrix(components):
             comp_i = truncated_components[i]
             comp_j = truncated_components[j]
 
-            # Verificar se há valores inválidos
             if np.any(np.isnan(comp_i)) or np.any(np.isnan(comp_j)):
                 return None
 
             if len(comp_i) < 2 or len(comp_j) < 2:
-                return None  # Necessário pelo menos dois pontos para calcular a covariância
+                return None
 
             covariance = np.cov(comp_i, comp_j)[0, 1]
             covariance_matrix[i, j] = covariance
@@ -120,54 +117,44 @@ def apply_polarization_filter(components, sampling_rate, window_duration=5, n=0.
     if len(components) != 3:
         raise ValueError("É necessário fornecer exatamente 3 componentes: Z, R e T.")
 
-    # Inicializar componentes filtradas
     Z_filt, R_filt, T_filt = [], [], []
 
-    window_length = int(window_duration * sampling_rate)  # Duração da janela em amostras
-    total_samples = len(components[0])  # Assumimos que todas as componentes têm o mesmo comprimento
+    window_length = int(window_duration * sampling_rate)
+    total_samples = len(components[0])
 
     for t in range(0, total_samples, window_length):
         end_sample = min(t + window_length, total_samples)
 
-        # Extrair os dados da janela
         window_data = [comp[t:end_sample] for comp in components]
 
-        # Verificar se há dados suficientes na janela
         if any(len(w) < window_length and end_sample != total_samples for w in window_data):
             print(f"Janela em t={t} não tem dados suficientes.")
             continue
 
-        # Calcular a matriz de covariância
         covariance_matrix = compute_covariance_matrix(window_data)
         if covariance_matrix is None:
             print(f"Matriz de covariância inválida em t={t}.")
             continue
 
-        # Calcular autovalores e autovetores
         eigenvalues, eigenvectors = np.linalg.eigh(covariance_matrix)
 
-        # Ordenar autovalores e autovetores de forma decrescente
         idx = eigenvalues.argsort()[::-1]
         eigenvalues = eigenvalues[idx]
         eigenvectors = eigenvectors[:, idx]
 
         lambda1, lambda2 = eigenvalues[:2]
 
-        # Garantir que os autovalores sejam válidos
         if lambda1 <= 0 or lambda2 <= 0:
             print(f"Autovalores não positivos em t={t}.")
             continue
 
-        # Calcular retangularidade e função de direção
         rectilinearity = calculate_rectilinearity(lambda1, lambda2, n, J)
         direction_functions = [calculate_direction_function(e, k) for e in eigenvectors[:, 0]]
 
-        # Aplicar o filtro aos dados da janela
         filtered_window = [
             w * rectilinearity * direction_functions[i] for i, w in enumerate(window_data)
         ]
 
-        # Adicionar os dados filtrados às respectivas componentes
         Z_filt.extend(filtered_window[0])
         R_filt.extend(filtered_window[1])
         T_filt.extend(filtered_window[2])

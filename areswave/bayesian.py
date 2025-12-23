@@ -10,7 +10,6 @@ import arviz as az
 from scipy.stats import gaussian_kde
 import matplotlib.collections as mcoll
 
-
 def process_model(model_name, depth, distance, model_directory):
     try:
         tau_model = TauPyModel(model=os.path.join(model_directory, model_name.lower()))
@@ -83,25 +82,22 @@ def run_bayesian_inference(sp_time_obs, sp_sigma, vp_mu, vp_sigma, vs_mu, vs_sig
         depth = pm.Uniform("depth", lower=depth_lower, upper=depth_upper)
         t_sp = 100 * depth * (1 / vs - 1 / vp)
         pm.Normal("t_sp_obs", mu=t_sp, sigma=sp_sigma, observed=sp_time_obs)
-        trace = pm.sample(10000, tune=5000, cores=2, return_inferencedata=True)
+        trace = pm.sample(10000, tune=5000, cores=8, return_inferencedata=True)
     return trace
 
 def plot_posterior_distribution(trace, fig_path):
     depth_samples = trace.posterior["depth"].values.flatten()
 
-    # KDE
     kde = gaussian_kde(depth_samples)
     x = np.linspace(5, 60, 500)
     y = kde(x)
 
-    # Statistics
     mean_val = depth_samples.mean()
     median_val = np.median(depth_samples)
     mode_val = x[np.argmax(y)]
     hdi_bounds = az.hdi(depth_samples, hdi_prob=0.95)
     hdi_low, hdi_high = hdi_bounds[0], hdi_bounds[1]
 
-    # Plot
     fig, ax = plt.subplots(figsize=(8, 4))
     lc = colorline(x, y, cmap='plasma')
     ax.add_collection(lc)

@@ -76,53 +76,29 @@ def calculate_variation(
     print(f"Variation ST: {window_misfit(r_ST_win, s_ST_win):.5f}")
     return total
 
-def calculate_moment_tensor(magnitude, strike, dip, rake, depth, distance, frequency_range=(0.1, 1.0), interval=0.1):
-    # Cálculo do momento sísmico
-    Mo = 10 ** ((magnitude + 10.7) * 3 / 2)
-    strike_rad, dip_rad, rake_rad = np.radians([strike, dip, rake])
+def calculate_moment_tensor(magnitude, strike, dip, rake, depth, distance,
+                            frequency_range=(0.1, 1.0), interval=0.1):
 
-    Mrr = Mo * np.sin(2 * dip_rad) * np.sin(rake_rad)
-    Mrt = -Mo * (np.cos(dip_rad) * np.cos(rake_rad) * np.cos(strike_rad) + np.cos(2 * dip_rad) * np.sin(rake_rad) * np.sin(strike_rad))
-    Mrp = -Mo * (np.cos(dip_rad) * np.cos(rake_rad) * np.sin(strike_rad) - np.cos(2 * dip_rad) * np.sin(rake_rad) * np.cos(strike_rad))
-    Mtt = Mo * (np.sin(dip_rad) * np.cos(rake_rad) * np.sin(2 * strike_rad) + np.sin(2 * dip_rad) * np.sin(rake_rad) * np.sin(strike_rad) ** 2)
-    Mtp = Mo * (np.sin(dip_rad) * np.cos(rake_rad) * np.cos(2 * strike_rad) + 0.5 * np.sin(2 * dip_rad) * np.sin(rake_rad) * np.sin(2 * strike_rad) ** 2)
-    Mpp = Mo * (np.sin(dip_rad) * np.cos(rake_rad) * np.sin(2 * strike_rad) - np.sin(2 * dip_rad) * np.sin(rake_rad) * np.cos(strike_rad) ** 2)
+    import numpy as np
+    from dsmpy.event_Mars import MomentTensor
 
-    if 0 <= depth <= 24:
-        vp = 2.3
-        vs = 1.55
-    elif 24.01 <= depth <= 49.5:
-        vp = 2.6
-        vs = 2.54
-    elif depth >= 49.5:
-        vp = 6.1
-        vs = 3.59
-    else:
-        raise ValueError("Profundidade fora do intervalo esperado.")
+    M0 = 10 ** (1.5 * magnitude + 16.1)
 
-    Qp = 400
-    Qs = 150
-    frequencies = np.arange(frequency_range[0], frequency_range[1] + interval, interval)
-    moment_tensors = []
-    for frequency in frequencies:
-        attenuation_p = np.exp(-distance / (Qp * vp * frequency))
-        attenuation_s = np.exp(-distance / (Qs * vs * frequency))
+    ϕ = np.radians(strike)
+    δ = np.radians(dip)
+    λ = np.radians(rake)
 
-        Mrr_att = Mrr * attenuation_p
-        Mtt_att = Mtt * attenuation_p
-        Mpp_att = Mpp * attenuation_p
-        Mrt_att = Mrt * attenuation_s
-        Mrp_att = Mrp * attenuation_s
-        Mtp_att = Mtp * attenuation_s
+    Mrr = -M0 * np.sin(2*δ) * np.sin(λ)
+    Mtt =  M0 * ( np.sin(δ)*np.cos(λ)*np.sin(2*ϕ) + np.sin(2*δ)*np.sin(λ)*(np.sin(ϕ)**2) )
+    Mpp = -M0 * ( np.sin(δ)*np.cos(λ)*np.sin(2*ϕ) - np.sin(2*δ)*np.sin(λ)*(np.cos(ϕ)**2) )
+    Mrt = -M0 * ( np.cos(δ)*np.cos(λ)*np.cos(ϕ) + np.cos(2*δ)*np.sin(λ)*np.sin(ϕ) )
+    Mrp =  M0 * ( np.cos(δ)*np.cos(λ)*np.sin(ϕ) - np.cos(2*δ)*np.sin(λ)*np.cos(ϕ) )
+    Mtp = -M0 * ( np.sin(δ)*np.cos(λ)*np.cos(2*ϕ) + 0.5*np.sin(2*δ)*np.sin(λ)*np.sin(2*ϕ) )
 
-        # Create DSMpy MomentTensor; DSMpy may expect units of 1e25 dyne-cm (warning is printed elsewhere)
-        mt_obj = MomentTensor(Mrr_att, Mrt_att, Mrp_att, Mtt_att, Mtp_att, Mpp_att)
+    mt_obj = MomentTensor(Mrr, Mrt, Mrp, Mtt, Mtp, Mpp)
 
-        moment_tensors.append({
-            'frequency': frequency,
-            'moment_tensor': mt_obj
-        })
-    return moment_tensors
+    return [{'frequency': None, 'moment_tensor': mt_obj}]
+
 
 def align_by_correlation(real, synthetic, max_shift):
     corr = correlate(real, synthetic, mode='full')

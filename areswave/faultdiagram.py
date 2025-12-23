@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
+from mpl_toolkits.mplot3d import Axes3D
 
 def strike_dip_rake_to_vectors(strike_deg, dip_deg, rake_deg):
     strike = math.radians(strike_deg)

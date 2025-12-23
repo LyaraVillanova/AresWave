@@ -12,7 +12,6 @@ from areswave.denoising import polarization_filter
 from dsmpy.event_Mars import Event, MomentTensor
 from scipy.signal import correlate
 
-
 def reorder_traces(traces):
     trace_dict = {}
     for tr in traces:
@@ -261,7 +260,6 @@ def plot_results(best_pos, event, stations, seismic_model, tlen, nspc, sampling_
         sac_path = os.path.join(synthetics_save_dir, f"{event_id}.{station}.{component_labels[i]}.sac")
         tr.write(sac_path, format="SAC")
 
-    # Plots
     fig, axs = plt.subplots(3, 2, figsize=(14, 8))
     axs = np.atleast_2d(axs)
 
@@ -313,7 +311,6 @@ def plot_results(best_pos, event, stations, seismic_model, tlen, nspc, sampling_
     os.makedirs(fig_dir, exist_ok=True)
     plt.savefig(os.path.join(fig_dir, f"final_comparison_{event_id}.png"))
 
-    # Corner plot
     params = np.vstack([tested_depths, tested_strikes, tested_dips, tested_rakes]).T
     figure = corner.corner(params, 
                            labels=["Depth (km)", "Strike (°)", "Dip (°)", "Rake (°)"],
@@ -323,7 +320,6 @@ def plot_results(best_pos, event, stations, seismic_model, tlen, nspc, sampling_
                            title_kwargs={"fontsize": 16})
     figure.savefig(os.path.join(fig_dir, f"cornerplot_{event_id}.png"))
 
-    # Save all tests
     results_df = pd.DataFrame({
         "Depth (km)": tested_depths,
         "Strike (°)": tested_strikes,
@@ -334,7 +330,6 @@ def plot_results(best_pos, event, stations, seismic_model, tlen, nspc, sampling_
     results_csv_path = os.path.join(fig_dir, f"all_tested_parameters_{event_id}.csv")
     results_df.to_csv(results_csv_path, index=False)
 
-    # Calculus of statistics per restart
     restart_stats = []
     n_total = len(tested_costs)
     costs_array = np.array(tested_costs)
@@ -355,7 +350,6 @@ def plot_results(best_pos, event, stations, seismic_model, tlen, nspc, sampling_
     restart_csv_path = os.path.join(fig_dir, f"restart_cost_stats_{event_id}.csv")
     restart_df.to_csv(restart_csv_path, index=False)
 
-    # Plot cost iterations
     plt.figure(figsize=(10, 5))
     x_vals = np.arange(len(tested_costs))
     plt.scatter(x_vals, tested_costs, label="Tested Costs", color="gray", s=10, alpha=0.5)
@@ -399,7 +393,6 @@ def plot_results(best_pos, event, stations, seismic_model, tlen, nspc, sampling_
     plt.tight_layout()
     plt.savefig(os.path.join(fig_dir, f"tested_costs_over_iterations_{event_id}.png"))
 
-    # Scatter of all particles
     n_iterations_run = len(tested_costs) // n_particles
 
     costs_array = np.array(tested_costs).reshape((n_iterations_run, n_particles))
@@ -428,7 +421,6 @@ def plot_results(best_pos, event, stations, seismic_model, tlen, nspc, sampling_
     plt.tight_layout(rect=[0, 0, 1, 0.96])
     plt.savefig(os.path.join(fig_dir, f"PSO_particles_all_scatter_{event_id}.png"))
 
-    # Best only
     fig2, axs2 = plt.subplots(2, 2, figsize=(14, 10))
     fig2.suptitle("Best parameters and cost per iteration", fontsize=16)
     for ax, param, title, color in zip(axs2.flat, param_arrays, titles, colors):

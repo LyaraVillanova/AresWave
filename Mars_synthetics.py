@@ -23,12 +23,12 @@ time_p = UTCDateTime("2019-06-05T02:13:48")
 time_s = UTCDateTime("2019-06-05T02:19:47")
 centroid_time = UTCDateTime((time_p.timestamp + time_s.timestamp) / 2)
 
-Mrr = 3.04e20
-Mrt = -2.16e19
-Mrp = -3.26e20
-Mtt = -1.21e20
-Mtp = -1.23e20
-Mpp = -7.31e19
+Mrr = -4.1e13 #3.04e20
+Mrt = -2.5e13 #-2.16e19
+Mrp = 2.5e13 #-3.26e20
+Mtt = -2.9e12 #-1.21e20
+Mtp = 1.16e13 #-1.23e20
+Mpp = 4.37e13 #-7.31e19
 mt = MomentTensor(Mrr, Mrt, Mrp, Mtt, Mtp, Mpp)
 
 event = Event(
@@ -47,7 +47,7 @@ stations = [
 ]
 
 # SEISMIC MODEL
-seismic_model = seismicmodel_Mars.SeismicModel.tayak()
+seismic_model = seismicmodel_Mars.SeismicModel.test2()
 tlen = 1276.8
 nspc = 1256
 sampling_hz = 20
