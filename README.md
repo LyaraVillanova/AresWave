@@ -324,7 +324,7 @@ plt.savefig('/figs/output_cross_correlation.png')
 
 
 ## Publication
-Villanova, L., & Genda, H. (2025). AresWave: Estimation of marsquake source parameters by waveform fitting with stochastic optimization. (submitted) [Link DOI]
+Villanova Silverio, L., & Genda, H. (2026). AresWave: estimation of marsquake source parameters by waveform fitting with stochastic optimization. Academia Earth and Planetary Science, 1(2). https://doi.org/10.20935/AcadEPS8376
 
 
 
