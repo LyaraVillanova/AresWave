@@ -308,9 +308,10 @@ plt.savefig('figs/output_cross_correlation.png')
 
 
 
-## Publication
-Villanova Silverio, L., & Genda, H. (2026). AresWave: estimation of marsquake source parameters by waveform fitting with stochastic optimization. Academia Earth and Planetary Science, 1(2). https://doi.org/10.20935/AcadEPS8376
+## Publications
+Villanova, L. S., & Genda, H. (2026). AresWave: estimation of marsquake source parameters by waveform fitting with stochastic optimization. Academia Earth and Planetary Science, 1(2). https://doi.org/10.20935/AcadEPS8376
 
+Villanova, L. S., & Genda, H. (submitted). Constraints on the depth and tectonic nature of Martian seismic sources.
 
 
 ## Contact
