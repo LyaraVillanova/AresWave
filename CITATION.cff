@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use AresWave in your research, please cite the software and the associated publication."
+title: "AresWave"
+version: "1.0"
+type: software
+authors:
+  - family-names: "Villanova Silverio"
+    given-names: "Lyara"
+license: MIT
+repository-code: "https://github.com/LyaraVillanova/AresWave"
+
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Villanova Silverio"
+      given-names: "Lyara"
+    - family-names: "Genda"
+      given-names: "Hidenori"
+  title: "AresWave: estimation of marsquake source parameters by waveform fitting with stochastic optimization"
+  year: 2026
+  journal: "Academia Earth and Planetary Science"
+  volume: 1
+  issue: 2
+  doi: "10.20935/AcadEPS8376"
