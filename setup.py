@@ -69,7 +69,7 @@ with open(ROOT / "README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="AresWave",
-    version="1.0",
+    version="1.1.0",
     author="Lyara Villanova",
     author_email="lyaravillanova@yahoo.com",
     license="MIT",
