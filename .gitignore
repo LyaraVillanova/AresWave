@@ -18,12 +18,8 @@ areswave-venv/
 # Logs
 *.log
 
-# Checkpoints
+# Runtime checkpoints
 *checkpoint*.npz
 
-# Generated figures and analysis outputs
-figs/
-figs_*/
-depth_results/
-null_results/
-outputs_modelsdir*/
+# Temporary repository inventory
+areswave_inventory.txt

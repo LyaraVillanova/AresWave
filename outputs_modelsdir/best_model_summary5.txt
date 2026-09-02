@@ -1,0 +1,22 @@
+Best-fitting full model (models/ directory workflow)
+component_mode = paper
+model_id = CD_model70
+source_path = /home/lyara/areswave/models_short/CD_model70.nd
+source_format = nd
+composition = UNK
+tpot_K = nan
+adiabat_K_km = nan
+d_main_km = nan
+w_main_km = 60.0
+d_800_km = nan
+w_800_km = 60.0
+d_1000_km = nan
+w_1000_km = 60.0
+d_1200_km = nan
+w_1200_km = 60.0
+d_1600_km = nan
+w_1600_km = 60.0
+mean_p_misfit = 0.3714526520099052
+mean_s_misfit = 0.46512538291053335
+total_misfit = 0.43390113927699064
+used_events = 5

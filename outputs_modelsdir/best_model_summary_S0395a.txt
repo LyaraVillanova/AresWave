@@ -1,0 +1,24 @@
+Best-fitting full model (models/ directory workflow)
+component_mode = paper
+model_id = Geophysical_model573
+source_path = /home/lyara/areswave/models/CD_model44.nd
+source_format = nd
+composition = UNK
+tpot_K = nan
+adiabat_K_km = nan
+d_main_km = 1098.113
+w_main_km = 60.0
+d_800_km = 900
+w_800_km = 23.974
+d_1000_km = 1098.113
+w_1000_km = 60.0
+d_1200_km = 1114.623
+w_1200_km = 16.509
+d_1400_km = 1444.812
+w_1400_km = 115.566
+d_1600_km = 1675.699
+w_1600_km = 60.0
+mean_p_misfit = 0.331355114085345
+mean_s_misfit = 0.579222405953596
+total_misfit = 0.496599975330846
+used_events = 1

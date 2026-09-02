@@ -1,0 +1,1361 @@
+event_id,model_key,model_label,model_id,stage,panel,component,window_type,cc,shift_samples,shift_s,sign,npts
+S1094b,X,Model X,X,raw,PZ,Z,pick-based,0.829224949757834,-41,-2.0500000000000003,-,200
+S1094b,X,Model X,X,raw,SZ,Z,pick-based,0.3577806288782868,-74,-3.7,-,300
+S1094b,X,Model X,X,raw,PR,R,pick-based,0.45948381458304055,100,5.0,+,200
+S1094b,X,Model X,X,raw,ST,T,pick-based,0.14615448266930314,-89,-4.45,-,300
+S1094b,X,Model X,X,bp_01_05,PZ,Z,pick-based,0.6418337712064723,-24,-1.2000000000000002,+,200
+S1094b,X,Model X,X,bp_01_05,SZ,Z,pick-based,0.4162590878742398,6,0.30000000000000004,-,300
+S1094b,X,Model X,X,bp_01_05,PR,R,pick-based,0.3818814399036693,15,0.75,-,200
+S1094b,X,Model X,X,bp_01_05,ST,T,pick-based,0.14096990134483797,99,4.95,+,300
+S1094b,X,Model X,X,bp_01_08,PZ,Z,pick-based,0.8716812542431159,-42,-2.1,-,200
+S1094b,X,Model X,X,bp_01_08,SZ,Z,pick-based,0.3321959047658262,-73,-3.6500000000000004,-,300
+S1094b,X,Model X,X,bp_01_08,PR,R,pick-based,0.5492717789814235,100,5.0,+,200
+S1094b,X,Model X,X,bp_01_08,ST,T,pick-based,0.13237369871032795,75,3.75,-,300
+S1094b,X,Model X,X,bp_03_09,PZ,Z,pick-based,0.8355287440932846,-41,-2.0500000000000003,-,200
+S1094b,X,Model X,X,bp_03_09,SZ,Z,pick-based,0.42168721456175423,-74,-3.7,-,300
+S1094b,X,Model X,X,bp_03_09,PR,R,pick-based,0.5522004106738733,100,5.0,+,200
+S1094b,X,Model X,X,bp_03_09,ST,T,pick-based,0.6479476112967693,91,4.55,+,300
+S1094b,X,Model X,X,bp_03_09_pol,PZ,Z,pick-based,0.8562404325313762,-41,-2.0500000000000003,-,200
+S1094b,X,Model X,X,bp_03_09_pol,SZ,Z,pick-based,0.12172399807503508,15,0.75,+,300
+S1094b,X,Model X,X,bp_03_09_pol,PR,R,pick-based,0.443239894732531,90,4.5,-,200
+S1094b,X,Model X,X,bp_03_09_pol,ST,T,pick-based,0.6263365340478696,91,4.55,+,300
+S1094b,TAYAK,TAYAK,TAYAK,raw,PZ,Z,pick-based,0.36969741797877653,90,4.5,+,200
+S1094b,TAYAK,TAYAK,TAYAK,raw,SZ,Z,pick-based,0.3188552366504193,65,3.25,+,300
+S1094b,TAYAK,TAYAK,TAYAK,raw,PR,R,pick-based,0.7930094309870531,86,4.3,-,200
+S1094b,TAYAK,TAYAK,TAYAK,raw,ST,T,pick-based,0.14290578958734929,100,5.0,-,300
+S1094b,TAYAK,TAYAK,TAYAK,bp_01_05,PZ,Z,pick-based,0.40814704858059253,80,4.0,+,200
+S1094b,TAYAK,TAYAK,TAYAK,bp_01_05,SZ,Z,pick-based,0.3958624248159776,17,0.8500000000000001,-,300
+S1094b,TAYAK,TAYAK,TAYAK,bp_01_05,PR,R,pick-based,0.5169902651981979,27,1.35,-,200
+S1094b,TAYAK,TAYAK,TAYAK,bp_01_05,ST,T,pick-based,0.1133129245594417,100,5.0,+,300
+S1094b,TAYAK,TAYAK,TAYAK,bp_01_08,PZ,Z,pick-based,0.3657247127176614,91,4.55,+,200
+S1094b,TAYAK,TAYAK,TAYAK,bp_01_08,SZ,Z,pick-based,0.22166727108662537,-6,-0.30000000000000004,+,300
+S1094b,TAYAK,TAYAK,TAYAK,bp_01_08,PR,R,pick-based,0.6998538391550096,100,5.0,+,200
+S1094b,TAYAK,TAYAK,TAYAK,bp_01_08,ST,T,pick-based,0.13418804323603492,100,5.0,-,300
+S1094b,TAYAK,TAYAK,TAYAK,bp_03_09,PZ,Z,pick-based,0.6358865127300678,88,4.4,+,200
+S1094b,TAYAK,TAYAK,TAYAK,bp_03_09,SZ,Z,pick-based,0.3297728750958283,65,3.25,+,300
+S1094b,TAYAK,TAYAK,TAYAK,bp_03_09,PR,R,pick-based,0.7960012492509039,100,5.0,+,200
+S1094b,TAYAK,TAYAK,TAYAK,bp_03_09,ST,T,pick-based,0.8299237705426454,100,5.0,-,300
+S1094b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PZ,Z,pick-based,0.48094096453617824,91,4.55,+,200
+S1094b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,SZ,Z,pick-based,0.46207290013591223,-100,-5.0,+,300
+S1094b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PR,R,pick-based,0.5939411579718015,100,5.0,+,200
+S1094b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,ST,T,pick-based,0.7525148757144184,100,5.0,-,300
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PZ,Z,pick-based,0.8683576435262542,40,2.0,-,200
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,SZ,Z,pick-based,0.45575852426420427,-17,-0.8500000000000001,-,300
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PR,R,pick-based,0.7807939241087776,-40,-2.0,+,200
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,ST,T,pick-based,0.1943993351361551,99,4.95,+,300
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PZ,Z,pick-based,0.4285972812635795,7,0.35000000000000003,-,200
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,SZ,Z,pick-based,0.34008936469040735,17,0.8500000000000001,-,300
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PR,R,pick-based,0.5603842405602804,55,2.75,+,200
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,ST,T,pick-based,0.1340738448839879,97,4.8500000000000005,+,300
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PZ,Z,pick-based,0.879214860161587,40,2.0,-,200
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,SZ,Z,pick-based,0.39141600875558913,-33,-1.6500000000000001,+,300
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PR,R,pick-based,0.7693454379111052,-39,-1.9500000000000002,+,200
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,ST,T,pick-based,0.1396680360412187,97,4.8500000000000005,+,300
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PZ,Z,pick-based,0.8957050545832939,40,2.0,-,200
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,SZ,Z,pick-based,0.6594396851332169,-17,-0.8500000000000001,-,300
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PR,R,pick-based,0.7870499548552357,-39,-1.9500000000000002,+,200
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,ST,T,pick-based,0.6538163050980706,98,4.9,+,300
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PZ,Z,pick-based,0.8796440021079885,40,2.0,-,200
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,SZ,Z,pick-based,0.10941536919144065,95,4.75,+,300
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PR,R,pick-based,0.8006984866771197,-54,-2.7,-,200
+S1094b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,ST,T,pick-based,0.5374796308741367,-92,-4.6000000000000005,-,300
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,raw,PZ,Z,pick-based,0.8155136997153482,2,0.1,-,200
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,raw,SZ,Z,pick-based,0.4863592781659628,20,1.0,+,300
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,raw,PR,R,pick-based,0.7267664354503592,-14,-0.7000000000000001,-,200
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,raw,ST,T,pick-based,0.24889727782626658,-23,-1.1500000000000001,-,300
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,bp_01_05,PZ,Z,pick-based,0.5505363550118626,65,3.25,-,200
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,bp_01_05,SZ,Z,pick-based,0.3280973484376049,12,0.6000000000000001,-,300
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,bp_01_05,PR,R,pick-based,0.6400329427005611,43,2.15,-,200
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,bp_01_05,ST,T,pick-based,0.16606735802534847,100,5.0,+,300
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,bp_01_08,PZ,Z,pick-based,0.8840464708108221,17,0.8500000000000001,+,200
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,bp_01_08,SZ,Z,pick-based,0.26055910064129606,95,4.75,+,300
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,bp_01_08,PR,R,pick-based,0.6002410238336584,14,0.7000000000000001,-,200
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,bp_01_08,ST,T,pick-based,0.19375562536398241,-23,-1.1500000000000001,-,300
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,bp_03_09,PZ,Z,pick-based,0.8610968305942907,17,0.8500000000000001,+,200
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,bp_03_09,SZ,Z,pick-based,0.5553705507873767,7,0.35000000000000003,-,300
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,bp_03_09,PR,R,pick-based,0.6906711117747686,13,0.65,-,200
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,bp_03_09,ST,T,pick-based,0.7596597664932737,-23,-1.1500000000000001,-,300
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,bp_03_09_pol,PZ,Z,pick-based,0.8719650453679751,17,0.8500000000000001,+,200
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,bp_03_09_pol,SZ,Z,pick-based,0.12542312731167962,5,0.25,-,300
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,bp_03_09_pol,PR,R,pick-based,0.6710834427988299,-28,-1.4000000000000001,+,200
+S1094b,EventBest,Event best (Geophysical_model319),Geophysical_model319,bp_03_09_pol,ST,T,pick-based,0.725615529049368,-8,-0.4,+,300
+S0185a,X,Model X,X,raw,PZ,Z,pick-based,0.7234027359988154,-35,-1.75,-,200
+S0185a,X,Model X,X,raw,SZ,Z,pick-based,0.5081419631152446,-34,-1.7000000000000002,+,300
+S0185a,X,Model X,X,raw,PR,R,pick-based,0.16804993299938692,-44,-2.2,+,200
+S0185a,X,Model X,X,raw,ST,T,pick-based,0.19081651750588063,-20,-1.0,+,300
+S0185a,X,Model X,X,bp_01_05,PZ,Z,pick-based,0.2203825186678301,-74,-3.7,-,200
+S0185a,X,Model X,X,bp_01_05,SZ,Z,pick-based,0.3774875034756769,81,4.05,+,300
+S0185a,X,Model X,X,bp_01_05,PR,R,pick-based,0.19586627553345864,-30,-1.5,+,200
+S0185a,X,Model X,X,bp_01_05,ST,T,pick-based,0.05889616178402808,-100,-5.0,-,300
+S0185a,X,Model X,X,bp_01_08,PZ,Z,pick-based,0.6826706901779881,-20,-1.0,+,200
+S0185a,X,Model X,X,bp_01_08,SZ,Z,pick-based,0.45999172534334476,97,4.8500000000000005,+,300
+S0185a,X,Model X,X,bp_01_08,PR,R,pick-based,0.1401194317231114,100,5.0,-,200
+S0185a,X,Model X,X,bp_01_08,ST,T,pick-based,0.1445053337416515,-52,-2.6,+,300
+S0185a,X,Model X,X,bp_03_09,PZ,Z,pick-based,0.9373468726964949,-35,-1.75,-,200
+S0185a,X,Model X,X,bp_03_09,SZ,Z,pick-based,0.4932975737705872,-34,-1.7000000000000002,+,300
+S0185a,X,Model X,X,bp_03_09,PR,R,pick-based,0.1758303169422837,19,0.9500000000000001,-,200
+S0185a,X,Model X,X,bp_03_09,ST,T,pick-based,0.609375988401866,-20,-1.0,+,300
+S0185a,X,Model X,X,bp_03_09_pol,PZ,Z,pick-based,0.8951908376958987,-35,-1.75,-,200
+S0185a,X,Model X,X,bp_03_09_pol,SZ,Z,pick-based,0.4430905140181678,-65,-3.25,+,300
+S0185a,X,Model X,X,bp_03_09_pol,PR,R,pick-based,0.04295871171485664,-92,-4.6000000000000005,-,200
+S0185a,X,Model X,X,bp_03_09_pol,ST,T,pick-based,0.5559734727192598,-37,-1.85,-,300
+S0185a,TAYAK,TAYAK,TAYAK,raw,PZ,Z,pick-based,0.17684129973112475,-22,-1.1,+,200
+S0185a,TAYAK,TAYAK,TAYAK,raw,SZ,Z,pick-based,0.3215969763461322,36,1.8,+,300
+S0185a,TAYAK,TAYAK,TAYAK,raw,PR,R,pick-based,0.3928133635952891,96,4.800000000000001,+,200
+S0185a,TAYAK,TAYAK,TAYAK,raw,ST,T,pick-based,0.1779871650697947,-90,-4.5,+,300
+S0185a,TAYAK,TAYAK,TAYAK,bp_01_05,PZ,Z,pick-based,0.1261704942681079,58,2.9000000000000004,+,200
+S0185a,TAYAK,TAYAK,TAYAK,bp_01_05,SZ,Z,pick-based,0.13728387191700342,-31,-1.55,-,300
+S0185a,TAYAK,TAYAK,TAYAK,bp_01_05,PR,R,pick-based,0.16293397898837994,-70,-3.5,-,200
+S0185a,TAYAK,TAYAK,TAYAK,bp_01_05,ST,T,pick-based,0.09282252085791036,73,3.6500000000000004,-,300
+S0185a,TAYAK,TAYAK,TAYAK,bp_01_08,PZ,Z,pick-based,0.17692043914837333,-38,-1.9000000000000001,-,200
+S0185a,TAYAK,TAYAK,TAYAK,bp_01_08,SZ,Z,pick-based,0.31520413233104255,35,1.75,+,300
+S0185a,TAYAK,TAYAK,TAYAK,bp_01_08,PR,R,pick-based,0.486906362551353,96,4.800000000000001,+,200
+S0185a,TAYAK,TAYAK,TAYAK,bp_01_08,ST,T,pick-based,0.17339825143609497,-73,-3.6500000000000004,-,300
+S0185a,TAYAK,TAYAK,TAYAK,bp_03_09,PZ,Z,pick-based,0.9071384809447615,-37,-1.85,-,200
+S0185a,TAYAK,TAYAK,TAYAK,bp_03_09,SZ,Z,pick-based,0.5369258753556364,51,2.5500000000000003,-,300
+S0185a,TAYAK,TAYAK,TAYAK,bp_03_09,PR,R,pick-based,0.5567661353083944,96,4.800000000000001,+,200
+S0185a,TAYAK,TAYAK,TAYAK,bp_03_09,ST,T,pick-based,0.6401035231963446,-90,-4.5,+,300
+S0185a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PZ,Z,pick-based,0.9123746391882045,-37,-1.85,-,200
+S0185a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,SZ,Z,pick-based,0.583471355156664,-61,-3.0500000000000003,-,300
+S0185a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PR,R,pick-based,0.048252350383414085,95,4.75,+,200
+S0185a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,ST,T,pick-based,0.736517602516826,-90,-4.5,+,300
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PZ,Z,pick-based,0.15054801382637856,61,3.0500000000000003,+,200
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,SZ,Z,pick-based,0.30557651411581965,32,1.6,+,300
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PR,R,pick-based,0.4862647154373014,35,1.75,-,200
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,ST,T,pick-based,0.16503861700658023,93,4.65,+,300
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PZ,Z,pick-based,0.14071366765211035,60,3.0,+,200
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,SZ,Z,pick-based,0.15443628795654427,-31,-1.55,-,300
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PR,R,pick-based,0.18090784515933356,-100,-5.0,+,200
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,ST,T,pick-based,0.11235054612754378,72,3.6,-,300
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PZ,Z,pick-based,0.16111183822554767,60,3.0,+,200
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,SZ,Z,pick-based,0.32214178691035245,34,1.7000000000000002,+,300
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PR,R,pick-based,0.33011102838075906,35,1.75,-,200
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,ST,T,pick-based,0.20949511157976952,94,4.7,+,300
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PZ,Z,pick-based,0.814635822480298,76,3.8000000000000003,-,200
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,SZ,Z,pick-based,0.42459106946951924,33,1.6500000000000001,+,300
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PR,R,pick-based,0.8202662547014901,35,1.75,-,200
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,ST,T,pick-based,0.6678031830620973,93,4.65,+,300
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PZ,Z,pick-based,0.8037285282333384,76,3.8000000000000003,-,200
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,SZ,Z,pick-based,0.6307441553076839,-79,-3.95,+,300
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PR,R,pick-based,0.9738763454865419,98,4.9,-,200
+S0185a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,ST,T,pick-based,0.556968655389501,76,3.8000000000000003,-,300
+S0185a,EventBest,Event best (MD_model78),MD_model78,raw,PZ,Z,pick-based,0.553735158091518,14,0.7000000000000001,+,200
+S0185a,EventBest,Event best (MD_model78),MD_model78,raw,SZ,Z,pick-based,0.34575281852355577,-36,-1.8,-,300
+S0185a,EventBest,Event best (MD_model78),MD_model78,raw,PR,R,pick-based,0.12025127577224343,56,2.8000000000000003,+,200
+S0185a,EventBest,Event best (MD_model78),MD_model78,raw,ST,T,pick-based,0.08807762365387413,67,3.35,-,300
+S0185a,EventBest,Event best (MD_model78),MD_model78,bp_01_05,PZ,Z,pick-based,0.34994221398066094,-90,-4.5,+,200
+S0185a,EventBest,Event best (MD_model78),MD_model78,bp_01_05,SZ,Z,pick-based,0.1299320132309832,-31,-1.55,-,300
+S0185a,EventBest,Event best (MD_model78),MD_model78,bp_01_05,PR,R,pick-based,0.14421033402658134,-80,-4.0,-,200
+S0185a,EventBest,Event best (MD_model78),MD_model78,bp_01_05,ST,T,pick-based,0.15237096357659782,97,4.8500000000000005,+,300
+S0185a,EventBest,Event best (MD_model78),MD_model78,bp_01_08,PZ,Z,pick-based,0.5087286365927702,15,0.75,+,200
+S0185a,EventBest,Event best (MD_model78),MD_model78,bp_01_08,SZ,Z,pick-based,0.3974720061018777,97,4.8500000000000005,-,300
+S0185a,EventBest,Event best (MD_model78),MD_model78,bp_01_08,PR,R,pick-based,0.14106152016883486,56,2.8000000000000003,+,200
+S0185a,EventBest,Event best (MD_model78),MD_model78,bp_01_08,ST,T,pick-based,0.09483338562284482,32,1.6,-,300
+S0185a,EventBest,Event best (MD_model78),MD_model78,bp_03_09,PZ,Z,pick-based,0.7454883695304623,14,0.7000000000000001,+,200
+S0185a,EventBest,Event best (MD_model78),MD_model78,bp_03_09,SZ,Z,pick-based,0.4021004543037711,-37,-1.85,-,300
+S0185a,EventBest,Event best (MD_model78),MD_model78,bp_03_09,PR,R,pick-based,0.6367110501597872,39,1.9500000000000002,-,200
+S0185a,EventBest,Event best (MD_model78),MD_model78,bp_03_09,ST,T,pick-based,0.42623618851186884,-18,-0.9,+,300
+S0185a,EventBest,Event best (MD_model78),MD_model78,bp_03_09_pol,PZ,Z,pick-based,0.6774712618019563,15,0.75,+,200
+S0185a,EventBest,Event best (MD_model78),MD_model78,bp_03_09_pol,SZ,Z,pick-based,0.4646079618404014,-69,-3.45,-,300
+S0185a,EventBest,Event best (MD_model78),MD_model78,bp_03_09_pol,PR,R,pick-based,0.40472347365744055,71,3.5500000000000003,-,200
+S0185a,EventBest,Event best (MD_model78),MD_model78,bp_03_09_pol,ST,T,pick-based,0.33208182554564775,-20,-1.0,+,300
+S0234c,X,Model X,X,raw,PZ,Z,pick-based,0.4552098426054229,99,4.95,+,200
+S0234c,X,Model X,X,raw,SZ,Z,pick-based,0.1185717782365566,35,1.75,+,300
+S0234c,X,Model X,X,raw,PR,R,pick-based,0.8091297549840369,-63,-3.1500000000000004,-,200
+S0234c,X,Model X,X,raw,ST,T,pick-based,0.2875328859233895,56,2.8000000000000003,-,300
+S0234c,X,Model X,X,bp_01_05,PZ,Z,pick-based,0.20402963449935488,74,3.7,-,200
+S0234c,X,Model X,X,bp_01_05,SZ,Z,pick-based,0.1535422529603156,95,4.75,-,300
+S0234c,X,Model X,X,bp_01_05,PR,R,pick-based,0.19359704882632892,-93,-4.65,+,200
+S0234c,X,Model X,X,bp_01_05,ST,T,pick-based,0.08028774301520962,-33,-1.6500000000000001,+,300
+S0234c,X,Model X,X,bp_01_08,PZ,Z,pick-based,0.3331233577097764,97,4.8500000000000005,+,200
+S0234c,X,Model X,X,bp_01_08,SZ,Z,pick-based,0.18470032195339328,-2,-0.1,+,300
+S0234c,X,Model X,X,bp_01_08,PR,R,pick-based,0.7183167156937729,-63,-3.1500000000000004,-,200
+S0234c,X,Model X,X,bp_01_08,ST,T,pick-based,0.2687721068716582,55,2.75,-,300
+S0234c,X,Model X,X,bp_03_09,PZ,Z,pick-based,0.34719289617480587,99,4.95,+,200
+S0234c,X,Model X,X,bp_03_09,SZ,Z,pick-based,0.29656768927073013,-91,-4.55,+,300
+S0234c,X,Model X,X,bp_03_09,PR,R,pick-based,0.8817316481592479,-63,-3.1500000000000004,-,200
+S0234c,X,Model X,X,bp_03_09,ST,T,pick-based,0.5398543640144843,55,2.75,-,300
+S0234c,X,Model X,X,bp_03_09_pol,PZ,Z,pick-based,0.34936158508025145,99,4.95,+,200
+S0234c,X,Model X,X,bp_03_09_pol,SZ,Z,pick-based,0.6844921779438597,8,0.4,+,300
+S0234c,X,Model X,X,bp_03_09_pol,PR,R,pick-based,0.7830424056302604,-90,-4.5,-,200
+S0234c,X,Model X,X,bp_03_09_pol,ST,T,pick-based,0.48536319849000636,-100,-5.0,+,300
+S0234c,TAYAK,TAYAK,TAYAK,raw,PZ,Z,pick-based,0.24987366658972626,29,1.4500000000000002,-,200
+S0234c,TAYAK,TAYAK,TAYAK,raw,SZ,Z,pick-based,0.11105950646593106,-19,-0.9500000000000001,+,300
+S0234c,TAYAK,TAYAK,TAYAK,raw,PR,R,pick-based,0.137901967061798,100,5.0,-,200
+S0234c,TAYAK,TAYAK,TAYAK,raw,ST,T,pick-based,0.2823317031652529,6,0.30000000000000004,-,300
+S0234c,TAYAK,TAYAK,TAYAK,bp_01_05,PZ,Z,pick-based,0.27940575507236237,35,1.75,-,200
+S0234c,TAYAK,TAYAK,TAYAK,bp_01_05,SZ,Z,pick-based,0.09385022464395106,79,3.95,+,300
+S0234c,TAYAK,TAYAK,TAYAK,bp_01_05,PR,R,pick-based,0.18106160971616092,100,5.0,-,200
+S0234c,TAYAK,TAYAK,TAYAK,bp_01_05,ST,T,pick-based,0.11596979286894878,-43,-2.15,+,300
+S0234c,TAYAK,TAYAK,TAYAK,bp_01_08,PZ,Z,pick-based,0.29285325234995185,98,4.9,+,200
+S0234c,TAYAK,TAYAK,TAYAK,bp_01_08,SZ,Z,pick-based,0.15083809615823948,-4,-0.2,-,300
+S0234c,TAYAK,TAYAK,TAYAK,bp_01_08,PR,R,pick-based,0.1533748694622946,100,5.0,-,200
+S0234c,TAYAK,TAYAK,TAYAK,bp_01_08,ST,T,pick-based,0.2714747628916404,-39,-1.9500000000000002,+,300
+S0234c,TAYAK,TAYAK,TAYAK,bp_03_09,PZ,Z,pick-based,0.680595561606972,0,0.0,-,200
+S0234c,TAYAK,TAYAK,TAYAK,bp_03_09,SZ,Z,pick-based,0.2860156262713298,11,0.55,+,300
+S0234c,TAYAK,TAYAK,TAYAK,bp_03_09,PR,R,pick-based,0.7279007464783521,-59,-2.95,-,200
+S0234c,TAYAK,TAYAK,TAYAK,bp_03_09,ST,T,pick-based,0.6130692454128914,34,1.7000000000000002,-,300
+S0234c,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PZ,Z,pick-based,0.7028655731585778,0,0.0,-,200
+S0234c,TAYAK,TAYAK,TAYAK,bp_03_09_pol,SZ,Z,pick-based,0.15081899746030772,-3,-0.15000000000000002,-,300
+S0234c,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PR,R,pick-based,0.766100516034942,-98,-4.9,+,200
+S0234c,TAYAK,TAYAK,TAYAK,bp_03_09_pol,ST,T,pick-based,0.5163291965381289,-8,-0.4,+,300
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PZ,Z,pick-based,0.5235530711087621,-5,-0.25,+,200
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,SZ,Z,pick-based,0.7638348918634533,16,0.8,+,300
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PR,R,pick-based,0.25556814389609,-96,-4.800000000000001,-,200
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,ST,T,pick-based,0.22564446092316365,100,5.0,-,300
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PZ,Z,pick-based,0.3753648383279454,51,2.5500000000000003,-,200
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,SZ,Z,pick-based,0.48943980609274135,17,0.8500000000000001,+,300
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PR,R,pick-based,0.19577779354381133,100,5.0,-,200
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,ST,T,pick-based,0.12692821888187744,-48,-2.4000000000000004,+,300
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PZ,Z,pick-based,0.48437847642639315,-6,-0.30000000000000004,+,200
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,SZ,Z,pick-based,0.7539708831907068,15,0.75,+,300
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PR,R,pick-based,0.31143903672433115,81,4.05,+,200
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,ST,T,pick-based,0.3085048840326838,100,5.0,-,300
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PZ,Z,pick-based,0.8197009031970593,8,0.4,-,200
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,SZ,Z,pick-based,0.7389658044991801,30,1.5,-,300
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PR,R,pick-based,0.5726879078519005,29,1.4500000000000002,-,200
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,ST,T,pick-based,0.5327351169402261,100,5.0,-,300
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PZ,Z,pick-based,0.888760618955977,8,0.4,-,200
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,SZ,Z,pick-based,0.8947497965465651,16,0.8,+,300
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PR,R,pick-based,0.484450306726983,3,0.15000000000000002,-,200
+S0234c,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,ST,T,pick-based,0.48702192295081864,-6,-0.30000000000000004,-,300
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,raw,PZ,Z,pick-based,0.625079860338722,28,1.4000000000000001,-,200
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,raw,SZ,Z,pick-based,0.7132798143551428,29,1.4500000000000002,+,300
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,raw,PR,R,pick-based,0.3148967080853543,11,0.55,-,200
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,raw,ST,T,pick-based,0.2782286837610436,84,4.2,-,300
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,bp_01_05,PZ,Z,pick-based,0.27925781598304683,26,1.3,-,200
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,bp_01_05,SZ,Z,pick-based,0.3615864558603842,50,2.5,-,300
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,bp_01_05,PR,R,pick-based,0.2330764532303898,87,4.3500000000000005,+,200
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,bp_01_05,ST,T,pick-based,0.08978601592946539,-43,-2.15,+,300
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,bp_01_08,PZ,Z,pick-based,0.5827917783792267,27,1.35,-,200
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,bp_01_08,SZ,Z,pick-based,0.46306310549147556,28,1.4000000000000001,+,300
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,bp_01_08,PR,R,pick-based,0.3198710232014628,80,4.0,-,200
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,bp_01_08,ST,T,pick-based,0.2931716854455831,-46,-2.3000000000000003,+,300
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,bp_03_09,PZ,Z,pick-based,0.9547204494298147,42,2.1,+,200
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,bp_03_09,SZ,Z,pick-based,0.7683887018475649,29,1.4500000000000002,+,300
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,bp_03_09,PR,R,pick-based,0.52652574466139,83,4.15,-,200
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,bp_03_09,ST,T,pick-based,0.6020583895652015,84,4.2,-,300
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,bp_03_09_pol,PZ,Z,pick-based,0.963075419365074,42,2.1,+,200
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,bp_03_09_pol,SZ,Z,pick-based,0.912114064124019,29,1.4500000000000002,+,300
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,bp_03_09_pol,PR,R,pick-based,0.5532751604538964,69,3.45,+,200
+S0234c,EventBest,Event best (Geophysical_model979),Geophysical_model979,bp_03_09_pol,ST,T,pick-based,0.5769674166522187,84,4.2,-,300
+S0167b,X,Model X,X,raw,PZ,Z,pick-based,0.4101972091797415,50,2.5,-,200
+S0167b,X,Model X,X,raw,SZ,Z,pick-based,0.43413340005395523,37,1.85,+,300
+S0167b,X,Model X,X,raw,PR,R,pick-based,0.6456479133883384,75,3.75,+,200
+S0167b,X,Model X,X,raw,ST,T,pick-based,0.2606777105767144,-100,-5.0,+,300
+S0167b,X,Model X,X,bp_01_05,PZ,Z,pick-based,0.24317157506892859,34,1.7000000000000002,-,200
+S0167b,X,Model X,X,bp_01_05,SZ,Z,pick-based,0.4892659759682063,19,0.9500000000000001,-,300
+S0167b,X,Model X,X,bp_01_05,PR,R,pick-based,0.5904311000067644,-61,-3.0500000000000003,-,200
+S0167b,X,Model X,X,bp_01_05,ST,T,pick-based,0.14370043335669344,81,4.05,-,300
+S0167b,X,Model X,X,bp_01_08,PZ,Z,pick-based,0.23607000425817887,49,2.45,-,200
+S0167b,X,Model X,X,bp_01_08,SZ,Z,pick-based,0.4686653479649309,22,1.1,-,300
+S0167b,X,Model X,X,bp_01_08,PR,R,pick-based,0.6518487383592562,59,2.95,-,200
+S0167b,X,Model X,X,bp_01_08,ST,T,pick-based,0.28441041358194086,-85,-4.25,-,300
+S0167b,X,Model X,X,bp_03_09,PZ,Z,pick-based,0.6216426887659521,50,2.5,-,200
+S0167b,X,Model X,X,bp_03_09,SZ,Z,pick-based,0.43457430257607266,24,1.2000000000000002,-,300
+S0167b,X,Model X,X,bp_03_09,PR,R,pick-based,0.6209977911756069,75,3.75,+,200
+S0167b,X,Model X,X,bp_03_09,ST,T,pick-based,0.6430634999445413,-100,-5.0,+,300
+S0167b,X,Model X,X,bp_03_09_pol,PZ,Z,pick-based,0.28091247721629564,28,1.4000000000000001,+,200
+S0167b,X,Model X,X,bp_03_09_pol,SZ,Z,pick-based,0.45769164570995335,25,1.25,-,300
+S0167b,X,Model X,X,bp_03_09_pol,PR,R,pick-based,0.5940388892354203,26,1.3,-,200
+S0167b,X,Model X,X,bp_03_09_pol,ST,T,pick-based,0.06180172902726145,84,4.2,+,300
+S0167b,TAYAK,TAYAK,TAYAK,raw,PZ,Z,pick-based,0.407834040313132,-100,-5.0,-,200
+S0167b,TAYAK,TAYAK,TAYAK,raw,SZ,Z,pick-based,0.3327028302955824,-7,-0.35000000000000003,-,300
+S0167b,TAYAK,TAYAK,TAYAK,raw,PR,R,pick-based,0.6326078044515719,100,5.0,-,200
+S0167b,TAYAK,TAYAK,TAYAK,raw,ST,T,pick-based,0.06726397238347513,-72,-3.6,-,300
+S0167b,TAYAK,TAYAK,TAYAK,bp_01_05,PZ,Z,pick-based,0.30385740705457864,44,2.2,+,200
+S0167b,TAYAK,TAYAK,TAYAK,bp_01_05,SZ,Z,pick-based,0.39516616230646623,98,4.9,-,300
+S0167b,TAYAK,TAYAK,TAYAK,bp_01_05,PR,R,pick-based,0.27379919207174785,89,4.45,+,200
+S0167b,TAYAK,TAYAK,TAYAK,bp_01_05,ST,T,pick-based,0.09311441800711484,-36,-1.8,-,300
+S0167b,TAYAK,TAYAK,TAYAK,bp_01_08,PZ,Z,pick-based,0.2531308190556505,-97,-4.8500000000000005,-,200
+S0167b,TAYAK,TAYAK,TAYAK,bp_01_08,SZ,Z,pick-based,0.28198366365889915,-7,-0.35000000000000003,-,300
+S0167b,TAYAK,TAYAK,TAYAK,bp_01_08,PR,R,pick-based,0.7217871370834547,85,4.25,+,200
+S0167b,TAYAK,TAYAK,TAYAK,bp_01_08,ST,T,pick-based,0.0603155489800736,-40,-2.0,-,300
+S0167b,TAYAK,TAYAK,TAYAK,bp_03_09,PZ,Z,pick-based,0.6562085584554375,-99,-4.95,-,200
+S0167b,TAYAK,TAYAK,TAYAK,bp_03_09,SZ,Z,pick-based,0.3121556305751532,-7,-0.35000000000000003,-,300
+S0167b,TAYAK,TAYAK,TAYAK,bp_03_09,PR,R,pick-based,0.7776107572546832,86,4.3,+,200
+S0167b,TAYAK,TAYAK,TAYAK,bp_03_09,ST,T,pick-based,0.1610730327683723,75,3.75,+,300
+S0167b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PZ,Z,pick-based,0.7141184572530856,-99,-4.95,-,200
+S0167b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,SZ,Z,pick-based,0.26721716262968953,67,3.35,-,300
+S0167b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PR,R,pick-based,0.7759534823794219,100,5.0,-,200
+S0167b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,ST,T,pick-based,0.06271240881026076,41,2.0500000000000003,+,300
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PZ,Z,pick-based,0.35014814599936295,14,0.7000000000000001,+,200
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,SZ,Z,pick-based,0.3192175663232467,100,5.0,+,300
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PR,R,pick-based,0.6119821260386998,-43,-2.15,+,200
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,ST,T,pick-based,0.37586722932807165,99,4.95,+,300
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PZ,Z,pick-based,0.2601902208582957,68,3.4000000000000004,-,200
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,SZ,Z,pick-based,0.4092698036676624,94,4.7,+,300
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PR,R,pick-based,0.1714292824751466,100,5.0,-,200
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,ST,T,pick-based,0.2903262378986153,45,2.25,-,300
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PZ,Z,pick-based,0.3323899311859916,14,0.7000000000000001,+,200
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,SZ,Z,pick-based,0.3336564276897013,99,4.95,+,300
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PR,R,pick-based,0.6189950070992479,-58,-2.9000000000000004,-,200
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,ST,T,pick-based,0.35474010303736725,11,0.55,-,300
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PZ,Z,pick-based,0.7636730502871796,15,0.75,+,200
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,SZ,Z,pick-based,0.3533502190739698,100,5.0,+,300
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PR,R,pick-based,0.815706261705483,-43,-2.15,+,200
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,ST,T,pick-based,0.5026960854739808,11,0.55,-,300
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PZ,Z,pick-based,0.7233279167203057,14,0.7000000000000001,+,200
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,SZ,Z,pick-based,0.31241132659606,100,5.0,+,300
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PR,R,pick-based,0.787287267653831,-43,-2.15,+,200
+S0167b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,ST,T,pick-based,0.6991196582281415,-4,-0.2,+,300
+S0167b,EventBest,Event best (MD_model37),MD_model37,raw,PZ,Z,pick-based,0.6330746644078481,77,3.85,+,200
+S0167b,EventBest,Event best (MD_model37),MD_model37,raw,SZ,Z,pick-based,0.526607417895144,97,4.8500000000000005,-,300
+S0167b,EventBest,Event best (MD_model37),MD_model37,raw,PR,R,pick-based,0.6319786329073799,2,0.1,+,200
+S0167b,EventBest,Event best (MD_model37),MD_model37,raw,ST,T,pick-based,0.5896749795133065,-34,-1.7000000000000002,+,300
+S0167b,EventBest,Event best (MD_model37),MD_model37,bp_01_05,PZ,Z,pick-based,0.36262583421730993,-9,-0.45,-,200
+S0167b,EventBest,Event best (MD_model37),MD_model37,bp_01_05,SZ,Z,pick-based,0.4015376194080759,4,0.2,+,300
+S0167b,EventBest,Event best (MD_model37),MD_model37,bp_01_05,PR,R,pick-based,0.14606337050272283,98,4.9,-,200
+S0167b,EventBest,Event best (MD_model37),MD_model37,bp_01_05,ST,T,pick-based,0.21469998891549213,78,3.9000000000000004,-,300
+S0167b,EventBest,Event best (MD_model37),MD_model37,bp_01_08,PZ,Z,pick-based,0.27303013030417994,-87,-4.3500000000000005,-,200
+S0167b,EventBest,Event best (MD_model37),MD_model37,bp_01_08,SZ,Z,pick-based,0.5541759895349825,94,4.7,-,300
+S0167b,EventBest,Event best (MD_model37),MD_model37,bp_01_08,PR,R,pick-based,0.6169177430093067,-12,-0.6000000000000001,-,200
+S0167b,EventBest,Event best (MD_model37),MD_model37,bp_01_08,ST,T,pick-based,0.6372545686771309,-35,-1.75,+,300
+S0167b,EventBest,Event best (MD_model37),MD_model37,bp_03_09,PZ,Z,pick-based,0.41250157112385427,-81,-4.05,+,200
+S0167b,EventBest,Event best (MD_model37),MD_model37,bp_03_09,SZ,Z,pick-based,0.5646925280909619,97,4.8500000000000005,-,300
+S0167b,EventBest,Event best (MD_model37),MD_model37,bp_03_09,PR,R,pick-based,0.7147984081163798,-12,-0.6000000000000001,-,200
+S0167b,EventBest,Event best (MD_model37),MD_model37,bp_03_09,ST,T,pick-based,0.7311378666377446,-35,-1.75,+,300
+S0167b,EventBest,Event best (MD_model37),MD_model37,bp_03_09_pol,PZ,Z,pick-based,0.45540437413071266,-96,-4.800000000000001,-,200
+S0167b,EventBest,Event best (MD_model37),MD_model37,bp_03_09_pol,SZ,Z,pick-based,0.6704849424317724,97,4.8500000000000005,-,300
+S0167b,EventBest,Event best (MD_model37),MD_model37,bp_03_09_pol,PR,R,pick-based,0.7342653488270557,-11,-0.55,-,200
+S0167b,EventBest,Event best (MD_model37),MD_model37,bp_03_09_pol,ST,T,pick-based,0.6549240401043476,-87,-4.3500000000000005,-,300
+S1102a,X,Model X,X,raw,PZ,Z,pick-based,0.5792235813803271,43,2.15,+,200
+S1102a,X,Model X,X,raw,SZ,Z,pick-based,0.19569813280815834,-100,-5.0,+,300
+S1102a,X,Model X,X,raw,PR,R,pick-based,0.438916030918607,90,4.5,+,200
+S1102a,X,Model X,X,raw,ST,T,pick-based,0.10228620855520089,-58,-2.9000000000000004,+,300
+S1102a,X,Model X,X,bp_01_05,PZ,Z,pick-based,0.3684662625912451,100,5.0,-,200
+S1102a,X,Model X,X,bp_01_05,SZ,Z,pick-based,0.3603914442892013,-9,-0.45,+,300
+S1102a,X,Model X,X,bp_01_05,PR,R,pick-based,0.3431376023673273,-83,-4.15,+,200
+S1102a,X,Model X,X,bp_01_05,ST,T,pick-based,0.07077891454788515,-100,-5.0,-,300
+S1102a,X,Model X,X,bp_01_08,PZ,Z,pick-based,0.5189146826933343,42,2.1,+,200
+S1102a,X,Model X,X,bp_01_08,SZ,Z,pick-based,0.26180517349171645,15,0.75,+,300
+S1102a,X,Model X,X,bp_01_08,PR,R,pick-based,0.3831585536635274,100,5.0,-,200
+S1102a,X,Model X,X,bp_01_08,ST,T,pick-based,0.09008339288338994,-100,-5.0,-,300
+S1102a,X,Model X,X,bp_03_09,PZ,Z,pick-based,0.7356245219492681,43,2.15,+,200
+S1102a,X,Model X,X,bp_03_09,SZ,Z,pick-based,0.32817471091273687,86,4.3,-,300
+S1102a,X,Model X,X,bp_03_09,PR,R,pick-based,0.6773742787693513,89,4.45,+,200
+S1102a,X,Model X,X,bp_03_09,ST,T,pick-based,0.775767996704613,-58,-2.9000000000000004,+,300
+S1102a,X,Model X,X,bp_03_09_pol,PZ,Z,pick-based,0.8021714184381166,42,2.1,+,200
+S1102a,X,Model X,X,bp_03_09_pol,SZ,Z,pick-based,0.5281384369507436,72,3.6,-,300
+S1102a,X,Model X,X,bp_03_09_pol,PR,R,pick-based,0.7220301362818963,90,4.5,+,200
+S1102a,X,Model X,X,bp_03_09_pol,ST,T,pick-based,0.733235221752289,-58,-2.9000000000000004,+,300
+S1102a,TAYAK,TAYAK,TAYAK,raw,PZ,Z,pick-based,0.49728186058834584,17,0.8500000000000001,+,200
+S1102a,TAYAK,TAYAK,TAYAK,raw,SZ,Z,pick-based,0.42566353278990376,26,1.3,+,300
+S1102a,TAYAK,TAYAK,TAYAK,raw,PR,R,pick-based,0.1621195073008152,99,4.95,+,200
+S1102a,TAYAK,TAYAK,TAYAK,raw,ST,T,pick-based,0.09316114517167301,-18,-0.9,+,300
+S1102a,TAYAK,TAYAK,TAYAK,bp_01_05,PZ,Z,pick-based,0.25540398621865773,19,0.9500000000000001,+,200
+S1102a,TAYAK,TAYAK,TAYAK,bp_01_05,SZ,Z,pick-based,0.22437573499187222,80,4.0,+,300
+S1102a,TAYAK,TAYAK,TAYAK,bp_01_05,PR,R,pick-based,0.14871085864775668,71,3.5500000000000003,+,200
+S1102a,TAYAK,TAYAK,TAYAK,bp_01_05,ST,T,pick-based,0.09330823661135372,-100,-5.0,-,300
+S1102a,TAYAK,TAYAK,TAYAK,bp_01_08,PZ,Z,pick-based,0.31334511621353456,-9,-0.45,+,200
+S1102a,TAYAK,TAYAK,TAYAK,bp_01_08,SZ,Z,pick-based,0.4644125488076623,56,2.8000000000000003,+,300
+S1102a,TAYAK,TAYAK,TAYAK,bp_01_08,PR,R,pick-based,0.1859393240294921,84,4.2,-,200
+S1102a,TAYAK,TAYAK,TAYAK,bp_01_08,ST,T,pick-based,0.10133960582245666,-79,-3.95,+,300
+S1102a,TAYAK,TAYAK,TAYAK,bp_03_09,PZ,Z,pick-based,0.8847706459386205,4,0.2,-,200
+S1102a,TAYAK,TAYAK,TAYAK,bp_03_09,SZ,Z,pick-based,0.6030855121901274,26,1.3,+,300
+S1102a,TAYAK,TAYAK,TAYAK,bp_03_09,PR,R,pick-based,0.650020982745508,99,4.95,+,200
+S1102a,TAYAK,TAYAK,TAYAK,bp_03_09,ST,T,pick-based,0.619141685312653,-4,-0.2,-,300
+S1102a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PZ,Z,pick-based,0.8950382035044233,5,0.25,-,200
+S1102a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,SZ,Z,pick-based,0.28782129533713363,89,4.45,+,300
+S1102a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PR,R,pick-based,0.8919678608544201,100,5.0,+,200
+S1102a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,ST,T,pick-based,0.5992724334084402,10,0.5,+,300
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PZ,Z,pick-based,0.323945740174202,31,1.55,+,200
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,SZ,Z,pick-based,0.5266671276559206,-3,-0.15000000000000002,+,300
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PR,R,pick-based,0.49573309387136755,100,5.0,-,200
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,ST,T,pick-based,0.12110876173679169,24,1.2000000000000002,-,300
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PZ,Z,pick-based,0.2443610837066035,67,3.35,+,200
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,SZ,Z,pick-based,0.22788436314835192,-10,-0.5,+,300
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PR,R,pick-based,0.3929698240567206,60,3.0,-,200
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,ST,T,pick-based,0.08536043627181511,-99,-4.95,-,300
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PZ,Z,pick-based,0.341534636366482,31,1.55,+,200
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,SZ,Z,pick-based,0.42201448130237473,-3,-0.15000000000000002,+,300
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PR,R,pick-based,0.6201006317925646,100,5.0,-,200
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,ST,T,pick-based,0.08823449103149789,24,1.2000000000000002,-,300
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PZ,Z,pick-based,0.8197632251034235,31,1.55,+,200
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,SZ,Z,pick-based,0.6216076716520059,-17,-0.8500000000000001,-,300
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PR,R,pick-based,0.5304360142107146,100,5.0,-,200
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,ST,T,pick-based,0.7980720976564524,24,1.2000000000000002,-,300
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PZ,Z,pick-based,0.8067445523295315,31,1.55,+,200
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,SZ,Z,pick-based,0.23479247815876517,-29,-1.4500000000000002,+,300
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PR,R,pick-based,0.604543051031498,100,5.0,-,200
+S1102a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,ST,T,pick-based,0.7709907065776829,37,1.85,+,300
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,raw,PZ,Z,pick-based,0.7927444954879266,31,1.55,+,200
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,raw,SZ,Z,pick-based,0.5301508155840431,-7,-0.35000000000000003,+,300
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,raw,PR,R,pick-based,0.49997269350029533,97,4.8500000000000005,-,200
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,raw,ST,T,pick-based,0.08176150991173783,1,0.05,-,300
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,bp_01_05,PZ,Z,pick-based,0.5942424524180636,92,4.6000000000000005,-,200
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,bp_01_05,SZ,Z,pick-based,0.2371485476609645,69,3.45,+,300
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,bp_01_05,PR,R,pick-based,0.12799319834782152,33,1.6500000000000001,-,200
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,bp_01_05,ST,T,pick-based,0.07803627173614607,-74,-3.7,+,300
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,bp_01_08,PZ,Z,pick-based,0.7597338699170912,31,1.55,+,200
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,bp_01_08,SZ,Z,pick-based,0.47071613959810116,-7,-0.35000000000000003,+,300
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,bp_01_08,PR,R,pick-based,0.2713885690247709,96,4.800000000000001,-,200
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,bp_01_08,ST,T,pick-based,0.07429934136079848,2,0.1,-,300
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,bp_03_09,PZ,Z,pick-based,0.8695175016034243,31,1.55,+,200
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,bp_03_09,SZ,Z,pick-based,0.7759270321538706,-21,-1.05,-,300
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,bp_03_09,PR,R,pick-based,0.685358541767638,96,4.800000000000001,-,200
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,bp_03_09,ST,T,pick-based,0.5885410000586279,1,0.05,-,300
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,bp_03_09_pol,PZ,Z,pick-based,0.8498048021456178,89,4.45,-,200
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,bp_03_09_pol,SZ,Z,pick-based,0.5291815802006187,99,4.95,-,300
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,bp_03_09_pol,PR,R,pick-based,0.6955315289527296,96,4.800000000000001,-,200
+S1102a,EventBest,Event best (Geophysical_model58),Geophysical_model58,bp_03_09_pol,ST,T,pick-based,0.5719115059289888,1,0.05,-,300
+S1153a,X,Model X,X,raw,PZ,Z,pick-based,0.7839496774212424,63,3.1500000000000004,-,200
+S1153a,X,Model X,X,raw,SZ,Z,pick-based,0.42340580663075894,100,5.0,-,300
+S1153a,X,Model X,X,raw,PR,R,pick-based,0.8075411384004928,47,2.35,-,200
+S1153a,X,Model X,X,raw,ST,T,pick-based,0.2010757477176923,89,4.45,-,300
+S1153a,X,Model X,X,bp_01_05,PZ,Z,pick-based,0.39741139429575734,63,3.1500000000000004,-,200
+S1153a,X,Model X,X,bp_01_05,SZ,Z,pick-based,0.45971319840421476,62,3.1,-,300
+S1153a,X,Model X,X,bp_01_05,PR,R,pick-based,0.4138151249297994,100,5.0,+,200
+S1153a,X,Model X,X,bp_01_05,ST,T,pick-based,0.1522630077607018,97,4.8500000000000005,+,300
+S1153a,X,Model X,X,bp_01_08,PZ,Z,pick-based,0.8398065704113636,78,3.9000000000000004,+,200
+S1153a,X,Model X,X,bp_01_08,SZ,Z,pick-based,0.4737980404357839,100,5.0,-,300
+S1153a,X,Model X,X,bp_01_08,PR,R,pick-based,0.7921935131799408,48,2.4000000000000004,-,200
+S1153a,X,Model X,X,bp_01_08,ST,T,pick-based,0.26154496327759924,100,5.0,+,300
+S1153a,X,Model X,X,bp_03_09,PZ,Z,pick-based,0.9236250184277366,78,3.9000000000000004,+,200
+S1153a,X,Model X,X,bp_03_09,SZ,Z,pick-based,0.44010914191787587,100,5.0,-,300
+S1153a,X,Model X,X,bp_03_09,PR,R,pick-based,0.9151101454381931,34,1.7000000000000002,+,200
+S1153a,X,Model X,X,bp_03_09,ST,T,pick-based,0.5190351243647228,88,4.4,-,300
+S1153a,X,Model X,X,bp_03_09_pol,PZ,Z,pick-based,0.9157869853682961,78,3.9000000000000004,+,200
+S1153a,X,Model X,X,bp_03_09_pol,SZ,Z,pick-based,0.6689768291348841,-14,-0.7000000000000001,-,300
+S1153a,X,Model X,X,bp_03_09_pol,PR,R,pick-based,0.8954631619402256,20,1.0,-,200
+S1153a,X,Model X,X,bp_03_09_pol,ST,T,pick-based,0.4743904029545077,100,5.0,+,300
+S1153a,TAYAK,TAYAK,TAYAK,raw,PZ,Z,pick-based,0.36318470048021556,97,4.8500000000000005,+,200
+S1153a,TAYAK,TAYAK,TAYAK,raw,SZ,Z,pick-based,0.7046066863733524,65,3.25,-,300
+S1153a,TAYAK,TAYAK,TAYAK,raw,PR,R,pick-based,0.2906097826320384,85,4.25,-,200
+S1153a,TAYAK,TAYAK,TAYAK,raw,ST,T,pick-based,0.3899337400457851,-77,-3.85,+,300
+S1153a,TAYAK,TAYAK,TAYAK,bp_01_05,PZ,Z,pick-based,0.15814394811022026,-51,-2.5500000000000003,-,200
+S1153a,TAYAK,TAYAK,TAYAK,bp_01_05,SZ,Z,pick-based,0.8392542418578309,86,4.3,+,300
+S1153a,TAYAK,TAYAK,TAYAK,bp_01_05,PR,R,pick-based,0.11304889749970437,65,3.25,+,200
+S1153a,TAYAK,TAYAK,TAYAK,bp_01_05,ST,T,pick-based,0.18732934124794845,-84,-4.2,+,300
+S1153a,TAYAK,TAYAK,TAYAK,bp_01_08,PZ,Z,pick-based,0.4176388344574279,97,4.8500000000000005,+,200
+S1153a,TAYAK,TAYAK,TAYAK,bp_01_08,SZ,Z,pick-based,0.749068029746852,65,3.25,-,300
+S1153a,TAYAK,TAYAK,TAYAK,bp_01_08,PR,R,pick-based,0.1448499499612056,70,3.5,+,200
+S1153a,TAYAK,TAYAK,TAYAK,bp_01_08,ST,T,pick-based,0.08324450469361916,17,0.8500000000000001,+,300
+S1153a,TAYAK,TAYAK,TAYAK,bp_03_09,PZ,Z,pick-based,0.8503892497787496,96,4.800000000000001,+,200
+S1153a,TAYAK,TAYAK,TAYAK,bp_03_09,SZ,Z,pick-based,0.7351456709580637,65,3.25,-,300
+S1153a,TAYAK,TAYAK,TAYAK,bp_03_09,PR,R,pick-based,0.9288031572641741,85,4.25,-,200
+S1153a,TAYAK,TAYAK,TAYAK,bp_03_09,ST,T,pick-based,0.27900430315733193,-82,-4.1000000000000005,-,300
+S1153a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PZ,Z,pick-based,0.8453860873239908,96,4.800000000000001,+,200
+S1153a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,SZ,Z,pick-based,0.587194954574203,-100,-5.0,+,300
+S1153a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PR,R,pick-based,0.8665213848158334,85,4.25,-,200
+S1153a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,ST,T,pick-based,0.27559701277987964,-97,-4.8500000000000005,+,300
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PZ,Z,pick-based,0.5786697143689247,20,1.0,-,200
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,SZ,Z,pick-based,0.45136676136235904,96,4.800000000000001,+,300
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PR,R,pick-based,0.2450859739034176,-13,-0.65,+,200
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,ST,T,pick-based,0.16238244034324248,-10,-0.5,-,300
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PZ,Z,pick-based,0.3546067060208214,100,5.0,-,200
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,SZ,Z,pick-based,0.33478925470857523,84,4.2,+,300
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PR,R,pick-based,0.21695279561043243,100,5.0,+,200
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,ST,T,pick-based,0.09733904667940615,-73,-3.6500000000000004,+,300
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PZ,Z,pick-based,0.30934384649371394,-13,-0.65,-,200
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,SZ,Z,pick-based,0.550878809917773,21,1.05,-,300
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PR,R,pick-based,0.23863145605772904,2,0.1,-,200
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,ST,T,pick-based,0.1435548341755863,21,1.05,-,300
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PZ,Z,pick-based,0.5293971392445413,-11,-0.55,-,200
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,SZ,Z,pick-based,0.5147559460698884,96,4.800000000000001,+,300
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PR,R,pick-based,0.8113452232433842,1,0.05,-,200
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,ST,T,pick-based,0.5814711985628731,-10,-0.5,-,300
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PZ,Z,pick-based,0.13296591850702474,-2,-0.1,+,200
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,SZ,Z,pick-based,0.7583442015782765,-99,-4.95,-,300
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PR,R,pick-based,0.882282172669126,1,0.05,-,200
+S1153a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,ST,T,pick-based,0.12422906556069277,97,4.8500000000000005,-,300
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,raw,PZ,Z,pick-based,0.6083528189312855,11,0.55,+,200
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,raw,SZ,Z,pick-based,0.5645513828010538,-3,-0.15000000000000002,-,300
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,raw,PR,R,pick-based,0.16255324633314838,11,0.55,-,200
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,raw,ST,T,pick-based,0.08046936548262507,98,4.9,+,300
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,bp_01_05,PZ,Z,pick-based,0.16246697195410417,97,4.8500000000000005,-,200
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,bp_01_05,SZ,Z,pick-based,0.5709495477134509,90,4.5,+,300
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,bp_01_05,PR,R,pick-based,0.21747875603489486,100,5.0,+,200
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,bp_01_05,ST,T,pick-based,0.18088828618125766,-69,-3.45,-,300
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,bp_01_08,PZ,Z,pick-based,0.38710509847750946,11,0.55,+,200
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,bp_01_08,SZ,Z,pick-based,0.5914164229481602,-4,-0.2,-,300
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,bp_01_08,PR,R,pick-based,0.1817636515513971,100,5.0,+,200
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,bp_01_08,ST,T,pick-based,0.07061205352378976,98,4.9,+,300
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,bp_03_09,PZ,Z,pick-based,0.769423916591946,25,1.25,-,200
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,bp_03_09,SZ,Z,pick-based,0.6043613451767301,-4,-0.2,-,300
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,bp_03_09,PR,R,pick-based,0.7478439551161505,23,1.1500000000000001,+,200
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,bp_03_09,ST,T,pick-based,0.4470312576922808,99,4.95,+,300
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,bp_03_09_pol,PZ,Z,pick-based,0.7722148489713727,11,0.55,+,200
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,bp_03_09_pol,SZ,Z,pick-based,0.3309535646507633,-83,-4.15,-,300
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,bp_03_09_pol,PR,R,pick-based,0.6086547397925887,36,1.8,-,200
+S1153a,EventBest,Event best (Geophysical_model489),Geophysical_model489,bp_03_09_pol,ST,T,pick-based,0.36563580759652486,99,4.95,+,300
+S1415a,X,Model X,X,raw,PZ,Z,pick-based,0.6329933400199969,22,1.1,+,200
+S1415a,X,Model X,X,raw,SZ,Z,pick-based,0.5791920811783079,73,3.6500000000000004,-,300
+S1415a,X,Model X,X,raw,PR,R,pick-based,0.8055572301300284,23,1.1500000000000001,+,200
+S1415a,X,Model X,X,raw,ST,T,pick-based,0.418707563553747,59,2.95,+,300
+S1415a,X,Model X,X,bp_01_05,PZ,Z,pick-based,0.4440906850693535,88,4.4,+,200
+S1415a,X,Model X,X,bp_01_05,SZ,Z,pick-based,0.22231496169121875,79,3.95,-,300
+S1415a,X,Model X,X,bp_01_05,PR,R,pick-based,0.38411088975904084,-57,-2.85,-,200
+S1415a,X,Model X,X,bp_01_05,ST,T,pick-based,0.4624903339285138,10,0.5,+,300
+S1415a,X,Model X,X,bp_01_08,PZ,Z,pick-based,0.5311639930544094,21,1.05,+,200
+S1415a,X,Model X,X,bp_01_08,SZ,Z,pick-based,0.6471563774312021,58,2.9000000000000004,+,300
+S1415a,X,Model X,X,bp_01_08,PR,R,pick-based,0.6301055045015171,23,1.1500000000000001,+,200
+S1415a,X,Model X,X,bp_01_08,ST,T,pick-based,0.4699504964508389,74,3.7,-,300
+S1415a,X,Model X,X,bp_03_09,PZ,Z,pick-based,0.5603464450812988,22,1.1,+,200
+S1415a,X,Model X,X,bp_03_09,SZ,Z,pick-based,0.7842451223830762,59,2.95,+,300
+S1415a,X,Model X,X,bp_03_09,PR,R,pick-based,0.7133501291268106,83,4.15,-,200
+S1415a,X,Model X,X,bp_03_09,ST,T,pick-based,0.5629701602852023,59,2.95,+,300
+S1415a,X,Model X,X,bp_03_09_pol,PZ,Z,pick-based,0.5329623334450063,22,1.1,+,200
+S1415a,X,Model X,X,bp_03_09_pol,SZ,Z,pick-based,0.8693563630667532,73,3.6500000000000004,-,300
+S1415a,X,Model X,X,bp_03_09_pol,PR,R,pick-based,0.6775427709241086,83,4.15,-,200
+S1415a,X,Model X,X,bp_03_09_pol,ST,T,pick-based,0.4604966040133265,3,0.15000000000000002,+,300
+S1415a,TAYAK,TAYAK,TAYAK,raw,PZ,Z,pick-based,0.3957217253926147,93,4.65,-,200
+S1415a,TAYAK,TAYAK,TAYAK,raw,SZ,Z,pick-based,0.47887779767820643,95,4.75,+,300
+S1415a,TAYAK,TAYAK,TAYAK,raw,PR,R,pick-based,0.611145949412479,-1,-0.05,+,200
+S1415a,TAYAK,TAYAK,TAYAK,raw,ST,T,pick-based,0.14502778280809095,33,1.6500000000000001,+,300
+S1415a,TAYAK,TAYAK,TAYAK,bp_01_05,PZ,Z,pick-based,0.1523540734749582,89,4.45,-,200
+S1415a,TAYAK,TAYAK,TAYAK,bp_01_05,SZ,Z,pick-based,0.16177741891796243,93,4.65,+,300
+S1415a,TAYAK,TAYAK,TAYAK,bp_01_05,PR,R,pick-based,0.22808939625972788,-100,-5.0,-,200
+S1415a,TAYAK,TAYAK,TAYAK,bp_01_05,ST,T,pick-based,0.103424193718676,27,1.35,+,300
+S1415a,TAYAK,TAYAK,TAYAK,bp_01_08,PZ,Z,pick-based,0.48834752403438925,92,4.6000000000000005,-,200
+S1415a,TAYAK,TAYAK,TAYAK,bp_01_08,SZ,Z,pick-based,0.5371871232968367,95,4.75,+,300
+S1415a,TAYAK,TAYAK,TAYAK,bp_01_08,PR,R,pick-based,0.5305943502442229,-1,-0.05,+,200
+S1415a,TAYAK,TAYAK,TAYAK,bp_01_08,ST,T,pick-based,0.10805745236624559,31,1.55,+,300
+S1415a,TAYAK,TAYAK,TAYAK,bp_03_09,PZ,Z,pick-based,0.6225323008369875,93,4.65,-,200
+S1415a,TAYAK,TAYAK,TAYAK,bp_03_09,SZ,Z,pick-based,0.7987467638339895,95,4.75,+,300
+S1415a,TAYAK,TAYAK,TAYAK,bp_03_09,PR,R,pick-based,0.9113956855175561,-1,-0.05,+,200
+S1415a,TAYAK,TAYAK,TAYAK,bp_03_09,ST,T,pick-based,0.4405387339421094,46,2.3000000000000003,-,300
+S1415a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PZ,Z,pick-based,0.6198983845833617,43,2.15,+,200
+S1415a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,SZ,Z,pick-based,0.7712930572425807,95,4.75,+,300
+S1415a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PR,R,pick-based,0.9488631743579053,-1,-0.05,+,200
+S1415a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,ST,T,pick-based,0.5785784575026343,-93,-4.65,-,300
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PZ,Z,pick-based,0.2038449507728493,-5,-0.25,-,200
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,SZ,Z,pick-based,0.39191825122039803,-61,-3.0500000000000003,+,300
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PR,R,pick-based,0.25734103573691336,-9,-0.45,-,200
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,ST,T,pick-based,0.39223574832644176,-94,-4.7,-,300
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PZ,Z,pick-based,0.08688180885198028,85,4.25,-,200
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,SZ,Z,pick-based,0.17260651235271757,87,4.3500000000000005,-,300
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PR,R,pick-based,0.3493273134234257,-16,-0.8,-,200
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,ST,T,pick-based,0.09657962991403611,30,1.5,+,300
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PZ,Z,pick-based,0.23199285702638164,-22,-1.1,+,200
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,SZ,Z,pick-based,0.40703740314633957,-75,-3.75,-,300
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PR,R,pick-based,0.3356757782504838,-10,-0.5,-,200
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,ST,T,pick-based,0.3006538199202575,-94,-4.7,-,300
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PZ,Z,pick-based,0.8605800381937404,-5,-0.25,-,200
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,SZ,Z,pick-based,0.6221820967251925,-74,-3.7,-,300
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PR,R,pick-based,0.418959427226493,100,5.0,-,200
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,ST,T,pick-based,0.7847360920617859,62,3.1,+,300
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PZ,Z,pick-based,0.859020202020005,-5,-0.25,-,200
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,SZ,Z,pick-based,0.6364521524050625,-60,-3.0,+,300
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PR,R,pick-based,0.43938796907881766,100,5.0,-,200
+S1415a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,ST,T,pick-based,0.7487965479522585,-94,-4.7,-,300
+S1415a,EventBest,Event best (MD_model34),MD_model34,raw,PZ,Z,pick-based,0.6063883888242836,-3,-0.15000000000000002,+,200
+S1415a,EventBest,Event best (MD_model34),MD_model34,raw,SZ,Z,pick-based,0.6413648609090996,89,4.45,+,300
+S1415a,EventBest,Event best (MD_model34),MD_model34,raw,PR,R,pick-based,0.3673009780618503,100,5.0,-,200
+S1415a,EventBest,Event best (MD_model34),MD_model34,raw,ST,T,pick-based,0.449793979857122,-1,-0.05,-,300
+S1415a,EventBest,Event best (MD_model34),MD_model34,bp_01_05,PZ,Z,pick-based,0.1642107725165259,-72,-3.6,+,200
+S1415a,EventBest,Event best (MD_model34),MD_model34,bp_01_05,SZ,Z,pick-based,0.23252832679371224,100,5.0,-,300
+S1415a,EventBest,Event best (MD_model34),MD_model34,bp_01_05,PR,R,pick-based,0.365793526457548,-89,-4.45,-,200
+S1415a,EventBest,Event best (MD_model34),MD_model34,bp_01_05,ST,T,pick-based,0.12113202149578313,-64,-3.2,-,300
+S1415a,EventBest,Event best (MD_model34),MD_model34,bp_01_08,PZ,Z,pick-based,0.6348955224235702,13,0.65,-,200
+S1415a,EventBest,Event best (MD_model34),MD_model34,bp_01_08,SZ,Z,pick-based,0.6935102175666082,88,4.4,+,300
+S1415a,EventBest,Event best (MD_model34),MD_model34,bp_01_08,PR,R,pick-based,0.24012101481475404,98,4.9,-,200
+S1415a,EventBest,Event best (MD_model34),MD_model34,bp_01_08,ST,T,pick-based,0.24638389859404375,-31,-1.55,-,300
+S1415a,EventBest,Event best (MD_model34),MD_model34,bp_03_09,PZ,Z,pick-based,0.6978688941938941,-3,-0.15000000000000002,+,200
+S1415a,EventBest,Event best (MD_model34),MD_model34,bp_03_09,SZ,Z,pick-based,0.7234963126733065,89,4.45,+,300
+S1415a,EventBest,Event best (MD_model34),MD_model34,bp_03_09,PR,R,pick-based,0.4871224222636338,87,4.3500000000000005,+,200
+S1415a,EventBest,Event best (MD_model34),MD_model34,bp_03_09,ST,T,pick-based,0.641394705287639,-15,-0.75,+,300
+S1415a,EventBest,Event best (MD_model34),MD_model34,bp_03_09_pol,PZ,Z,pick-based,0.7139938635085199,-3,-0.15000000000000002,+,200
+S1415a,EventBest,Event best (MD_model34),MD_model34,bp_03_09_pol,SZ,Z,pick-based,0.695156870483307,89,4.45,+,300
+S1415a,EventBest,Event best (MD_model34),MD_model34,bp_03_09_pol,PR,R,pick-based,0.49846552535119615,100,5.0,-,200
+S1415a,EventBest,Event best (MD_model34),MD_model34,bp_03_09_pol,ST,T,pick-based,0.7378371903284234,-15,-0.75,+,300
+S0133a,X,Model X,X,raw,PZ,Z,pick-based,0.33895124930023157,100,5.0,+,200
+S0133a,X,Model X,X,raw,SZ,Z,pick-based,0.5730206108387788,14,0.7000000000000001,+,300
+S0133a,X,Model X,X,raw,PR,R,pick-based,0.431555003353918,90,4.5,+,200
+S0133a,X,Model X,X,raw,ST,T,pick-based,0.14819448855949705,-95,-4.75,+,300
+S0133a,X,Model X,X,bp_01_05,PZ,Z,pick-based,0.314768614733023,55,2.75,+,200
+S0133a,X,Model X,X,bp_01_05,SZ,Z,pick-based,0.5037112578920251,48,2.4000000000000004,+,300
+S0133a,X,Model X,X,bp_01_05,PR,R,pick-based,0.277000880871478,69,3.45,+,200
+S0133a,X,Model X,X,bp_01_05,ST,T,pick-based,0.10914711781282067,11,0.55,-,300
+S0133a,X,Model X,X,bp_01_08,PZ,Z,pick-based,0.2403815300788646,-40,-2.0,-,200
+S0133a,X,Model X,X,bp_01_08,SZ,Z,pick-based,0.5432868413681619,-53,-2.6500000000000004,-,300
+S0133a,X,Model X,X,bp_01_08,PR,R,pick-based,0.39618918343406234,88,4.4,+,200
+S0133a,X,Model X,X,bp_01_08,ST,T,pick-based,0.11167029092175877,-100,-5.0,+,300
+S0133a,X,Model X,X,bp_03_09,PZ,Z,pick-based,0.3875369770809779,-44,-2.2,-,200
+S0133a,X,Model X,X,bp_03_09,SZ,Z,pick-based,0.5836902008096403,14,0.7000000000000001,+,300
+S0133a,X,Model X,X,bp_03_09,PR,R,pick-based,0.43124777386287566,89,4.45,+,200
+S0133a,X,Model X,X,bp_03_09,ST,T,pick-based,0.4520096978634794,-81,-4.05,-,300
+S0133a,X,Model X,X,bp_03_09_pol,PZ,Z,pick-based,0.42079213469148563,9,0.45,+,200
+S0133a,X,Model X,X,bp_03_09_pol,SZ,Z,pick-based,0.6185806002401658,-26,-1.3,-,300
+S0133a,X,Model X,X,bp_03_09_pol,PR,R,pick-based,0.5901924033886667,1,0.05,-,200
+S0133a,X,Model X,X,bp_03_09_pol,ST,T,pick-based,0.6947481399391947,-79,-3.95,-,300
+S0133a,TAYAK,TAYAK,TAYAK,raw,PZ,Z,pick-based,0.4801446251659461,92,4.6000000000000005,+,200
+S0133a,TAYAK,TAYAK,TAYAK,raw,SZ,Z,pick-based,0.48920940663647855,93,4.65,+,300
+S0133a,TAYAK,TAYAK,TAYAK,raw,PR,R,pick-based,0.29375785836208174,89,4.45,-,200
+S0133a,TAYAK,TAYAK,TAYAK,raw,ST,T,pick-based,0.2313713489801682,-79,-3.95,+,300
+S0133a,TAYAK,TAYAK,TAYAK,bp_01_05,PZ,Z,pick-based,0.41324999126690876,58,2.9000000000000004,-,200
+S0133a,TAYAK,TAYAK,TAYAK,bp_01_05,SZ,Z,pick-based,0.34236205286028565,2,0.1,+,300
+S0133a,TAYAK,TAYAK,TAYAK,bp_01_05,PR,R,pick-based,0.4007931633097499,8,0.4,-,200
+S0133a,TAYAK,TAYAK,TAYAK,bp_01_05,ST,T,pick-based,0.18254816137484717,-4,-0.2,-,300
+S0133a,TAYAK,TAYAK,TAYAK,bp_01_08,PZ,Z,pick-based,0.7199040481391609,90,4.5,+,200
+S0133a,TAYAK,TAYAK,TAYAK,bp_01_08,SZ,Z,pick-based,0.49118489252322295,94,4.7,+,300
+S0133a,TAYAK,TAYAK,TAYAK,bp_01_08,PR,R,pick-based,0.27795674877310567,9,0.45,-,200
+S0133a,TAYAK,TAYAK,TAYAK,bp_01_08,ST,T,pick-based,0.23685045963691032,-75,-3.75,+,300
+S0133a,TAYAK,TAYAK,TAYAK,bp_03_09,PZ,Z,pick-based,0.6439057499079334,92,4.6000000000000005,+,200
+S0133a,TAYAK,TAYAK,TAYAK,bp_03_09,SZ,Z,pick-based,0.5561115034846835,93,4.65,+,300
+S0133a,TAYAK,TAYAK,TAYAK,bp_03_09,PR,R,pick-based,0.7259103066863858,8,0.4,-,200
+S0133a,TAYAK,TAYAK,TAYAK,bp_03_09,ST,T,pick-based,0.5550531170582841,0,0.0,-,300
+S0133a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PZ,Z,pick-based,0.4934120761830189,92,4.6000000000000005,+,200
+S0133a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,SZ,Z,pick-based,0.4519321306575383,-43,-2.15,+,300
+S0133a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PR,R,pick-based,0.5872294374536798,8,0.4,-,200
+S0133a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,ST,T,pick-based,0.7472117666123056,-55,-2.75,-,300
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PZ,Z,pick-based,0.5960530818084107,41,2.0500000000000003,+,200
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,SZ,Z,pick-based,0.5717034613087135,82,4.1000000000000005,+,300
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PR,R,pick-based,0.20408136583150924,100,5.0,-,200
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,ST,T,pick-based,0.27455651460699093,6,0.30000000000000004,-,300
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PZ,Z,pick-based,0.6648105823724807,64,3.2,+,200
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,SZ,Z,pick-based,0.19137425070631173,87,4.3500000000000005,-,300
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PR,R,pick-based,0.2756912832481302,93,4.65,-,200
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,ST,T,pick-based,0.17790871242829592,39,1.9500000000000002,-,300
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PZ,Z,pick-based,0.8200396864400508,73,3.6500000000000004,+,200
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,SZ,Z,pick-based,0.558772465765377,97,4.8500000000000005,-,300
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PR,R,pick-based,0.208509284402878,100,5.0,-,200
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,ST,T,pick-based,0.28383913065368227,5,0.25,-,300
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PZ,Z,pick-based,0.710284985905857,57,2.85,-,200
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,SZ,Z,pick-based,0.601645743191131,82,4.1000000000000005,+,300
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PR,R,pick-based,0.7651780733531014,5,0.25,-,200
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,ST,T,pick-based,0.4368380115397493,21,1.05,+,300
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PZ,Z,pick-based,0.5462849425905806,57,2.85,-,200
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,SZ,Z,pick-based,0.38987360091187045,96,4.800000000000001,-,300
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PR,R,pick-based,0.4950096176197717,3,0.15000000000000002,-,200
+S0133a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,ST,T,pick-based,0.046674739397446985,99,4.95,-,300
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,raw,PZ,Z,pick-based,0.6338649764025864,94,4.7,+,200
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,raw,SZ,Z,pick-based,0.5517125011642025,-30,-1.5,-,300
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,raw,PR,R,pick-based,0.21454230369180954,86,4.3,-,200
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,raw,ST,T,pick-based,0.2347650501122787,-3,-0.15000000000000002,-,300
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,bp_01_05,PZ,Z,pick-based,0.7820391471576608,91,4.55,+,200
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,bp_01_05,SZ,Z,pick-based,0.1682634788751292,97,4.8500000000000005,-,300
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,bp_01_05,PR,R,pick-based,0.29779001647964226,91,4.55,-,200
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,bp_01_05,ST,T,pick-based,0.15532181313939142,5,0.25,-,300
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,bp_01_08,PZ,Z,pick-based,0.7748509438986901,95,4.75,+,200
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,bp_01_08,SZ,Z,pick-based,0.4532585358826826,-30,-1.5,-,300
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,bp_01_08,PR,R,pick-based,0.2659860891445124,84,4.2,-,200
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,bp_01_08,ST,T,pick-based,0.23484347274246295,-3,-0.15000000000000002,-,300
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,bp_03_09,PZ,Z,pick-based,0.7431546361669686,96,4.800000000000001,+,200
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,bp_03_09,SZ,Z,pick-based,0.6679594238976675,-43,-2.15,+,300
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,bp_03_09,PR,R,pick-based,0.41966962638390565,97,4.8500000000000005,+,200
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,bp_03_09,ST,T,pick-based,0.7044546147663598,-4,-0.2,-,300
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,bp_03_09_pol,PZ,Z,pick-based,0.5561397719212614,80,4.0,-,200
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,bp_03_09_pol,SZ,Z,pick-based,0.5644810800558303,-30,-1.5,-,300
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,bp_03_09_pol,PR,R,pick-based,0.5203573091966013,-20,-1.0,-,200
+S0133a,EventBest,Event best (Geophysical_model225),Geophysical_model225,bp_03_09_pol,ST,T,pick-based,0.7752388730077885,-100,-5.0,-,300
+S0254b,X,Model X,X,raw,PZ,Z,pick-based,0.5719947625997324,-61,-3.0500000000000003,+,200
+S0254b,X,Model X,X,raw,SZ,Z,pick-based,0.3668187000700267,-96,-4.800000000000001,-,300
+S0254b,X,Model X,X,raw,PR,R,pick-based,0.2829231221866802,20,1.0,+,200
+S0254b,X,Model X,X,raw,ST,T,pick-based,0.12683472122331269,-20,-1.0,-,300
+S0254b,X,Model X,X,bp_01_05,PZ,Z,pick-based,0.22819684616945282,-53,-2.6500000000000004,+,200
+S0254b,X,Model X,X,bp_01_05,SZ,Z,pick-based,0.24342281053882608,85,4.25,-,300
+S0254b,X,Model X,X,bp_01_05,PR,R,pick-based,0.21982615520051338,63,3.1500000000000004,+,200
+S0254b,X,Model X,X,bp_01_05,ST,T,pick-based,0.05659856105753292,-87,-4.3500000000000005,+,300
+S0254b,X,Model X,X,bp_01_08,PZ,Z,pick-based,0.5637470186568253,-60,-3.0,+,200
+S0254b,X,Model X,X,bp_01_08,SZ,Z,pick-based,0.46616981555424253,-96,-4.800000000000001,-,300
+S0254b,X,Model X,X,bp_01_08,PR,R,pick-based,0.22628598372958378,21,1.05,+,200
+S0254b,X,Model X,X,bp_01_08,ST,T,pick-based,0.12187080058755609,-21,-1.05,-,300
+S0254b,X,Model X,X,bp_03_09,PZ,Z,pick-based,0.6687744274826967,-61,-3.0500000000000003,+,200
+S0254b,X,Model X,X,bp_03_09,SZ,Z,pick-based,0.46451206263363776,-80,-4.0,+,300
+S0254b,X,Model X,X,bp_03_09,PR,R,pick-based,0.5449653889913865,95,4.75,+,200
+S0254b,X,Model X,X,bp_03_09,ST,T,pick-based,0.7966928080121962,-20,-1.0,-,300
+S0254b,X,Model X,X,bp_03_09_pol,PZ,Z,pick-based,0.5283274797857515,-61,-3.0500000000000003,+,200
+S0254b,X,Model X,X,bp_03_09_pol,SZ,Z,pick-based,0.9311144311658833,-100,-5.0,-,300
+S0254b,X,Model X,X,bp_03_09_pol,PR,R,pick-based,0.595557713834813,20,1.0,+,200
+S0254b,X,Model X,X,bp_03_09_pol,ST,T,pick-based,0.7838078313290926,-20,-1.0,-,300
+S0254b,TAYAK,TAYAK,TAYAK,raw,PZ,Z,pick-based,0.4395141549535095,-62,-3.1,-,200
+S0254b,TAYAK,TAYAK,TAYAK,raw,SZ,Z,pick-based,0.4142663266737963,-13,-0.65,-,300
+S0254b,TAYAK,TAYAK,TAYAK,raw,PR,R,pick-based,0.6945461073392928,38,1.9000000000000001,+,200
+S0254b,TAYAK,TAYAK,TAYAK,raw,ST,T,pick-based,0.10690242264055153,31,1.55,+,300
+S0254b,TAYAK,TAYAK,TAYAK,bp_01_05,PZ,Z,pick-based,0.20207592676546338,-75,-3.75,+,200
+S0254b,TAYAK,TAYAK,TAYAK,bp_01_05,SZ,Z,pick-based,0.25073907291787917,79,3.95,+,300
+S0254b,TAYAK,TAYAK,TAYAK,bp_01_05,PR,R,pick-based,0.37200648477026615,71,3.5500000000000003,+,200
+S0254b,TAYAK,TAYAK,TAYAK,bp_01_05,ST,T,pick-based,0.07296614857491689,-93,-4.65,+,300
+S0254b,TAYAK,TAYAK,TAYAK,bp_01_08,PZ,Z,pick-based,0.3911112639796773,-61,-3.0500000000000003,-,200
+S0254b,TAYAK,TAYAK,TAYAK,bp_01_08,SZ,Z,pick-based,0.49031985828580205,-13,-0.65,-,300
+S0254b,TAYAK,TAYAK,TAYAK,bp_01_08,PR,R,pick-based,0.7247926062280915,39,1.9500000000000002,+,200
+S0254b,TAYAK,TAYAK,TAYAK,bp_01_08,ST,T,pick-based,0.10620997360874605,47,2.35,-,300
+S0254b,TAYAK,TAYAK,TAYAK,bp_03_09,PZ,Z,pick-based,0.6268839801622633,-61,-3.0500000000000003,-,200
+S0254b,TAYAK,TAYAK,TAYAK,bp_03_09,SZ,Z,pick-based,0.5137680003933718,-13,-0.65,-,300
+S0254b,TAYAK,TAYAK,TAYAK,bp_03_09,PR,R,pick-based,0.8312827383153191,39,1.9500000000000002,+,200
+S0254b,TAYAK,TAYAK,TAYAK,bp_03_09,ST,T,pick-based,0.6707921343709174,77,3.85,-,300
+S0254b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PZ,Z,pick-based,0.4907991135143594,-60,-3.0,-,200
+S0254b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,SZ,Z,pick-based,0.9487584608734203,-96,-4.800000000000001,+,300
+S0254b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PR,R,pick-based,0.8579814701123393,38,1.9000000000000001,+,200
+S0254b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,ST,T,pick-based,0.6722627986884642,-100,-5.0,+,300
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PZ,Z,pick-based,0.6548109274153632,85,4.25,-,200
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,SZ,Z,pick-based,0.4318260351336178,-78,-3.9000000000000004,+,300
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PR,R,pick-based,0.7947528513024088,49,2.45,+,200
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,ST,T,pick-based,0.13747384049614106,-95,-4.75,+,300
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PZ,Z,pick-based,0.2508297503493779,52,2.6,-,200
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,SZ,Z,pick-based,0.562345400337705,70,3.5,+,300
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PR,R,pick-based,0.3754997238544145,-6,-0.30000000000000004,-,200
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,ST,T,pick-based,0.07393991982272188,-92,-4.6000000000000005,+,300
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PZ,Z,pick-based,0.5455195770638195,86,4.3,-,200
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,SZ,Z,pick-based,0.5322093620376548,-78,-3.9000000000000004,+,300
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PR,R,pick-based,0.8613693638440373,50,2.5,+,200
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,ST,T,pick-based,0.1269106583397689,-96,-4.800000000000001,+,300
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PZ,Z,pick-based,0.770153495275693,71,3.5500000000000003,+,200
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,SZ,Z,pick-based,0.5068745585569583,-95,-4.75,-,300
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PR,R,pick-based,0.9091021613113266,50,2.5,+,200
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,ST,T,pick-based,0.7271403121499825,-96,-4.800000000000001,+,300
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PZ,Z,pick-based,0.6522342187076433,-23,-1.1500000000000001,-,200
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,SZ,Z,pick-based,0.8760139727935828,-97,-4.8500000000000005,-,300
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PR,R,pick-based,0.9357171373273548,35,1.75,-,200
+S0254b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,ST,T,pick-based,0.7296423535239399,92,4.6000000000000005,-,300
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,raw,PZ,Z,pick-based,0.6573643052412877,13,0.65,+,200
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,raw,SZ,Z,pick-based,0.3391003031341986,-65,-3.25,-,300
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,raw,PR,R,pick-based,0.8722686827273339,52,2.6,+,200
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,raw,ST,T,pick-based,0.08484805721428192,-89,-4.45,+,300
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,bp_01_05,PZ,Z,pick-based,0.21188600982419675,-8,-0.4,-,200
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,bp_01_05,SZ,Z,pick-based,0.3847413928476176,89,4.45,-,300
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,bp_01_05,PR,R,pick-based,0.31398701601878604,56,2.8000000000000003,+,200
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,bp_01_05,ST,T,pick-based,0.055894024120125764,-89,-4.45,+,300
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,bp_01_08,PZ,Z,pick-based,0.5844353710570117,12,0.6000000000000001,+,200
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,bp_01_08,SZ,Z,pick-based,0.4350850325210856,-82,-4.1000000000000005,+,300
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,bp_01_08,PR,R,pick-based,0.9108751439234759,53,2.6500000000000004,+,200
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,bp_01_08,ST,T,pick-based,0.06994439249880788,-100,-5.0,-,300
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,bp_03_09,PZ,Z,pick-based,0.7460933317868813,27,1.35,-,200
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,bp_03_09,SZ,Z,pick-based,0.4760830829676549,-97,-4.8500000000000005,-,300
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,bp_03_09,PR,R,pick-based,0.9521399345780411,38,1.9000000000000001,-,200
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,bp_03_09,ST,T,pick-based,0.6504131204876585,-100,-5.0,-,300
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,bp_03_09_pol,PZ,Z,pick-based,0.7083665175434767,-82,-4.1000000000000005,-,200
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,bp_03_09_pol,SZ,Z,pick-based,0.8505940659092366,-11,-0.55,-,300
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,bp_03_09_pol,PR,R,pick-based,0.9566457901434081,38,1.9000000000000001,-,200
+S0254b,EventBest,Event best (Geophysical_model277),Geophysical_model277,bp_03_09_pol,ST,T,pick-based,0.6604575990964755,-100,-5.0,-,300
+S0395a,X,Model X,X,raw,PZ,Z,pick-based,0.6475583807062139,91,4.55,+,200
+S0395a,X,Model X,X,raw,SZ,Z,pick-based,0.3081693545099086,46,2.3000000000000003,-,300
+S0395a,X,Model X,X,raw,PR,R,pick-based,0.9381688751827542,48,2.4000000000000004,-,200
+S0395a,X,Model X,X,raw,ST,T,pick-based,0.4017098719704548,37,1.85,+,300
+S0395a,X,Model X,X,bp_01_05,PZ,Z,pick-based,0.5427016921743226,-33,-1.6500000000000001,-,200
+S0395a,X,Model X,X,bp_01_05,SZ,Z,pick-based,0.2521053395223602,42,2.1,-,300
+S0395a,X,Model X,X,bp_01_05,PR,R,pick-based,0.42237066068983137,-54,-2.7,-,200
+S0395a,X,Model X,X,bp_01_05,ST,T,pick-based,0.10743171605918175,37,1.85,+,300
+S0395a,X,Model X,X,bp_01_08,PZ,Z,pick-based,0.6426982432290816,89,4.45,+,200
+S0395a,X,Model X,X,bp_01_08,SZ,Z,pick-based,0.2858016874696176,46,2.3000000000000003,-,300
+S0395a,X,Model X,X,bp_01_08,PR,R,pick-based,0.8753792577815024,48,2.4000000000000004,-,200
+S0395a,X,Model X,X,bp_01_08,ST,T,pick-based,0.35458674975733284,37,1.85,+,300
+S0395a,X,Model X,X,bp_03_09,PZ,Z,pick-based,0.7179350841684965,90,4.5,+,200
+S0395a,X,Model X,X,bp_03_09,SZ,Z,pick-based,0.30801568437904797,46,2.3000000000000003,-,300
+S0395a,X,Model X,X,bp_03_09,PR,R,pick-based,0.9471638495598829,48,2.4000000000000004,-,200
+S0395a,X,Model X,X,bp_03_09,ST,T,pick-based,0.9054549883097257,37,1.85,+,300
+S0395a,X,Model X,X,bp_03_09_pol,PZ,Z,pick-based,0.10416286693481094,-80,-4.0,+,200
+S0395a,X,Model X,X,bp_03_09_pol,SZ,Z,pick-based,0.04797328524705935,46,2.3000000000000003,-,300
+S0395a,X,Model X,X,bp_03_09_pol,PR,R,pick-based,0.6532449434935274,-56,-2.8000000000000003,-,200
+S0395a,X,Model X,X,bp_03_09_pol,ST,T,pick-based,0.8699057369874091,51,2.5500000000000003,-,300
+S0395a,TAYAK,TAYAK,TAYAK,raw,PZ,Z,pick-based,0.44944848030683526,91,4.55,-,200
+S0395a,TAYAK,TAYAK,TAYAK,raw,SZ,Z,pick-based,0.36134429229069615,-45,-2.25,-,300
+S0395a,TAYAK,TAYAK,TAYAK,raw,PR,R,pick-based,0.5572763010930304,-39,-1.9500000000000002,-,200
+S0395a,TAYAK,TAYAK,TAYAK,raw,ST,T,pick-based,0.13675930841078027,94,4.7,-,300
+S0395a,TAYAK,TAYAK,TAYAK,bp_01_05,PZ,Z,pick-based,0.38784133254216113,-89,-4.45,+,200
+S0395a,TAYAK,TAYAK,TAYAK,bp_01_05,SZ,Z,pick-based,0.2964868430079679,-34,-1.7000000000000002,-,300
+S0395a,TAYAK,TAYAK,TAYAK,bp_01_05,PR,R,pick-based,0.05396957956339869,77,3.85,-,200
+S0395a,TAYAK,TAYAK,TAYAK,bp_01_05,ST,T,pick-based,0.0449129425515508,92,4.6000000000000005,-,300
+S0395a,TAYAK,TAYAK,TAYAK,bp_01_08,PZ,Z,pick-based,0.411725328901589,91,4.55,-,200
+S0395a,TAYAK,TAYAK,TAYAK,bp_01_08,SZ,Z,pick-based,0.347584853462537,-42,-2.1,-,300
+S0395a,TAYAK,TAYAK,TAYAK,bp_01_08,PR,R,pick-based,0.25136622743367343,-39,-1.9500000000000002,-,200
+S0395a,TAYAK,TAYAK,TAYAK,bp_01_08,ST,T,pick-based,0.15568533904322313,93,4.65,-,300
+S0395a,TAYAK,TAYAK,TAYAK,bp_03_09,PZ,Z,pick-based,0.8350941824738479,91,4.55,-,200
+S0395a,TAYAK,TAYAK,TAYAK,bp_03_09,SZ,Z,pick-based,0.413267377667324,-45,-2.25,-,300
+S0395a,TAYAK,TAYAK,TAYAK,bp_03_09,PR,R,pick-based,0.7321917221666333,-39,-1.9500000000000002,-,200
+S0395a,TAYAK,TAYAK,TAYAK,bp_03_09,ST,T,pick-based,0.6158454177246269,94,4.7,-,300
+S0395a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PZ,Z,pick-based,0.4887849569067345,90,4.5,-,200
+S0395a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,SZ,Z,pick-based,0.4389291447756373,-45,-2.25,-,300
+S0395a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PR,R,pick-based,0.6336991133477787,-54,-2.7,+,200
+S0395a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,ST,T,pick-based,0.5199061228757207,41,2.0500000000000003,+,300
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PZ,Z,pick-based,0.34685092136369333,58,2.9000000000000004,-,200
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,SZ,Z,pick-based,0.4608693445404355,-77,-3.85,-,300
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PR,R,pick-based,0.3376924283523817,-51,-2.5500000000000003,-,200
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,ST,T,pick-based,0.16674781442946165,-46,-2.3000000000000003,-,300
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PZ,Z,pick-based,0.37199246314696605,-43,-2.15,-,200
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,SZ,Z,pick-based,0.35924941183294234,-53,-2.6500000000000004,+,300
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PR,R,pick-based,0.2155922132289741,-69,-3.45,+,200
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,ST,T,pick-based,0.154050404931021,90,4.5,-,300
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PZ,Z,pick-based,0.3186618249792683,57,2.85,-,200
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,SZ,Z,pick-based,0.42441228038325496,-60,-3.0,+,300
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PR,R,pick-based,0.29267343364677395,-67,-3.35,+,200
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,ST,T,pick-based,0.13079935150453276,-46,-2.3000000000000003,-,300
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PZ,Z,pick-based,0.6434905229908021,73,3.6500000000000004,+,200
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,SZ,Z,pick-based,0.48778780504001085,-76,-3.8000000000000003,-,300
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PR,R,pick-based,0.7236432749683923,91,4.55,+,200
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,ST,T,pick-based,0.5864966428358597,-46,-2.3000000000000003,-,300
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PZ,Z,pick-based,0.6852639571548461,100,5.0,+,200
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,SZ,Z,pick-based,0.5425371143200288,-75,-3.75,-,300
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PR,R,pick-based,0.5836969293065423,-49,-2.45,-,200
+S0395a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,ST,T,pick-based,0.759722848479653,-31,-1.55,+,300
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,raw,PZ,Z,pick-based,0.8713830164981267,55,2.75,-,200
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,raw,SZ,Z,pick-based,0.26324472097022494,-32,-1.6,-,300
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,raw,PR,R,pick-based,0.7773167839839454,88,4.4,-,200
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,raw,ST,T,pick-based,0.19605740756985163,-63,-3.1500000000000004,-,300
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,bp_01_05,PZ,Z,pick-based,0.44938881393357666,-38,-1.9000000000000001,-,200
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,bp_01_05,SZ,Z,pick-based,0.25919584284247865,-23,-1.1500000000000001,-,300
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,bp_01_05,PR,R,pick-based,0.3909586266455279,67,3.35,+,200
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,bp_01_05,ST,T,pick-based,0.07958104662841697,90,4.5,-,300
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,bp_01_08,PZ,Z,pick-based,0.7714165082232328,40,2.0,+,200
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,bp_01_08,SZ,Z,pick-based,0.26935068870729706,-30,-1.5,-,300
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,bp_01_08,PR,R,pick-based,0.796193827815408,87,4.3500000000000005,-,200
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,bp_01_08,ST,T,pick-based,0.18986115893460254,-63,-3.1500000000000004,-,300
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,bp_03_09,PZ,Z,pick-based,0.8527913582069825,41,2.0500000000000003,+,200
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,bp_03_09,SZ,Z,pick-based,0.2664672428669206,-32,-1.6,-,300
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,bp_03_09,PR,R,pick-based,0.843995128538804,88,4.4,-,200
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,bp_03_09,ST,T,pick-based,0.8191534307843491,-63,-3.1500000000000004,-,300
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,bp_03_09_pol,PZ,Z,pick-based,0.9132173389976646,96,4.800000000000001,+,200
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,bp_03_09_pol,SZ,Z,pick-based,0.10491533195197211,40,2.0,+,300
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,bp_03_09_pol,PR,R,pick-based,0.8503599779202357,88,4.4,-,200
+S0395a,EventBest,Event best (Geophysical_model573),Geophysical_model573,bp_03_09_pol,ST,T,pick-based,0.7084291790975206,-34,-1.7000000000000002,-,300
+S0345a,X,Model X,X,raw,PZ,Z,pick-based,0.652062036983732,41,2.0500000000000003,-,200
+S0345a,X,Model X,X,raw,SZ,Z,pick-based,0.16844639042795925,-12,-0.6000000000000001,+,300
+S0345a,X,Model X,X,raw,PR,R,pick-based,0.6037312349238204,-78,-3.9000000000000004,-,200
+S0345a,X,Model X,X,raw,ST,T,pick-based,0.12175090437757584,8,0.4,+,300
+S0345a,X,Model X,X,bp_01_05,PZ,Z,pick-based,0.4769233335182517,-62,-3.1,-,200
+S0345a,X,Model X,X,bp_01_05,SZ,Z,pick-based,0.19040976354929148,69,3.45,-,300
+S0345a,X,Model X,X,bp_01_05,PR,R,pick-based,0.6870020648240631,-94,-4.7,+,200
+S0345a,X,Model X,X,bp_01_05,ST,T,pick-based,0.041804346999621204,87,4.3500000000000005,+,300
+S0345a,X,Model X,X,bp_01_08,PZ,Z,pick-based,0.7472614349367622,41,2.0500000000000003,-,200
+S0345a,X,Model X,X,bp_01_08,SZ,Z,pick-based,0.26112995554921226,99,4.95,+,300
+S0345a,X,Model X,X,bp_01_08,PR,R,pick-based,0.6206492059960378,-95,-4.75,+,200
+S0345a,X,Model X,X,bp_01_08,ST,T,pick-based,0.05151046974760514,-93,-4.65,+,300
+S0345a,X,Model X,X,bp_03_09,PZ,Z,pick-based,0.7507381534678959,41,2.0500000000000003,-,200
+S0345a,X,Model X,X,bp_03_09,SZ,Z,pick-based,0.20680511543965532,100,5.0,+,300
+S0345a,X,Model X,X,bp_03_09,PR,R,pick-based,0.6734273053102356,-78,-3.9000000000000004,-,200
+S0345a,X,Model X,X,bp_03_09,ST,T,pick-based,0.2654200258589458,-94,-4.7,+,300
+S0345a,X,Model X,X,bp_03_09_pol,PZ,Z,pick-based,0.13517725542061923,41,2.0500000000000003,-,200
+S0345a,X,Model X,X,bp_03_09_pol,SZ,Z,pick-based,0.6168518299901979,1,0.05,-,300
+S0345a,X,Model X,X,bp_03_09_pol,PR,R,pick-based,0.5677749986175638,46,2.3000000000000003,+,200
+S0345a,X,Model X,X,bp_03_09_pol,ST,T,pick-based,0.6040365463587369,91,4.55,-,300
+S0345a,TAYAK,TAYAK,TAYAK,raw,PZ,Z,pick-based,0.29717587482151003,93,4.65,-,200
+S0345a,TAYAK,TAYAK,TAYAK,raw,SZ,Z,pick-based,0.3463644346629434,87,4.3500000000000005,+,300
+S0345a,TAYAK,TAYAK,TAYAK,raw,PR,R,pick-based,0.7337555378539657,-90,-4.5,-,200
+S0345a,TAYAK,TAYAK,TAYAK,raw,ST,T,pick-based,0.7054742205683122,-39,-1.9500000000000002,-,300
+S0345a,TAYAK,TAYAK,TAYAK,bp_01_05,PZ,Z,pick-based,0.2051855234020539,-54,-2.7,-,200
+S0345a,TAYAK,TAYAK,TAYAK,bp_01_05,SZ,Z,pick-based,0.343421969097794,100,5.0,-,300
+S0345a,TAYAK,TAYAK,TAYAK,bp_01_05,PR,R,pick-based,0.5840370632917927,-95,-4.75,+,200
+S0345a,TAYAK,TAYAK,TAYAK,bp_01_05,ST,T,pick-based,0.1652179002287166,48,2.4000000000000004,+,300
+S0345a,TAYAK,TAYAK,TAYAK,bp_01_08,PZ,Z,pick-based,0.18226470153191413,92,4.6000000000000005,-,200
+S0345a,TAYAK,TAYAK,TAYAK,bp_01_08,SZ,Z,pick-based,0.465544470329643,87,4.3500000000000005,+,300
+S0345a,TAYAK,TAYAK,TAYAK,bp_01_08,PR,R,pick-based,0.7029323361084704,-90,-4.5,-,200
+S0345a,TAYAK,TAYAK,TAYAK,bp_01_08,ST,T,pick-based,0.6678631026283839,-24,-1.2000000000000002,+,300
+S0345a,TAYAK,TAYAK,TAYAK,bp_03_09,PZ,Z,pick-based,0.7624728747389967,93,4.65,-,200
+S0345a,TAYAK,TAYAK,TAYAK,bp_03_09,SZ,Z,pick-based,0.5077177347684612,87,4.3500000000000005,+,300
+S0345a,TAYAK,TAYAK,TAYAK,bp_03_09,PR,R,pick-based,0.74288083652466,-90,-4.5,-,200
+S0345a,TAYAK,TAYAK,TAYAK,bp_03_09,ST,T,pick-based,0.8459847284477877,-25,-1.25,+,300
+S0345a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PZ,Z,pick-based,0.5828757980202208,-97,-4.8500000000000005,-,200
+S0345a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,SZ,Z,pick-based,0.5838989313502282,-57,-2.85,+,300
+S0345a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PR,R,pick-based,0.7335642508826593,-90,-4.5,-,200
+S0345a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,ST,T,pick-based,0.5623116983391425,-54,-2.7,+,300
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PZ,Z,pick-based,0.6276401275375061,-18,-0.9,-,200
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,SZ,Z,pick-based,0.9057320673975796,-34,-1.7000000000000002,+,300
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PR,R,pick-based,0.8604033527498524,-12,-0.6000000000000001,+,200
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,ST,T,pick-based,0.3556846061015345,92,4.6000000000000005,+,300
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PZ,Z,pick-based,0.1580761906171939,82,4.1000000000000005,+,200
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,SZ,Z,pick-based,0.16526244934430165,9,0.45,+,300
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PR,R,pick-based,0.771567078201541,-45,-2.25,+,200
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,ST,T,pick-based,0.11809455954335367,-16,-0.8,+,300
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PZ,Z,pick-based,0.4246717000297162,-17,-0.8500000000000001,-,200
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,SZ,Z,pick-based,0.6796513023589131,-19,-0.9500000000000001,-,300
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PR,R,pick-based,0.9274437897101538,-28,-1.4000000000000001,-,200
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,ST,T,pick-based,0.3480738140417582,92,4.6000000000000005,+,300
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PZ,Z,pick-based,0.7922417012609638,-17,-0.8500000000000001,-,200
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,SZ,Z,pick-based,0.9144384723495828,-33,-1.6500000000000001,+,300
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PR,R,pick-based,0.8896127880913981,-27,-1.35,-,200
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,ST,T,pick-based,0.6689890403647285,92,4.6000000000000005,+,300
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PZ,Z,pick-based,0.9747289842864207,0,0.0,+,200
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,SZ,Z,pick-based,0.6230277634115375,-19,-0.9500000000000001,-,300
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PR,R,pick-based,0.9245129657305902,-27,-1.35,-,200
+S0345a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,ST,T,pick-based,0.7071207086285484,-42,-2.1,+,300
+S0345a,EventBest,Event best (CD_model68),CD_model68,raw,PZ,Z,pick-based,0.6679814004355913,34,1.7000000000000002,+,200
+S0345a,EventBest,Event best (CD_model68),CD_model68,raw,SZ,Z,pick-based,0.14342795567608663,98,4.9,+,300
+S0345a,EventBest,Event best (CD_model68),CD_model68,raw,PR,R,pick-based,0.6979671497717742,-26,-1.3,-,200
+S0345a,EventBest,Event best (CD_model68),CD_model68,raw,ST,T,pick-based,0.16187152924412976,57,2.85,+,300
+S0345a,EventBest,Event best (CD_model68),CD_model68,bp_01_05,PZ,Z,pick-based,0.4789102244831321,100,5.0,-,200
+S0345a,EventBest,Event best (CD_model68),CD_model68,bp_01_05,SZ,Z,pick-based,0.44363679749852275,100,5.0,-,300
+S0345a,EventBest,Event best (CD_model68),CD_model68,bp_01_05,PR,R,pick-based,0.4006379951303016,-87,-4.3500000000000005,+,200
+S0345a,EventBest,Event best (CD_model68),CD_model68,bp_01_05,ST,T,pick-based,0.07701167277524242,59,2.95,+,300
+S0345a,EventBest,Event best (CD_model68),CD_model68,bp_01_08,PZ,Z,pick-based,0.6206185358490546,35,1.75,+,200
+S0345a,EventBest,Event best (CD_model68),CD_model68,bp_01_08,SZ,Z,pick-based,0.1924196794197292,96,4.800000000000001,+,300
+S0345a,EventBest,Event best (CD_model68),CD_model68,bp_01_08,PR,R,pick-based,0.5908581382552468,-42,-2.1,+,200
+S0345a,EventBest,Event best (CD_model68),CD_model68,bp_01_08,ST,T,pick-based,0.12611284267785292,57,2.85,+,300
+S0345a,EventBest,Event best (CD_model68),CD_model68,bp_03_09,PZ,Z,pick-based,0.7203648789555275,21,1.05,-,200
+S0345a,EventBest,Event best (CD_model68),CD_model68,bp_03_09,SZ,Z,pick-based,0.17771733317078123,97,4.8500000000000005,+,300
+S0345a,EventBest,Event best (CD_model68),CD_model68,bp_03_09,PR,R,pick-based,0.7587972492116678,-26,-1.3,-,200
+S0345a,EventBest,Event best (CD_model68),CD_model68,bp_03_09,ST,T,pick-based,0.5229195892536286,56,2.8000000000000003,+,300
+S0345a,EventBest,Event best (CD_model68),CD_model68,bp_03_09_pol,PZ,Z,pick-based,0.14496374052563343,21,1.05,-,200
+S0345a,EventBest,Event best (CD_model68),CD_model68,bp_03_09_pol,SZ,Z,pick-based,0.734755859022459,-96,-4.800000000000001,+,300
+S0345a,EventBest,Event best (CD_model68),CD_model68,bp_03_09_pol,PR,R,pick-based,0.6684313514022298,-26,-1.3,-,200
+S0345a,EventBest,Event best (CD_model68),CD_model68,bp_03_09_pol,ST,T,pick-based,0.4892759597345039,28,1.4000000000000001,+,300
+S0421b,X,Model X,X,raw,PZ,Z,pick-based,0.6065659983298957,-80,-4.0,-,200
+S0421b,X,Model X,X,raw,SZ,Z,pick-based,0.3213227552721039,-23,-1.1500000000000001,+,300
+S0421b,X,Model X,X,raw,PR,R,pick-based,0.5689609652206741,66,3.3000000000000003,-,200
+S0421b,X,Model X,X,raw,ST,T,pick-based,0.07988329287692808,-13,-0.65,-,300
+S0421b,X,Model X,X,bp_01_05,PZ,Z,pick-based,0.4001769397586012,-87,-4.3500000000000005,-,200
+S0421b,X,Model X,X,bp_01_05,SZ,Z,pick-based,0.12369110713319385,-76,-3.8000000000000003,-,300
+S0421b,X,Model X,X,bp_01_05,PR,R,pick-based,0.3010899818212031,66,3.3000000000000003,-,200
+S0421b,X,Model X,X,bp_01_05,ST,T,pick-based,0.14159044682279381,-82,-4.1000000000000005,+,300
+S0421b,X,Model X,X,bp_01_08,PZ,Z,pick-based,0.6179029439227386,-80,-4.0,-,200
+S0421b,X,Model X,X,bp_01_08,SZ,Z,pick-based,0.3042412683790738,-23,-1.1500000000000001,+,300
+S0421b,X,Model X,X,bp_01_08,PR,R,pick-based,0.5052320087179458,66,3.3000000000000003,-,200
+S0421b,X,Model X,X,bp_01_08,ST,T,pick-based,0.07239600845026621,-14,-0.7000000000000001,-,300
+S0421b,X,Model X,X,bp_03_09,PZ,Z,pick-based,0.7928609885480395,-81,-4.05,-,200
+S0421b,X,Model X,X,bp_03_09,SZ,Z,pick-based,0.5625296294896281,-7,-0.35000000000000003,-,300
+S0421b,X,Model X,X,bp_03_09,PR,R,pick-based,0.8694170224441612,48,2.4000000000000004,+,200
+S0421b,X,Model X,X,bp_03_09,ST,T,pick-based,0.45918490054819927,1,0.05,+,300
+S0421b,X,Model X,X,bp_03_09_pol,PZ,Z,pick-based,0.8195223173263094,-81,-4.05,-,200
+S0421b,X,Model X,X,bp_03_09_pol,SZ,Z,pick-based,0.5972355540628934,-7,-0.35000000000000003,-,300
+S0421b,X,Model X,X,bp_03_09_pol,PR,R,pick-based,0.5649879882780681,13,0.65,+,200
+S0421b,X,Model X,X,bp_03_09_pol,ST,T,pick-based,0.5643514122104182,1,0.05,+,300
+S0421b,TAYAK,TAYAK,TAYAK,raw,PZ,Z,pick-based,0.2757634769254274,-52,-2.6,-,200
+S0421b,TAYAK,TAYAK,TAYAK,raw,SZ,Z,pick-based,0.2003074935848436,14,0.7000000000000001,-,300
+S0421b,TAYAK,TAYAK,TAYAK,raw,PR,R,pick-based,0.21207662922378506,-48,-2.4000000000000004,+,200
+S0421b,TAYAK,TAYAK,TAYAK,raw,ST,T,pick-based,0.7511735455215399,15,0.75,-,300
+S0421b,TAYAK,TAYAK,TAYAK,bp_01_05,PZ,Z,pick-based,0.20035973397341586,-45,-2.25,-,200
+S0421b,TAYAK,TAYAK,TAYAK,bp_01_05,SZ,Z,pick-based,0.1941875185149436,70,3.5,+,300
+S0421b,TAYAK,TAYAK,TAYAK,bp_01_05,PR,R,pick-based,0.2416357938939924,97,4.8500000000000005,+,200
+S0421b,TAYAK,TAYAK,TAYAK,bp_01_05,ST,T,pick-based,0.49695399473366103,-27,-1.35,-,300
+S0421b,TAYAK,TAYAK,TAYAK,bp_01_08,PZ,Z,pick-based,0.23942396712657638,-51,-2.5500000000000003,-,200
+S0421b,TAYAK,TAYAK,TAYAK,bp_01_08,SZ,Z,pick-based,0.24415674492447192,14,0.7000000000000001,-,300
+S0421b,TAYAK,TAYAK,TAYAK,bp_01_08,PR,R,pick-based,0.18709705754469738,27,1.35,+,200
+S0421b,TAYAK,TAYAK,TAYAK,bp_01_08,ST,T,pick-based,0.7525863526353506,14,0.7000000000000001,-,300
+S0421b,TAYAK,TAYAK,TAYAK,bp_03_09,PZ,Z,pick-based,0.44553612183987656,28,1.4000000000000001,+,200
+S0421b,TAYAK,TAYAK,TAYAK,bp_03_09,SZ,Z,pick-based,0.2807130170687427,-3,-0.15000000000000002,+,300
+S0421b,TAYAK,TAYAK,TAYAK,bp_03_09,PR,R,pick-based,0.35143572314291804,11,0.55,-,200
+S0421b,TAYAK,TAYAK,TAYAK,bp_03_09,ST,T,pick-based,0.8550880428854877,14,0.7000000000000001,-,300
+S0421b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PZ,Z,pick-based,0.3452471424767706,27,1.35,+,200
+S0421b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,SZ,Z,pick-based,0.2810238882748447,66,3.3000000000000003,+,300
+S0421b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PR,R,pick-based,0.11975658592617518,-18,-0.9,+,200
+S0421b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,ST,T,pick-based,0.8213879670263796,15,0.75,-,300
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PZ,Z,pick-based,0.3247272669157969,-80,-4.0,-,200
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,SZ,Z,pick-based,0.5502181543572121,18,0.9,+,300
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PR,R,pick-based,0.6017012966345462,95,4.75,+,200
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,ST,T,pick-based,0.10234035101290867,-62,-3.1,+,300
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PZ,Z,pick-based,0.25274871853226105,-97,-4.8500000000000005,-,200
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,SZ,Z,pick-based,0.2799332659752495,52,2.6,+,300
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PR,R,pick-based,0.3244442952288248,93,4.65,+,200
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,ST,T,pick-based,0.17858909648240512,-61,-3.0500000000000003,+,300
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PZ,Z,pick-based,0.2791474054348874,-78,-3.9000000000000004,-,200
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,SZ,Z,pick-based,0.571019581396241,18,0.9,+,300
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PR,R,pick-based,0.5124328746122794,94,4.7,+,200
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,ST,T,pick-based,0.1456142186353275,-62,-3.1,+,300
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PZ,Z,pick-based,0.3994149486289245,-93,-4.65,+,200
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,SZ,Z,pick-based,0.7948960951884535,18,0.9,+,300
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PR,R,pick-based,0.8936321950976406,94,4.7,+,200
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,ST,T,pick-based,0.4449796188530996,-61,-3.0500000000000003,+,300
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PZ,Z,pick-based,0.4010908664555462,-93,-4.65,+,200
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,SZ,Z,pick-based,0.7633436028476877,34,1.7000000000000002,-,300
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PR,R,pick-based,0.8758064755532484,94,4.7,+,200
+S0421b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,ST,T,pick-based,0.6538447871976463,-79,-3.95,-,300
+S0421b,EventBest,Event best (MD_model14),MD_model14,raw,PZ,Z,pick-based,0.3657878380022479,-95,-4.75,+,200
+S0421b,EventBest,Event best (MD_model14),MD_model14,raw,SZ,Z,pick-based,0.5678556128928739,72,3.6,+,300
+S0421b,EventBest,Event best (MD_model14),MD_model14,raw,PR,R,pick-based,0.5303140569062684,98,4.9,+,200
+S0421b,EventBest,Event best (MD_model14),MD_model14,raw,ST,T,pick-based,0.9108729410817888,-25,-1.25,-,300
+S0421b,EventBest,Event best (MD_model14),MD_model14,bp_01_05,PZ,Z,pick-based,0.1697554553571434,-94,-4.7,+,200
+S0421b,EventBest,Event best (MD_model14),MD_model14,bp_01_05,SZ,Z,pick-based,0.21621279149894385,70,3.5,+,300
+S0421b,EventBest,Event best (MD_model14),MD_model14,bp_01_05,PR,R,pick-based,0.24867512858247817,90,4.5,+,200
+S0421b,EventBest,Event best (MD_model14),MD_model14,bp_01_05,ST,T,pick-based,0.31478564867138625,-25,-1.25,-,300
+S0421b,EventBest,Event best (MD_model14),MD_model14,bp_01_08,PZ,Z,pick-based,0.4163027960225539,-97,-4.8500000000000005,+,200
+S0421b,EventBest,Event best (MD_model14),MD_model14,bp_01_08,SZ,Z,pick-based,0.5825290751868859,71,3.5500000000000003,+,300
+S0421b,EventBest,Event best (MD_model14),MD_model14,bp_01_08,PR,R,pick-based,0.5165624720689111,98,4.9,+,200
+S0421b,EventBest,Event best (MD_model14),MD_model14,bp_01_08,ST,T,pick-based,0.6604854979162306,-24,-1.2000000000000002,-,300
+S0421b,EventBest,Event best (MD_model14),MD_model14,bp_03_09,PZ,Z,pick-based,0.454610546175812,-79,-3.95,-,200
+S0421b,EventBest,Event best (MD_model14),MD_model14,bp_03_09,SZ,Z,pick-based,0.7679338815957957,71,3.5500000000000003,+,300
+S0421b,EventBest,Event best (MD_model14),MD_model14,bp_03_09,PR,R,pick-based,0.8516873628611488,98,4.9,+,200
+S0421b,EventBest,Event best (MD_model14),MD_model14,bp_03_09,ST,T,pick-based,0.973694732931987,-25,-1.25,-,300
+S0421b,EventBest,Event best (MD_model14),MD_model14,bp_03_09_pol,PZ,Z,pick-based,0.44791627347186636,-80,-4.0,-,200
+S0421b,EventBest,Event best (MD_model14),MD_model14,bp_03_09_pol,SZ,Z,pick-based,0.8585986034600712,87,4.3500000000000005,-,300
+S0421b,EventBest,Event best (MD_model14),MD_model14,bp_03_09_pol,PR,R,pick-based,0.8613356921552077,98,4.9,+,200
+S0421b,EventBest,Event best (MD_model14),MD_model14,bp_03_09_pol,ST,T,pick-based,0.928183822251302,-25,-1.25,-,300
+S0226b,X,Model X,X,raw,PZ,Z,pick-based,0.7322564584337724,87,4.3500000000000005,+,200
+S0226b,X,Model X,X,raw,SZ,Z,pick-based,0.5467426440972273,-38,-1.9000000000000001,+,300
+S0226b,X,Model X,X,raw,PR,R,pick-based,0.8192530537320271,-4,-0.2,+,200
+S0226b,X,Model X,X,raw,ST,T,pick-based,0.11698555733271829,-61,-3.0500000000000003,-,300
+S0226b,X,Model X,X,bp_01_05,PZ,Z,pick-based,0.18672091678807007,-75,-3.75,-,200
+S0226b,X,Model X,X,bp_01_05,SZ,Z,pick-based,0.35334814072193754,-54,-2.7,+,300
+S0226b,X,Model X,X,bp_01_05,PR,R,pick-based,0.6844414394347604,0,0.0,+,200
+S0226b,X,Model X,X,bp_01_05,ST,T,pick-based,0.061718998896957186,98,4.9,+,300
+S0226b,X,Model X,X,bp_01_08,PZ,Z,pick-based,0.6257726909656514,-61,-3.0500000000000003,+,200
+S0226b,X,Model X,X,bp_01_08,SZ,Z,pick-based,0.23547033838573547,-46,-2.3000000000000003,-,300
+S0226b,X,Model X,X,bp_01_08,PR,R,pick-based,0.8546339138903127,-4,-0.2,+,200
+S0226b,X,Model X,X,bp_01_08,ST,T,pick-based,0.1117208579850744,-61,-3.0500000000000003,-,300
+S0226b,X,Model X,X,bp_03_09,PZ,Z,pick-based,0.7963555961875753,-62,-3.1,+,200
+S0226b,X,Model X,X,bp_03_09,SZ,Z,pick-based,0.3285733049033622,-51,-2.5500000000000003,-,300
+S0226b,X,Model X,X,bp_03_09,PR,R,pick-based,0.84681798543741,-4,-0.2,+,200
+S0226b,X,Model X,X,bp_03_09,ST,T,pick-based,0.5895504765590655,-61,-3.0500000000000003,-,300
+S0226b,X,Model X,X,bp_03_09_pol,PZ,Z,pick-based,0.8223184009884957,-62,-3.1,+,200
+S0226b,X,Model X,X,bp_03_09_pol,SZ,Z,pick-based,0.17884531517532756,-51,-2.5500000000000003,-,300
+S0226b,X,Model X,X,bp_03_09_pol,PR,R,pick-based,0.9880700569075032,-4,-0.2,+,200
+S0226b,X,Model X,X,bp_03_09_pol,ST,T,pick-based,0.6971948039036874,88,4.4,+,300
+S0226b,TAYAK,TAYAK,TAYAK,raw,PZ,Z,pick-based,0.29985593197240223,97,4.8500000000000005,-,200
+S0226b,TAYAK,TAYAK,TAYAK,raw,SZ,Z,pick-based,0.2588279889941506,-45,-2.25,+,300
+S0226b,TAYAK,TAYAK,TAYAK,raw,PR,R,pick-based,0.45336179511828495,-16,-0.8,-,200
+S0226b,TAYAK,TAYAK,TAYAK,raw,ST,T,pick-based,0.30242222306596983,18,0.9,+,300
+S0226b,TAYAK,TAYAK,TAYAK,bp_01_05,PZ,Z,pick-based,0.0788887963954001,-73,-3.6500000000000004,+,200
+S0226b,TAYAK,TAYAK,TAYAK,bp_01_05,SZ,Z,pick-based,0.0816751374010797,-64,-3.2,-,300
+S0226b,TAYAK,TAYAK,TAYAK,bp_01_05,PR,R,pick-based,0.10863472571220677,-70,-3.5,+,200
+S0226b,TAYAK,TAYAK,TAYAK,bp_01_05,ST,T,pick-based,0.07374258706828757,-20,-1.0,+,300
+S0226b,TAYAK,TAYAK,TAYAK,bp_01_08,PZ,Z,pick-based,0.3396898351411002,96,4.800000000000001,-,200
+S0226b,TAYAK,TAYAK,TAYAK,bp_01_08,SZ,Z,pick-based,0.2745253332751349,-45,-2.25,+,300
+S0226b,TAYAK,TAYAK,TAYAK,bp_01_08,PR,R,pick-based,0.1433154637598757,-12,-0.6000000000000001,-,200
+S0226b,TAYAK,TAYAK,TAYAK,bp_01_08,ST,T,pick-based,0.2621188654076037,18,0.9,+,300
+S0226b,TAYAK,TAYAK,TAYAK,bp_03_09,PZ,Z,pick-based,0.6495253466047232,-73,-3.6500000000000004,-,200
+S0226b,TAYAK,TAYAK,TAYAK,bp_03_09,SZ,Z,pick-based,0.6729986820095735,-30,-1.5,-,300
+S0226b,TAYAK,TAYAK,TAYAK,bp_03_09,PR,R,pick-based,0.41343434619100833,-18,-0.9,-,200
+S0226b,TAYAK,TAYAK,TAYAK,bp_03_09,ST,T,pick-based,0.8909519475633565,18,0.9,+,300
+S0226b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PZ,Z,pick-based,0.6402795389738817,-72,-3.6,-,200
+S0226b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,SZ,Z,pick-based,0.4311932567154365,-45,-2.25,+,300
+S0226b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PR,R,pick-based,0.07333087793855461,-4,-0.2,+,200
+S0226b,TAYAK,TAYAK,TAYAK,bp_03_09_pol,ST,T,pick-based,0.8981537148046314,18,0.9,+,300
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PZ,Z,pick-based,0.2407580136903121,-74,-3.7,-,200
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,SZ,Z,pick-based,0.443359108149211,-20,-1.0,-,300
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PR,R,pick-based,0.5748352678812872,-29,-1.4500000000000002,+,200
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,ST,T,pick-based,0.3484448204514069,96,4.800000000000001,+,300
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PZ,Z,pick-based,0.1287278187340645,-73,-3.6500000000000004,-,200
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,SZ,Z,pick-based,0.08164803805807125,74,3.7,-,300
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PR,R,pick-based,0.3542217023522108,-28,-1.4000000000000001,+,200
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,ST,T,pick-based,0.085002345363405,-92,-4.6000000000000005,+,300
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PZ,Z,pick-based,0.27194411784673206,-75,-3.75,-,200
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,SZ,Z,pick-based,0.4295935707070203,-33,-1.6500000000000001,+,300
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PR,R,pick-based,0.6649862794410452,-100,-5.0,-,200
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,ST,T,pick-based,0.3051134837935021,93,4.65,+,300
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PZ,Z,pick-based,0.8275775924484994,-59,-2.95,+,200
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,SZ,Z,pick-based,0.680492044341637,97,4.8500000000000005,+,300
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PR,R,pick-based,0.6970730126189998,-100,-5.0,-,200
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,ST,T,pick-based,0.8170359281616717,-71,-3.5500000000000003,-,300
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PZ,Z,pick-based,0.8449038752918117,-59,-2.95,+,200
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,SZ,Z,pick-based,0.364644903896153,-19,-0.9500000000000001,-,300
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PR,R,pick-based,0.9657353327133869,-100,-5.0,-,200
+S0226b,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,ST,T,pick-based,0.6069996477398149,95,4.75,+,300
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,raw,PZ,Z,pick-based,0.6148896724953755,-56,-2.8000000000000003,-,200
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,raw,SZ,Z,pick-based,0.31220189777756074,97,4.8500000000000005,-,300
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,raw,PR,R,pick-based,0.7016076888940763,-56,-2.8000000000000003,-,200
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,raw,ST,T,pick-based,0.25237391042603297,-60,-3.0,-,300
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,bp_01_05,PZ,Z,pick-based,0.21465635687781803,-36,-1.8,+,200
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,bp_01_05,SZ,Z,pick-based,0.1300939529284425,27,1.35,+,300
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,bp_01_05,PR,R,pick-based,0.13239910177535316,-14,-0.7000000000000001,-,200
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,bp_01_05,ST,T,pick-based,0.08911364669820389,100,5.0,+,300
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,bp_01_08,PZ,Z,pick-based,0.687272762695212,-56,-2.8000000000000003,-,200
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,bp_01_08,SZ,Z,pick-based,0.29701955555865933,-39,-1.9500000000000002,-,300
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,bp_01_08,PR,R,pick-based,0.22908085429713962,94,4.7,-,200
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,bp_01_08,ST,T,pick-based,0.29691207614492743,-93,-4.65,-,300
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,bp_03_09,PZ,Z,pick-based,0.8818716860677803,-56,-2.8000000000000003,-,200
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,bp_03_09,SZ,Z,pick-based,0.5223403635483148,96,4.800000000000001,-,300
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,bp_03_09,PR,R,pick-based,0.7200233479029625,-56,-2.8000000000000003,-,200
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,bp_03_09,ST,T,pick-based,0.7308544992674495,-76,-3.8000000000000003,+,300
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,bp_03_09_pol,PZ,Z,pick-based,0.8924981158897412,-56,-2.8000000000000003,-,200
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,bp_03_09_pol,SZ,Z,pick-based,0.6208800788094617,-91,-4.55,-,300
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,bp_03_09_pol,PR,R,pick-based,0.8975736717007197,-90,-4.5,-,200
+S0226b,EventBest,Event best (Geophysical_model776),Geophysical_model776,bp_03_09_pol,ST,T,pick-based,0.7070149833909364,-76,-3.8000000000000003,+,300
+S0167a,X,Model X,X,raw,PZ,Z,pick-based,0.6070089414361505,-94,-4.7,+,200
+S0167a,X,Model X,X,raw,SZ,Z,pick-based,0.16387273615540934,67,3.35,-,300
+S0167a,X,Model X,X,raw,PR,R,pick-based,0.5794847223979337,22,1.1,+,200
+S0167a,X,Model X,X,raw,ST,T,pick-based,0.13743627104401918,100,5.0,-,300
+S0167a,X,Model X,X,bp_01_05,PZ,Z,pick-based,0.3766626194668142,-59,-2.95,+,200
+S0167a,X,Model X,X,bp_01_05,SZ,Z,pick-based,0.12107064364953332,-34,-1.7000000000000002,-,300
+S0167a,X,Model X,X,bp_01_05,PR,R,pick-based,0.5145365132813203,19,0.9500000000000001,+,200
+S0167a,X,Model X,X,bp_01_05,ST,T,pick-based,0.13439479198742535,95,4.75,-,300
+S0167a,X,Model X,X,bp_01_08,PZ,Z,pick-based,0.4231667450553417,-67,-3.35,+,200
+S0167a,X,Model X,X,bp_01_08,SZ,Z,pick-based,0.15983753817040622,82,4.1000000000000005,+,300
+S0167a,X,Model X,X,bp_01_08,PR,R,pick-based,0.6482452128188873,21,1.05,+,200
+S0167a,X,Model X,X,bp_01_08,ST,T,pick-based,0.17798578162561854,100,5.0,-,300
+S0167a,X,Model X,X,bp_03_09,PZ,Z,pick-based,0.7562397019327859,-68,-3.4000000000000004,+,200
+S0167a,X,Model X,X,bp_03_09,SZ,Z,pick-based,0.6530468068434137,67,3.35,-,300
+S0167a,X,Model X,X,bp_03_09,PR,R,pick-based,0.6809363398012563,38,1.9000000000000001,-,200
+S0167a,X,Model X,X,bp_03_09,ST,T,pick-based,0.28763735723548517,100,5.0,-,300
+S0167a,X,Model X,X,bp_03_09_pol,PZ,Z,pick-based,0.8289037234540547,0,0.0,-,200
+S0167a,X,Model X,X,bp_03_09_pol,SZ,Z,pick-based,0.6139590068056482,40,2.0,-,300
+S0167a,X,Model X,X,bp_03_09_pol,PR,R,pick-based,0.7922006356304316,38,1.9000000000000001,-,200
+S0167a,X,Model X,X,bp_03_09_pol,ST,T,pick-based,0.6048114858285911,100,5.0,-,300
+S0167a,TAYAK,TAYAK,TAYAK,raw,PZ,Z,pick-based,0.215474491121639,-51,-2.5500000000000003,+,200
+S0167a,TAYAK,TAYAK,TAYAK,raw,SZ,Z,pick-based,0.3248635634821344,47,2.35,+,300
+S0167a,TAYAK,TAYAK,TAYAK,raw,PR,R,pick-based,0.41755992080686694,-1,-0.05,-,200
+S0167a,TAYAK,TAYAK,TAYAK,raw,ST,T,pick-based,0.1565540870192143,91,4.55,-,300
+S0167a,TAYAK,TAYAK,TAYAK,bp_01_05,PZ,Z,pick-based,0.23310286782860448,-42,-2.1,+,200
+S0167a,TAYAK,TAYAK,TAYAK,bp_01_05,SZ,Z,pick-based,0.17192721742112405,-35,-1.75,-,300
+S0167a,TAYAK,TAYAK,TAYAK,bp_01_05,PR,R,pick-based,0.3791156035427813,58,2.9000000000000004,+,200
+S0167a,TAYAK,TAYAK,TAYAK,bp_01_05,ST,T,pick-based,0.14769854589552386,85,4.25,-,300
+S0167a,TAYAK,TAYAK,TAYAK,bp_01_08,PZ,Z,pick-based,0.20225799614975148,-45,-2.25,+,200
+S0167a,TAYAK,TAYAK,TAYAK,bp_01_08,SZ,Z,pick-based,0.38422595066468174,97,4.8500000000000005,-,300
+S0167a,TAYAK,TAYAK,TAYAK,bp_01_08,PR,R,pick-based,0.2357185182939194,55,2.75,+,200
+S0167a,TAYAK,TAYAK,TAYAK,bp_01_08,ST,T,pick-based,0.15147728585665463,91,4.55,-,300
+S0167a,TAYAK,TAYAK,TAYAK,bp_03_09,PZ,Z,pick-based,0.4474710896913649,-99,-4.95,+,200
+S0167a,TAYAK,TAYAK,TAYAK,bp_03_09,SZ,Z,pick-based,0.5360243861787091,33,1.6500000000000001,-,300
+S0167a,TAYAK,TAYAK,TAYAK,bp_03_09,PR,R,pick-based,0.5219818252959658,2,0.1,-,200
+S0167a,TAYAK,TAYAK,TAYAK,bp_03_09,ST,T,pick-based,0.7081640980142951,91,4.55,-,300
+S0167a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PZ,Z,pick-based,0.33802879831266136,-100,-5.0,+,200
+S0167a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,SZ,Z,pick-based,0.5365009967504074,48,2.4000000000000004,+,300
+S0167a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PR,R,pick-based,0.21819469513687698,-35,-1.75,-,200
+S0167a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,ST,T,pick-based,0.13980269600225875,-63,-3.1500000000000004,+,300
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PZ,Z,pick-based,0.46263137730408044,-66,-3.3000000000000003,+,200
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,SZ,Z,pick-based,0.2952470039593947,49,2.45,+,300
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PR,R,pick-based,0.4991686635355946,85,4.25,+,200
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,ST,T,pick-based,0.12088578600546206,91,4.55,-,300
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PZ,Z,pick-based,0.472494855820318,-59,-2.95,+,200
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,SZ,Z,pick-based,0.13873775507326586,-35,-1.75,-,300
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PR,R,pick-based,0.368850620345533,57,2.85,+,200
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,ST,T,pick-based,0.05082456762482239,81,4.05,-,300
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PZ,Z,pick-based,0.5602643066866404,-68,-3.4000000000000004,+,200
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,SZ,Z,pick-based,0.26415350931334813,35,1.75,-,300
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PR,R,pick-based,0.2500063406604346,-7,-0.35000000000000003,-,200
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,ST,T,pick-based,0.1072965207329932,89,4.45,-,300
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PZ,Z,pick-based,0.45761699663164895,-50,-2.5,-,200
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,SZ,Z,pick-based,0.6215021291771201,50,2.5,+,300
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PR,R,pick-based,0.5694978118587124,31,1.55,-,200
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,ST,T,pick-based,0.21448113437001115,91,4.55,-,300
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PZ,Z,pick-based,0.36737502232164737,-67,-3.35,+,200
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,SZ,Z,pick-based,0.5421880023895084,36,1.8,-,300
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PR,R,pick-based,0.4751950256750016,4,0.2,+,200
+S0167a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,ST,T,pick-based,0.27181047905245387,90,4.5,-,300
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,raw,PZ,Z,pick-based,0.701253996135916,-84,-4.2,+,200
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,raw,SZ,Z,pick-based,0.28108903226125814,43,2.15,-,300
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,raw,PR,R,pick-based,0.5074497237057046,84,4.2,+,200
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,raw,ST,T,pick-based,0.19212073710230193,100,5.0,+,300
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,bp_01_05,PZ,Z,pick-based,0.5640514754619591,-75,-3.75,+,200
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,bp_01_05,SZ,Z,pick-based,0.10324953938041757,-35,-1.75,-,300
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,bp_01_05,PR,R,pick-based,0.5268611429590496,72,3.6,+,200
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,bp_01_05,ST,T,pick-based,0.043554880635369206,-14,-0.7000000000000001,+,300
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,bp_01_08,PZ,Z,pick-based,0.7971899016983374,-82,-4.1000000000000005,+,200
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,bp_01_08,SZ,Z,pick-based,0.26746584978774257,30,1.5,+,300
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,bp_01_08,PR,R,pick-based,0.35161233219001875,82,4.1000000000000005,+,200
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,bp_01_08,ST,T,pick-based,0.09511716606259762,100,5.0,+,300
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,bp_03_09,PZ,Z,pick-based,0.8856953274434858,-98,-4.9,-,200
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,bp_03_09,SZ,Z,pick-based,0.6651608561729997,29,1.4500000000000002,+,300
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,bp_03_09,PR,R,pick-based,0.5992262604530557,82,4.1000000000000005,+,200
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,bp_03_09,ST,T,pick-based,0.33747762710077095,100,5.0,+,300
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,bp_03_09_pol,PZ,Z,pick-based,0.7798195775581205,-99,-4.95,-,200
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,bp_03_09_pol,SZ,Z,pick-based,0.6571923646163477,15,0.75,-,300
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,bp_03_09_pol,PR,R,pick-based,0.7297917417642685,82,4.1000000000000005,+,200
+S0167a,EventBest,Event best (Geophysical_model64),Geophysical_model64,bp_03_09_pol,ST,T,pick-based,0.0382143423538243,100,5.0,+,300
+S0152a,X,Model X,X,raw,PZ,Z,pick-based,0.6792356690313663,54,2.7,+,200
+S0152a,X,Model X,X,raw,SZ,Z,pick-based,0.7582632404839184,-91,-4.55,+,300
+S0152a,X,Model X,X,raw,PR,R,pick-based,0.898247450526888,12,0.6000000000000001,+,200
+S0152a,X,Model X,X,raw,ST,T,pick-based,0.6178985651946155,-96,-4.800000000000001,-,300
+S0152a,X,Model X,X,bp_01_05,PZ,Z,pick-based,0.5167224253609898,-10,-0.5,+,200
+S0152a,X,Model X,X,bp_01_05,SZ,Z,pick-based,0.6936044616593646,-84,-4.2,+,300
+S0152a,X,Model X,X,bp_01_05,PR,R,pick-based,0.6780660345815638,13,0.65,+,200
+S0152a,X,Model X,X,bp_01_05,ST,T,pick-based,0.10196213574831865,-100,-5.0,-,300
+S0152a,X,Model X,X,bp_01_08,PZ,Z,pick-based,0.658684388821627,54,2.7,+,200
+S0152a,X,Model X,X,bp_01_08,SZ,Z,pick-based,0.7841922420629428,-90,-4.5,+,300
+S0152a,X,Model X,X,bp_01_08,PR,R,pick-based,0.9595040593033499,28,1.4000000000000001,-,200
+S0152a,X,Model X,X,bp_01_08,ST,T,pick-based,0.15517939373022055,-82,-4.1000000000000005,+,300
+S0152a,X,Model X,X,bp_03_09,PZ,Z,pick-based,0.7018462906189381,54,2.7,+,200
+S0152a,X,Model X,X,bp_03_09,SZ,Z,pick-based,0.7830974534957825,-90,-4.5,+,300
+S0152a,X,Model X,X,bp_03_09,PR,R,pick-based,0.9538812225621619,12,0.6000000000000001,+,200
+S0152a,X,Model X,X,bp_03_09,ST,T,pick-based,0.7365647906345602,-95,-4.75,-,300
+S0152a,X,Model X,X,bp_03_09_pol,PZ,Z,pick-based,0.5885562740589914,53,2.6500000000000004,+,200
+S0152a,X,Model X,X,bp_03_09_pol,SZ,Z,pick-based,0.752123223344365,-91,-4.55,+,300
+S0152a,X,Model X,X,bp_03_09_pol,PR,R,pick-based,0.9611764757457805,12,0.6000000000000001,+,200
+S0152a,X,Model X,X,bp_03_09_pol,ST,T,pick-based,0.752715802341493,-95,-4.75,-,300
+S0152a,TAYAK,TAYAK,TAYAK,raw,PZ,Z,pick-based,0.19748019233475725,26,1.3,+,200
+S0152a,TAYAK,TAYAK,TAYAK,raw,SZ,Z,pick-based,0.5689963045564146,-58,-2.9000000000000004,-,300
+S0152a,TAYAK,TAYAK,TAYAK,raw,PR,R,pick-based,0.4136038661808262,100,5.0,-,200
+S0152a,TAYAK,TAYAK,TAYAK,raw,ST,T,pick-based,0.100255163780119,-100,-5.0,-,300
+S0152a,TAYAK,TAYAK,TAYAK,bp_01_05,PZ,Z,pick-based,0.10322551255602422,100,5.0,+,200
+S0152a,TAYAK,TAYAK,TAYAK,bp_01_05,SZ,Z,pick-based,0.24721890446998177,13,0.65,+,300
+S0152a,TAYAK,TAYAK,TAYAK,bp_01_05,PR,R,pick-based,0.19238294095416122,100,5.0,-,200
+S0152a,TAYAK,TAYAK,TAYAK,bp_01_05,ST,T,pick-based,0.30393343970544123,84,4.2,-,300
+S0152a,TAYAK,TAYAK,TAYAK,bp_01_08,PZ,Z,pick-based,0.1948531763871471,26,1.3,+,200
+S0152a,TAYAK,TAYAK,TAYAK,bp_01_08,SZ,Z,pick-based,0.647224904419119,17,0.8500000000000001,+,300
+S0152a,TAYAK,TAYAK,TAYAK,bp_01_08,PR,R,pick-based,0.474015427594215,100,5.0,-,200
+S0152a,TAYAK,TAYAK,TAYAK,bp_01_08,ST,T,pick-based,0.10475585283907346,95,4.75,-,300
+S0152a,TAYAK,TAYAK,TAYAK,bp_03_09,PZ,Z,pick-based,0.6928523184472226,26,1.3,+,200
+S0152a,TAYAK,TAYAK,TAYAK,bp_03_09,SZ,Z,pick-based,0.685470733248183,-44,-2.2,+,300
+S0152a,TAYAK,TAYAK,TAYAK,bp_03_09,PR,R,pick-based,0.5831010685860496,-1,-0.05,-,200
+S0152a,TAYAK,TAYAK,TAYAK,bp_03_09,ST,T,pick-based,0.34832658110331155,-100,-5.0,-,300
+S0152a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PZ,Z,pick-based,0.5759541256127485,9,0.45,-,200
+S0152a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,SZ,Z,pick-based,0.6695625591691791,-44,-2.2,+,300
+S0152a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PR,R,pick-based,0.7359551110580089,-1,-0.05,-,200
+S0152a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,ST,T,pick-based,0.01488495593009676,-96,-4.800000000000001,+,300
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PZ,Z,pick-based,0.8382691443535899,21,1.05,-,200
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,SZ,Z,pick-based,0.5949193875652867,57,2.85,+,300
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PR,R,pick-based,0.4778583095873173,100,5.0,-,200
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,ST,T,pick-based,0.6563174544393393,-91,-4.55,-,300
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PZ,Z,pick-based,0.6263936314311044,41,2.0500000000000003,+,200
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,SZ,Z,pick-based,0.1713340305615696,20,1.0,+,300
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PR,R,pick-based,0.21903961351777418,95,4.75,-,200
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,ST,T,pick-based,0.17358327280186414,-100,-5.0,+,300
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PZ,Z,pick-based,0.8704883489348582,22,1.1,-,200
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,SZ,Z,pick-based,0.6399168021392851,57,2.85,+,300
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PR,R,pick-based,0.5633736495712345,99,4.95,-,200
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,ST,T,pick-based,0.6528442359977176,-90,-4.5,-,300
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PZ,Z,pick-based,0.9159886383761139,21,1.05,-,200
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,SZ,Z,pick-based,0.725997428708663,57,2.85,+,300
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PR,R,pick-based,0.6140690325679782,62,3.1,-,200
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,ST,T,pick-based,0.9251725568809859,-91,-4.55,-,300
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PZ,Z,pick-based,0.8981161008902923,5,0.25,+,200
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,SZ,Z,pick-based,0.7129244063383927,57,2.85,+,300
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PR,R,pick-based,0.9058990853842299,45,2.25,+,200
+S0152a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,ST,T,pick-based,0.9463360071601273,-91,-4.55,-,300
+S0152a,EventBest,Event best (MD_model88),MD_model88,raw,PZ,Z,pick-based,0.7627253269022831,-55,-2.75,+,200
+S0152a,EventBest,Event best (MD_model88),MD_model88,raw,SZ,Z,pick-based,0.1823890186011429,61,3.0500000000000003,-,300
+S0152a,EventBest,Event best (MD_model88),MD_model88,raw,PR,R,pick-based,0.2592157681488763,82,4.1000000000000005,-,200
+S0152a,EventBest,Event best (MD_model88),MD_model88,raw,ST,T,pick-based,0.8151980265846057,-26,-1.3,+,300
+S0152a,EventBest,Event best (MD_model88),MD_model88,bp_01_05,PZ,Z,pick-based,0.30426646336151514,-74,-3.7,-,200
+S0152a,EventBest,Event best (MD_model88),MD_model88,bp_01_05,SZ,Z,pick-based,0.050704140957887715,-89,-4.45,+,300
+S0152a,EventBest,Event best (MD_model88),MD_model88,bp_01_05,PR,R,pick-based,0.12057515688913865,42,2.1,-,200
+S0152a,EventBest,Event best (MD_model88),MD_model88,bp_01_05,ST,T,pick-based,0.3102411910870427,-27,-1.35,+,300
+S0152a,EventBest,Event best (MD_model88),MD_model88,bp_01_08,PZ,Z,pick-based,0.7844775602945461,-55,-2.75,+,200
+S0152a,EventBest,Event best (MD_model88),MD_model88,bp_01_08,SZ,Z,pick-based,0.18398455855425289,62,3.1,-,300
+S0152a,EventBest,Event best (MD_model88),MD_model88,bp_01_08,PR,R,pick-based,0.2732597768430483,81,4.05,-,200
+S0152a,EventBest,Event best (MD_model88),MD_model88,bp_01_08,ST,T,pick-based,0.8356581755403916,-26,-1.3,+,300
+S0152a,EventBest,Event best (MD_model88),MD_model88,bp_03_09,PZ,Z,pick-based,0.806400005868164,-55,-2.75,+,200
+S0152a,EventBest,Event best (MD_model88),MD_model88,bp_03_09,SZ,Z,pick-based,0.75467887862537,62,3.1,-,300
+S0152a,EventBest,Event best (MD_model88),MD_model88,bp_03_09,PR,R,pick-based,0.7083699469428558,82,4.1000000000000005,-,200
+S0152a,EventBest,Event best (MD_model88),MD_model88,bp_03_09,ST,T,pick-based,0.9538638137229831,-26,-1.3,+,300
+S0152a,EventBest,Event best (MD_model88),MD_model88,bp_03_09_pol,PZ,Z,pick-based,0.6911918974357947,-71,-3.5500000000000003,-,200
+S0152a,EventBest,Event best (MD_model88),MD_model88,bp_03_09_pol,SZ,Z,pick-based,0.8102474109211715,62,3.1,-,300
+S0152a,EventBest,Event best (MD_model88),MD_model88,bp_03_09_pol,PR,R,pick-based,0.5531485064563212,96,4.800000000000001,+,200
+S0152a,EventBest,Event best (MD_model88),MD_model88,bp_03_09_pol,ST,T,pick-based,0.9413464030712073,-26,-1.3,+,300
+S1000a,X,Model X,X,raw,PZ,Z,pick-based,0.5715013869982442,89,4.45,+,200
+S1000a,X,Model X,X,raw,SZ,Z,pick-based,0.8520323251406271,-87,-4.3500000000000005,-,300
+S1000a,X,Model X,X,raw,PR,R,pick-based,0.41818124524983213,19,0.9500000000000001,+,200
+S1000a,X,Model X,X,raw,ST,T,pick-based,0.2940421456249625,100,5.0,-,300
+S1000a,X,Model X,X,bp_01_05,PZ,Z,pick-based,0.5210073381602779,96,4.800000000000001,-,200
+S1000a,X,Model X,X,bp_01_05,SZ,Z,pick-based,0.4664859950154386,21,1.05,-,300
+S1000a,X,Model X,X,bp_01_05,PR,R,pick-based,0.4647102235800499,-100,-5.0,+,200
+S1000a,X,Model X,X,bp_01_05,ST,T,pick-based,0.13988520702457455,-13,-0.65,-,300
+S1000a,X,Model X,X,bp_01_08,PZ,Z,pick-based,0.6097295822838334,88,4.4,+,200
+S1000a,X,Model X,X,bp_01_08,SZ,Z,pick-based,0.8595936425504739,-87,-4.3500000000000005,-,300
+S1000a,X,Model X,X,bp_01_08,PR,R,pick-based,0.2136723539356318,4,0.2,-,200
+S1000a,X,Model X,X,bp_01_08,ST,T,pick-based,0.31110488415633897,98,4.9,-,300
+S1000a,X,Model X,X,bp_03_09,PZ,Z,pick-based,0.564607322725771,89,4.45,+,200
+S1000a,X,Model X,X,bp_03_09,SZ,Z,pick-based,0.8970678518096845,-87,-4.3500000000000005,-,300
+S1000a,X,Model X,X,bp_03_09,PR,R,pick-based,0.4708841667905639,18,0.9,+,200
+S1000a,X,Model X,X,bp_03_09,ST,T,pick-based,0.4622530402721751,-99,-4.95,+,300
+S1000a,X,Model X,X,bp_03_09_pol,PZ,Z,pick-based,0.559116758569648,89,4.45,+,200
+S1000a,X,Model X,X,bp_03_09_pol,SZ,Z,pick-based,0.9158107800294849,-87,-4.3500000000000005,-,300
+S1000a,X,Model X,X,bp_03_09_pol,PR,R,pick-based,0.08958194966743763,44,2.2,+,200
+S1000a,X,Model X,X,bp_03_09_pol,ST,T,pick-based,0.27208325975054276,-72,-3.6,+,300
+S1000a,TAYAK,TAYAK,TAYAK,raw,PZ,Z,pick-based,0.5549168507908927,-3,-0.15000000000000002,-,200
+S1000a,TAYAK,TAYAK,TAYAK,raw,SZ,Z,pick-based,0.8498828139882414,-89,-4.45,-,300
+S1000a,TAYAK,TAYAK,TAYAK,raw,PR,R,pick-based,0.5541689882077241,-1,-0.05,-,200
+S1000a,TAYAK,TAYAK,TAYAK,raw,ST,T,pick-based,0.3075847408887713,4,0.2,+,300
+S1000a,TAYAK,TAYAK,TAYAK,bp_01_05,PZ,Z,pick-based,0.24772434440872948,57,2.85,+,200
+S1000a,TAYAK,TAYAK,TAYAK,bp_01_05,SZ,Z,pick-based,0.4858149715283917,-6,-0.30000000000000004,-,300
+S1000a,TAYAK,TAYAK,TAYAK,bp_01_05,PR,R,pick-based,0.3352645619407538,-84,-4.2,+,200
+S1000a,TAYAK,TAYAK,TAYAK,bp_01_05,ST,T,pick-based,0.16519639566490107,6,0.30000000000000004,+,300
+S1000a,TAYAK,TAYAK,TAYAK,bp_01_08,PZ,Z,pick-based,0.5505154474513555,-2,-0.1,-,200
+S1000a,TAYAK,TAYAK,TAYAK,bp_01_08,SZ,Z,pick-based,0.8406330013279251,-89,-4.45,-,300
+S1000a,TAYAK,TAYAK,TAYAK,bp_01_08,PR,R,pick-based,0.5810491660900262,-1,-0.05,-,200
+S1000a,TAYAK,TAYAK,TAYAK,bp_01_08,ST,T,pick-based,0.32003360199900904,100,5.0,-,300
+S1000a,TAYAK,TAYAK,TAYAK,bp_03_09,PZ,Z,pick-based,0.863922474730983,-2,-0.1,-,200
+S1000a,TAYAK,TAYAK,TAYAK,bp_03_09,SZ,Z,pick-based,0.8518419353397622,-89,-4.45,-,300
+S1000a,TAYAK,TAYAK,TAYAK,bp_03_09,PR,R,pick-based,0.739277204748402,-1,-0.05,-,200
+S1000a,TAYAK,TAYAK,TAYAK,bp_03_09,ST,T,pick-based,0.5959077635511684,87,4.3500000000000005,+,300
+S1000a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PZ,Z,pick-based,0.9213546276145904,-2,-0.1,-,200
+S1000a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,SZ,Z,pick-based,0.8506698771407908,-89,-4.45,-,300
+S1000a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PR,R,pick-based,0.929880906551762,-2,-0.1,-,200
+S1000a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,ST,T,pick-based,0.3978676807026251,-26,-1.3,+,300
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PZ,Z,pick-based,0.384554543298341,41,2.0500000000000003,-,200
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,SZ,Z,pick-based,0.7821826985237632,-30,-1.5,+,300
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PR,R,pick-based,0.8135137499680581,-58,-2.9000000000000004,+,200
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,ST,T,pick-based,0.597652080255897,59,2.95,-,300
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PZ,Z,pick-based,0.3245516427850757,-3,-0.15000000000000002,-,200
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,SZ,Z,pick-based,0.5338964769152362,-82,-4.1000000000000005,-,300
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PR,R,pick-based,0.31533088337201487,-22,-1.1,+,200
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,ST,T,pick-based,0.28168756928076016,-36,-1.8,+,300
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PZ,Z,pick-based,0.3982381007644599,-5,-0.25,-,200
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,SZ,Z,pick-based,0.7967803103472348,-46,-2.3000000000000003,-,300
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PR,R,pick-based,0.8251479000488849,-58,-2.9000000000000004,+,200
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,ST,T,pick-based,0.6608090477689451,43,2.15,+,300
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PZ,Z,pick-based,0.7832015724600294,70,3.5,-,200
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,SZ,Z,pick-based,0.7918327452312901,-30,-1.5,+,300
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PR,R,pick-based,0.9317300942677832,-58,-2.9000000000000004,+,200
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,ST,T,pick-based,0.7099162354688237,43,2.15,+,300
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PZ,Z,pick-based,0.8053837499479485,70,3.5,-,200
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,SZ,Z,pick-based,0.7854664100320549,-31,-1.55,+,300
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PR,R,pick-based,0.9304209939423715,-59,-2.95,+,200
+S1000a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,ST,T,pick-based,0.8132465224198545,27,1.35,-,300
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,raw,PZ,Z,pick-based,0.7403862298505001,67,3.35,-,200
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,raw,SZ,Z,pick-based,0.8823192379642822,-100,-5.0,+,300
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,raw,PR,R,pick-based,0.7976694923612182,13,0.65,+,200
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,raw,ST,T,pick-based,0.2731263249756051,100,5.0,+,300
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,bp_01_05,PZ,Z,pick-based,0.4745522305440533,63,3.1500000000000004,-,200
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,bp_01_05,SZ,Z,pick-based,0.5090593815713844,28,1.4000000000000001,+,300
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,bp_01_05,PR,R,pick-based,0.6645246142342744,-94,-4.7,-,200
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,bp_01_05,ST,T,pick-based,0.1316341698055989,-36,-1.8,+,300
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,bp_01_08,PZ,Z,pick-based,0.8511233918910894,67,3.35,-,200
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,bp_01_08,SZ,Z,pick-based,0.8756561956264064,-100,-5.0,+,300
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,bp_01_08,PR,R,pick-based,0.8054473733138383,13,0.65,+,200
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,bp_01_08,ST,T,pick-based,0.18510560776884344,84,4.2,-,300
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,bp_03_09,PZ,Z,pick-based,0.7986803889555117,67,3.35,-,200
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,bp_03_09,SZ,Z,pick-based,0.9105998016897161,-100,-5.0,+,300
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,bp_03_09,PR,R,pick-based,0.8664486690379484,13,0.65,+,200
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,bp_03_09,ST,T,pick-based,0.4976129884247802,99,4.95,+,300
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,bp_03_09_pol,PZ,Z,pick-based,0.8292549242978251,67,3.35,-,200
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,bp_03_09_pol,SZ,Z,pick-based,0.9209836556766101,-100,-5.0,+,300
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,bp_03_09_pol,PR,R,pick-based,0.8911804765789417,-3,-0.15000000000000002,-,200
+S1000a,EventBest,Event best (AK_model_62),AK_model_62,bp_03_09_pol,ST,T,pick-based,0.06494854772579745,-82,-4.1000000000000005,-,300
+S0976a,X,Model X,X,raw,PZ,Z,pick-based,0.5037519831836609,72,3.6,+,200
+S0976a,X,Model X,X,raw,SZ,Z,pick-based,0.6780634200556083,82,4.1000000000000005,+,300
+S0976a,X,Model X,X,raw,PR,R,pick-based,0.2579851712000148,20,1.0,+,200
+S0976a,X,Model X,X,raw,ST,T,pick-based,0.7347527468867622,-69,-3.45,-,300
+S0976a,X,Model X,X,bp_01_05,PZ,Z,pick-based,0.1413709788032402,74,3.7,+,200
+S0976a,X,Model X,X,bp_01_05,SZ,Z,pick-based,0.702220784349846,45,2.25,+,300
+S0976a,X,Model X,X,bp_01_05,PR,R,pick-based,0.20313712403822917,69,3.45,-,200
+S0976a,X,Model X,X,bp_01_05,ST,T,pick-based,0.3700021589413327,-67,-3.35,+,300
+S0976a,X,Model X,X,bp_01_08,PZ,Z,pick-based,0.504666458903387,72,3.6,+,200
+S0976a,X,Model X,X,bp_01_08,SZ,Z,pick-based,0.7848148344533123,82,4.1000000000000005,+,300
+S0976a,X,Model X,X,bp_01_08,PR,R,pick-based,0.2769830908687812,75,3.75,-,200
+S0976a,X,Model X,X,bp_01_08,ST,T,pick-based,0.6461232544695749,-83,-4.15,+,300
+S0976a,X,Model X,X,bp_03_09,PZ,Z,pick-based,0.9077184293174875,56,2.8000000000000003,-,200
+S0976a,X,Model X,X,bp_03_09,SZ,Z,pick-based,0.7370653037060971,82,4.1000000000000005,+,300
+S0976a,X,Model X,X,bp_03_09,PR,R,pick-based,0.7092997313706233,97,4.8500000000000005,+,200
+S0976a,X,Model X,X,bp_03_09,ST,T,pick-based,0.7481173834624186,-83,-4.15,+,300
+S0976a,X,Model X,X,bp_03_09_pol,PZ,Z,pick-based,0.7463057966608133,-65,-3.25,+,200
+S0976a,X,Model X,X,bp_03_09_pol,SZ,Z,pick-based,0.7376524063664766,82,4.1000000000000005,+,300
+S0976a,X,Model X,X,bp_03_09_pol,PR,R,pick-based,0.6956569678872804,50,2.5,+,200
+S0976a,X,Model X,X,bp_03_09_pol,ST,T,pick-based,0.7564014866821706,-83,-4.15,+,300
+S0976a,TAYAK,TAYAK,TAYAK,raw,PZ,Z,pick-based,0.20386074870065307,96,4.800000000000001,+,200
+S0976a,TAYAK,TAYAK,TAYAK,raw,SZ,Z,pick-based,0.7628496552898283,61,3.0500000000000003,+,300
+S0976a,TAYAK,TAYAK,TAYAK,raw,PR,R,pick-based,0.3683153636434506,79,3.95,+,200
+S0976a,TAYAK,TAYAK,TAYAK,raw,ST,T,pick-based,0.7775472864722384,85,4.25,+,300
+S0976a,TAYAK,TAYAK,TAYAK,bp_01_05,PZ,Z,pick-based,0.13762192016513974,-49,-2.45,-,200
+S0976a,TAYAK,TAYAK,TAYAK,bp_01_05,SZ,Z,pick-based,0.20470259318102077,98,4.9,+,300
+S0976a,TAYAK,TAYAK,TAYAK,bp_01_05,PR,R,pick-based,0.12564707348289536,-7,-0.35000000000000003,-,200
+S0976a,TAYAK,TAYAK,TAYAK,bp_01_05,ST,T,pick-based,0.23912996267208156,100,5.0,-,300
+S0976a,TAYAK,TAYAK,TAYAK,bp_01_08,PZ,Z,pick-based,0.18088879518727555,96,4.800000000000001,+,200
+S0976a,TAYAK,TAYAK,TAYAK,bp_01_08,SZ,Z,pick-based,0.7531755156082436,61,3.0500000000000003,+,300
+S0976a,TAYAK,TAYAK,TAYAK,bp_01_08,PR,R,pick-based,0.3673247133460351,78,3.9000000000000004,+,200
+S0976a,TAYAK,TAYAK,TAYAK,bp_01_08,ST,T,pick-based,0.6268130938682998,85,4.25,+,300
+S0976a,TAYAK,TAYAK,TAYAK,bp_03_09,PZ,Z,pick-based,0.8622160216684633,95,4.75,+,200
+S0976a,TAYAK,TAYAK,TAYAK,bp_03_09,SZ,Z,pick-based,0.8957148496772044,61,3.0500000000000003,+,300
+S0976a,TAYAK,TAYAK,TAYAK,bp_03_09,PR,R,pick-based,0.7505179677349672,93,4.65,-,200
+S0976a,TAYAK,TAYAK,TAYAK,bp_03_09,ST,T,pick-based,0.7745411830876409,85,4.25,+,300
+S0976a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PZ,Z,pick-based,0.8602348596585491,80,4.0,-,200
+S0976a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,SZ,Z,pick-based,0.9102405821465729,61,3.0500000000000003,+,300
+S0976a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,PR,R,pick-based,0.6755530722359485,93,4.65,-,200
+S0976a,TAYAK,TAYAK,TAYAK,bp_03_09_pol,ST,T,pick-based,0.06422223536134943,85,4.25,+,300
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PZ,Z,pick-based,0.5493847030586528,-11,-0.55,+,200
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,SZ,Z,pick-based,0.5225259915319425,52,2.6,+,300
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,PR,R,pick-based,0.1630692170080107,100,5.0,+,200
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,raw,ST,T,pick-based,0.8183871256999116,50,2.5,-,300
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PZ,Z,pick-based,0.2587241116800048,-51,-2.5500000000000003,+,200
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,SZ,Z,pick-based,0.10597265805171076,-21,-1.05,+,300
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,PR,R,pick-based,0.07687214912210646,95,4.75,+,200
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_05,ST,T,pick-based,0.3905604600151041,69,3.45,+,300
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PZ,Z,pick-based,0.5181051646676902,-11,-0.55,+,200
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,SZ,Z,pick-based,0.5144333549542672,52,2.6,+,300
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,PR,R,pick-based,0.265141952995691,100,5.0,+,200
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_01_08,ST,T,pick-based,0.9084911998771388,50,2.5,-,300
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PZ,Z,pick-based,0.9193759062537504,-11,-0.55,+,200
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,SZ,Z,pick-based,0.9498421111227306,52,2.6,+,300
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,PR,R,pick-based,0.20474416108398022,100,5.0,+,200
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09,ST,T,pick-based,0.9423399485562847,50,2.5,-,300
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PZ,Z,pick-based,0.9000947874307391,-27,-1.35,-,200
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,SZ,Z,pick-based,0.9329747197067413,52,2.6,+,300
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,PR,R,pick-based,0.09794372630962565,-58,-2.9000000000000004,-,200
+S0976a,Best17,17-event best (Geophysical_model298),Geophysical_model298,bp_03_09_pol,ST,T,pick-based,0.9516072420213201,50,2.5,-,300
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,raw,PZ,Z,pick-based,0.9264077068427151,-3,-0.15000000000000002,-,200
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,raw,SZ,Z,pick-based,0.18524316221865086,-100,-5.0,+,300
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,raw,PR,R,pick-based,0.09873214577748907,-27,-1.35,-,200
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,raw,ST,T,pick-based,0.9161311606633881,76,3.8000000000000003,+,300
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,bp_01_05,PZ,Z,pick-based,0.7152068856436483,-22,-1.1,+,200
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,bp_01_05,SZ,Z,pick-based,0.20145649566129079,100,5.0,-,300
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,bp_01_05,PR,R,pick-based,0.21315357927212542,96,4.800000000000001,+,200
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,bp_01_05,ST,T,pick-based,0.558487290388571,76,3.8000000000000003,+,300
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,bp_01_08,PZ,Z,pick-based,0.9383496454443898,-3,-0.15000000000000002,-,200
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,bp_01_08,SZ,Z,pick-based,0.250270698308041,93,4.65,+,300
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,bp_01_08,PR,R,pick-based,0.09897294854519002,100,5.0,+,200
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,bp_01_08,ST,T,pick-based,0.9383785313379216,76,3.8000000000000003,+,300
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,bp_03_09,PZ,Z,pick-based,0.9430953525213289,-3,-0.15000000000000002,-,200
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,bp_03_09,SZ,Z,pick-based,0.5781634366334152,-86,-4.3,-,300
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,bp_03_09,PR,R,pick-based,0.14732030277211697,46,2.3000000000000003,+,200
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,bp_03_09,ST,T,pick-based,0.9602629466486695,76,3.8000000000000003,+,300
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,bp_03_09_pol,PZ,Z,pick-based,0.9339593557824691,-3,-0.15000000000000002,-,200
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,bp_03_09_pol,SZ,Z,pick-based,0.4637081542190307,-100,-5.0,+,300
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,bp_03_09_pol,PR,R,pick-based,0.09794999574172307,-58,-2.9000000000000004,+,200
+S0976a,EventBest,Event best (Geophysical_model837),Geophysical_model837,bp_03_09_pol,ST,T,pick-based,0.9018468363229017,61,3.0500000000000003,-,300

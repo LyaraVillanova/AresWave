@@ -1,0 +1,24 @@
+Best-fitting full model (models/ directory workflow)
+component_mode = paper
+model_id = MD_model14
+source_path = /home/lyara/areswave/models/MD_model14.nd
+source_format = nd
+composition = UNK
+tpot_K = nan
+adiabat_K_km = nan
+d_main_km = 1003.044
+w_main_km = 60.0
+d_800_km = 801.326
+w_800_km = 10.616999999999962
+d_1000_km = 1003.044
+w_1000_km = 60.0
+d_1200_km = 1130.445
+w_1200_km = 138.01800000000003
+d_1400_km = 1321.547
+w_1400_km = 191.10199999999986
+d_1600_km = 1614.289
+w_1600_km = 60.0
+mean_p_misfit = 0.6177392804949529
+mean_s_misfit = 0.18582118928482927
+total_misfit = 0.32979388635487045
+used_events = 1

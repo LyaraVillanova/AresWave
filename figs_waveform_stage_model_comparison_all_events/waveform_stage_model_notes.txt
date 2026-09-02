@@ -1,0 +1,44 @@
+Waveform stage/model comparison notes
+==============================================
+
+Important:
+- The panel CC values are visualization-stage diagnostics, not the official inversion misfit.
+- Each panel is aligned independently using the best sign (+/-) and best lag.
+- Therefore, this file is best used to discuss how waveform agreement evolves
+  across preprocessing stages and across model choices.
+
+Mean panel CC by model and stage:
+- Best17    | bp_01_05    | mean CC=0.266 | median CC=0.236 | n=68
+- Best17    | bp_01_08    | mean CC=0.443 | median CC=0.395 | n=68
+- Best17    | bp_03_09    | mean CC=0.687 | median CC=0.717 | n=68
+- Best17    | bp_03_09_pol | mean CC=0.660 | median CC=0.718 | n=68
+- Best17    | raw         | mean CC=0.448 | median CC=0.447 | n=68
+- EventBest | bp_01_05    | mean CC=0.288 | median CC=0.233 | n=68
+- EventBest | bp_01_08    | mean CC=0.455 | median CC=0.426 | n=68
+- EventBest | bp_03_09    | mean CC=0.677 | median CC=0.717 | n=68
+- EventBest | bp_03_09_pol | mean CC=0.645 | median CC=0.693 | n=68
+- EventBest | raw         | mean CC=0.489 | median CC=0.530 | n=68
+- TAYAK     | bp_01_05    | mean CC=0.233 | median CC=0.197 | n=68
+- TAYAK     | bp_01_08    | mean CC=0.361 | median CC=0.303 | n=68
+- TAYAK     | bp_03_09    | mean CC=0.644 | median CC=0.653 | n=68
+- TAYAK     | bp_03_09_pol | mean CC=0.573 | median CC=0.587 | n=68
+- TAYAK     | raw         | mean CC=0.378 | median CC=0.354 | n=68
+- X         | bp_01_05    | mean CC=0.319 | median CC=0.308 | n=68
+- X         | bp_01_08    | mean CC=0.447 | median CC=0.463 | n=68
+- X         | bp_03_09    | mean CC=0.623 | median CC=0.646 | n=68
+- X         | bp_03_09_pol | mean CC=0.597 | median CC=0.615 | n=68
+- X         | raw         | mean CC=0.471 | median CC=0.457 | n=68
+
+Examples of strongest EventBest improvement over Best17 in final stage:
+- S0133a ST: EventBest=0.775, Best17=0.047, improvement=0.729
+- S1153a PZ: EventBest=0.772, Best17=0.133, improvement=0.639
+- S0167a PZ: EventBest=0.780, Best17=0.367, improvement=0.412
+- S0167b SZ: EventBest=0.670, Best17=0.312, improvement=0.358
+- S1102a SZ: EventBest=0.529, Best17=0.235, improvement=0.294
+- S0421b ST: EventBest=0.928, Best17=0.654, improvement=0.274
+- S0395a PR: EventBest=0.850, Best17=0.584, improvement=0.267
+- S0226b SZ: EventBest=0.621, Best17=0.365, improvement=0.256
+- S0167a PR: EventBest=0.730, Best17=0.475, improvement=0.255
+- S1153a ST: EventBest=0.366, Best17=0.124, improvement=0.241
+- S0395a PZ: EventBest=0.913, Best17=0.685, improvement=0.228
+- S1094b ST: EventBest=0.726, Best17=0.537, improvement=0.188

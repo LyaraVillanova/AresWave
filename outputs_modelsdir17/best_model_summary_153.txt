@@ -1,0 +1,22 @@
+Best-fitting full model (models/ directory workflow)
+component_mode = paper
+model_id = SANAK
+source_path = /home/lyara/areswave/models_short/SANAK.nd
+source_format = nd
+composition = UNK
+tpot_K = nan
+adiabat_K_km = nan
+d_main_km = 755.2258
+w_main_km = 60.0
+d_800_km = 755.2258
+w_800_km = 503.48389999999984
+d_1000_km = 755.2258
+w_1000_km = 60.0
+d_1200_km = 755.2258
+w_1200_km = 1006.9678
+d_1600_km = 1785.6487
+w_1600_km = 23.455099999999902
+mean_p_misfit = 0.392641870390213
+mean_s_misfit = 0.5062994727366219
+total_misfit = 0.46841360528781895
+used_events = 17
