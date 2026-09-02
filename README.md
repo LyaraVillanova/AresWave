@@ -2,7 +2,7 @@
 
 # AresWave
 
-[![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/python-3.9--3.11-blue)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 AresWave is a Python package for source parameter estimation of martian seismic events (marsquakes) through waveform fitting between real SEIS data and synthetic seismograms.  
@@ -22,108 +22,93 @@ It provides an end-to-end workflow that includes data preprocessing, synthetic g
 
 
 
-## Instalation
+## Installation
 
-It is strongly recommended to use Visual Studio Code (VSC) (https://code.visualstudio.com/) since it simplifies environment management and workflow execution.
-For Windows users, you must also install Ubuntu via WSL (Windows Subsystem for Linux) (https://ubuntu.com/desktop/wsl).
-These instructions were tested on Windows 10 and 11 systems with Python 3.10.12.
+AresWave is designed to run in a Linux environment. For Windows users, WSL (Windows Subsystem for Linux) with Ubuntu is recommended. Visual Studio Code with WSL support can be used for development, but it is not required.
 
-1) Open PowerShell (Administrator mode)
-Click the Windows Start menu, type “PowerShell”, right-click, and choose Run as Administrator.
+The package metadata supports Python 3.9–3.11. The installation and compiled extensions have been validated with Python 3.10.18.
 
+### 1) Install system dependencies
 
-2) Install Ubuntu (WSL). From PowerShell, run:
+Inside Ubuntu or another Debian-based Linux environment:
+
+```bash
+sudo apt-get update
+sudo apt-get install -y python3-venv gcc gfortran openmpi-bin libopenmpi-dev
 ```
-wsl --install
-```
-Restart your computer after the installation completes.
-Then, open the Ubuntu app: this will be your Linux terminal.
 
+You also need Python 3.9, 3.10, or 3.11, together with `pip` and `venv`.
 
-3) Install dependencies inside Ubuntu. Run the following commands inside Ubuntu terminal:
-```
-sudo apt-get update && sudo apt-get install -y python3 python3-pip
-sudo apt install python-is-python3
-sudo apt-get install -y gcc gfortran
-sudo apt-get install -y openmpi-bin libopenmpi-dev
-```
-These packages install:
-- Python and pip (for package management)
-- GCC and GFortran (compilers required to build AresWave’s internal engine)
-- OpenMPI (for parallel processing and compatibility with mpi4py)
+### 2) Clone AresWave
 
-
-4) Create a working directory and open it in Visual Studio Code. In Ubuntu:
-```
-cd ~
-mkdir areswave_project
-cd areswave_project
-code .
-```
-This will open Visual Studio Code within your Ubuntu environment (WSL).
-
-
-5) Clone the AresWave repository. In the Ubuntu terminal inside VSC:
-```
+```bash
 git clone https://github.com/LyaraVillanova/AresWave.git
 cd AresWave
 ```
 
+### 3) Create a virtual environment
 
-6) Install requirements
-```
-python3 -m pip install -r requirements.txt
-```
-This installs Python dependencies required by AresWave and its embedded modules.
+Using Python 3.10:
 
-
-7) Install the Python build tool
-```
-pip install build
-```
-This is needed to build the internal components before installation.
-
-
-8) Build the embedded engine. From the root directory of AresWave (where setup.py is located):
-```
-python -m build .
-```
-This step compiles the embedded Fortran components (from DSMpy-based modules).
-
-
-9) Install the package. Once built, install AresWave locally with:
-```
-pip install dist/*.tar.gz
+```bash
+python3.10 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
 ```
 
+### 4) Install AresWave
 
-You can verify the installation by running:
+From the repository root:
+
+```bash
+python -m pip install .
 ```
-python -m areswave --version
+
+This installs the Python dependencies and compiles the modified DSMpy Fortran extensions bundled with AresWave.
+
+### 5) Verify the installation
+
+```bash
+python - <<'PYTEST'
+import areswave
+import dsmpy
+from dsmpy.flib import tish, tipsv
+
+print("AresWave:", areswave.__file__)
+print("DSMpy:", dsmpy.__file__)
+print("Fortran extensions: OK")
+PYTEST
 ```
 
-
+If the imports complete without an exception, the installation is working correctly.
 
 ## Requirements
 
-AresWave requires the following Python libraries:
-```
+Runtime dependencies are maintained in `requirements.txt`. They currently include:
+
+```text
 arviz
-concurrent.futures
-glob
+corner
 matplotlib
-numpy
+numpy<2
 obspy
-os
 pandas
 pymc
-pyswarm
+pyswarms
 scipy
+tqdm
+mpi4py
+joblib
+sqlalchemy
+requests
+geographiclib
 ```
-The modified DSMpy module used by AresWave is already included in the package — you do not need to install it separately.
-It is recommended to use Python 3.8 or later.
-Special gratitude to Anselme Borgeaud (@afeborgeaud), developer of the original DSMpy package.
 
+NumPy is currently restricted to versions below 2 because the bundled DSMpy Fortran extensions use the legacy NumPy/F2PY build stack.
+
+The modified DSMpy code used by AresWave is bundled with this repository and must not be installed separately.
+
+AresWave builds on DSMpy, originally developed by Anselme Borgeaud and Kensuke Konishi. The bundled version contains modifications required for the Mars workflows used by AresWave.
 
 
 ## How to use
@@ -183,7 +168,7 @@ nspc = 1256
 sampling_hz = 20
 
 # REAL DATA
-sac_folder_path = '/SAC'
+sac_folder_path = 'SAC'
 sac_files = [
     os.path.join(sac_folder_path, 'S0185a_trlq_denois03.Z.sac'),
     os.path.join(sac_folder_path, 'S0185a_trlq_denois04.T.sac'),
@@ -213,7 +198,7 @@ real_data_list = [real_data_dict['Z'], real_data_dict['R'], real_data_dict['T']]
 # SYNTHETICS
 output = generate_synthetics(event, stations, seismic_model, tlen, nspc, sampling_hz)
 ts = output.ts
-output.write(root_path='/synthetics/', format='sac')
+output.write(root_path='synthetics/', format='sac')
 
 u_Z_ELYSE_XB = output['Z', 'ELYSE_XB']
 u_R_ELYSE_XB = output['R', 'ELYSE_XB']
@@ -236,7 +221,7 @@ synthetic_data = polarization_filter(synthetic_data, sampling_hz)
 synthetics = [synthetic_data[0], synthetic_data[1], synthetic_data[2]]
 
 # TEMPORAL ALIGNMENT
-model = TauPyModel(model="/home/lyara/areswave/models/TAYAK.npz")
+model = TauPyModel(model="models/TAYAK.npz")
 arrivals = model.get_travel_times(source_depth_in_km=depth, distance_in_degree=distance, phase_list=['P', 'S'])
 if not arrivals:
     raise ValueError('Não foi possível calcular o tempo de chegada da onda P.')
@@ -318,7 +303,7 @@ for i, (comp, synthetic, real_data) in enumerate(zip(components, synthetics, rea
 
 plt.subplots_adjust(hspace=0.4, wspace=0.3)
 plt.tight_layout()
-plt.savefig('/figs/output_cross_correlation.png')
+plt.savefig('figs/output_cross_correlation.png')
 ```
 
 
