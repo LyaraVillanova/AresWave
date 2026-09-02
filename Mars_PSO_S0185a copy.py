@@ -7,7 +7,7 @@ from dsmpy.station_Mars import Station
 from areswave.PSO import create_cost_function, run_pso_with_restarts, plot_results
 
 # Configuration: Event and Station
-event_id = 'S0185a_mqs2019kxjd'
+event_id = 'S0185a_mqs2019kxjd_30'
 latitude, longitude, distance, depth = 41.59816, 90.13083, 59.8, 30
 magnitude = 3.1
 time_p = UTCDateTime("2019-06-05T02:13:48")
@@ -19,7 +19,7 @@ event = Event(event_id=event_id, latitude=latitude, longitude=longitude,
               depth=depth, mt=initial_mt, centroid_time=centroid_time, source_time_function=None)
 
 stations = [Station(name='ELYSE', network='XB', latitude=4.502384, longitude=135.623447)]
-seismic_model = seismicmodel_Mars.SeismicModel.test2()
+seismic_model = seismicmodel_Mars.SeismicModel.geophysical_model298()
 sampling_hz = 20
 nspc = 256
 tlen = 400
@@ -27,9 +27,9 @@ tlen = 400
 # Upload and pre-processing real data
 sac_folder_path = '/home/lyara/areswave/SAC'
 sac_files = [
-    os.path.join(sac_folder_path, 'S0185a_trlq_denois03.R.sac'),
+    os.path.join(sac_folder_path, 'S0185a_trlq_denois03.Z.sac'),
     os.path.join(sac_folder_path, 'S0185a_trlq_denois04.T.sac'),
-    os.path.join(sac_folder_path, 'S0185a_trlq_denois05.Z.sac')
+    os.path.join(sac_folder_path, 'S0185a_trlq_denois05.R.sac')
 ]
 if not all(os.path.exists(f) for f in sac_files):
     raise FileNotFoundError("Um ou mais arquivos SAC não foram encontrados. Verifique o caminho: " + sac_folder_path)
@@ -57,8 +57,8 @@ for i in range(len(real_data_list)):
 bounds = (np.array([12, 0, 0, -180]), np.array([44, 360, 90, 180]))
 options = {'c1': 1.5, 'c2': 1.5, 'w': 0.5}
 n_particles = 50
-n_iterations = 40
-restart_interval = 30
+n_iterations = 30
+restart_interval = 20
 
 # Running the PSO
 cost_func, tested_params_tracker = create_cost_function(

@@ -1,0 +1,2 @@
+event_id,p_sec,s_sec,latitude,longitude,depth,distance,mrr,mrt,mrp,mtt,mtp,mpp,time_p,time_s
+S0226b,20640,20957,-38.1,-122.9,11.7,94.1,1.83E+20,-2.73E+20,8.93E+19,6.41E+20,-4.03E+20,-6.24E+18,2019-07-17T05:44:00,2019-07-17T05:49:17

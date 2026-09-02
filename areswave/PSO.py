@@ -202,16 +202,27 @@ def plot_results(best_pos, event, stations, seismic_model, tlen, nspc, sampling_
         print(f"Mrp: {event.mt.Mrp:.3e}")
         print(f"Mtp: {event.mt.Mtp:.3e}")
 
-        mt_vec = [event.mt.Mrr, event.mt.Mtt, event.mt.Mpp,
-                  event.mt.Mrt, event.mt.Mrp, event.mt.Mtp]
+        # --- GMT-consistent beachball plotting: use strike/dip/rake directly ---
+        strike_plot = float(stke) % 360.0
+        dip_plot = float(dp)
+        rake_plot = float(rk)
 
-        max_abs = max(abs(x) for x in mt_vec)
-        if max_abs > 0:
-            mt_vec = [x / max_abs for x in mt_vec]
+        # Optional normalization (helps avoid weird edge cases)
+        # Keep dip in [0, 90]
+        if dip_plot < 0:
+            dip_plot = -dip_plot
+        if dip_plot > 90:
+            dip_plot = 180 - dip_plot
+            strike_plot = (strike_plot + 180) % 360.0
 
-        fig = beachball(mt_vec, size=200, linewidth=1, facecolor="b")
-        fig.savefig(os.path.join(fig_dir, f"beachball_{event_id}.png"))
+        # Keep rake in [-180, 180]
+        rake_plot = ((rake_plot + 180.0) % 360.0) - 180.0
+
+        # Plot beachball from SDR (same convention as GMT expects)
+        fig = beachball([strike_plot, dip_plot, rake_plot], size=200, linewidth=1, facecolor="b")
+        fig.savefig(os.path.join(fig_dir, f"beachball_{event_id}.png"), dpi=300, bbox_inches="tight")
         plt.close(fig)
+
 
     except Exception as e:
         print(f"Error to calculate the moment tensor or generate the beachball: {e}")

@@ -1,0 +1,2 @@
+event_id,p_sec,s_sec,latitude,longitude,depth,distance,mrr,mrt,mrp,mtt,mtp,mpp,time_p,time_s
+S1000a ,64907,65648,32.9,-89,10,128.3,5.92E+21,5.92E+21,5.92E+21,0.00E+00,0.00E+00,0.00E+00,2021-09-18T18:01:47,2021-09-18T18:14:08

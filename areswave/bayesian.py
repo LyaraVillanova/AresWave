@@ -82,7 +82,7 @@ def run_bayesian_inference(sp_time_obs, sp_sigma, vp_mu, vp_sigma, vs_mu, vs_sig
         depth = pm.Uniform("depth", lower=depth_lower, upper=depth_upper)
         t_sp = 100 * depth * (1 / vs - 1 / vp)
         pm.Normal("t_sp_obs", mu=t_sp, sigma=sp_sigma, observed=sp_time_obs)
-        trace = pm.sample(10000, tune=5000, cores=8, return_inferencedata=True)
+        trace = pm.sample(10000, tune=5000, cores=7, return_inferencedata=True)
     return trace
 
 def plot_posterior_distribution(trace, fig_path):
@@ -104,7 +104,7 @@ def plot_posterior_distribution(trace, fig_path):
     ax.set_xlim(x.min(), x.max())
     ax.set_ylim(0, y.max() * 1.2)
     ax.set_xlabel("Depth (km)")
-    ax.set_ylabel("Density")
+    ax.set_ylabel("Posterior density (km$^{-1}$)")
     ax.set_title("Posterior distribution of depth")
     ax.grid(False) #True, linestyle='--', alpha=0.3)
     ax.hlines(0, hdi_low, hdi_high, color="black", linewidth=3)

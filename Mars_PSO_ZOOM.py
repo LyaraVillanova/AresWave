@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # === 1. CARREGAR OS DADOS ===
-df = pd.read_csv("figs/all_tested_parameters_S0185a_mqs2019kxjd.csv")
+df = pd.read_csv("figs/all_tested_parameters_S1415a_mqs2022wrzi.csv")
 
 # Ajuste: defina o número de partículas por iteração (use o valor correto do seu PSO)
 n_particles = 40
@@ -30,7 +30,7 @@ axes[0].scatter(iters, costs_array[np.arange(n_iterations), best_indices],
 axes[0].set_title("Cost vs Iteration (zoomed)")
 axes[0].set_xlabel("Iteration")
 axes[0].set_ylabel("Cost")
-axes[0].set_ylim(0.050, 0.5)   # ESCALA LINEAR
+axes[0].set_ylim(0.0, 0.8)   # ESCALA LINEAR
 axes[0].legend()
 
 # --- (B) DEPTH vs ITERATION ---
@@ -46,4 +46,4 @@ axes[1].set_ylabel("Depth (km)")
 axes[1].legend()
 
 plt.tight_layout()
-plt.savefig("figs/PSO_cost_depth_zoom_S0185a_mqs2019kxjd.png", dpi=300)
+plt.savefig("figs/PSO_cost_depth_zoom_S1415a_mqs2022wrzi.png", dpi=300)

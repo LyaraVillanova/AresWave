@@ -3,39 +3,56 @@ import numpy as np
 import pandas as pd
 import math
 import obspy
-from scipy import signal
-from obspy import read
-from obspy.core.trace import Trace, Stats
-from obspy.core.stream import Stream
-from obspy import UTCDateTime
-from obspy.clients.fdsn import Client
-client = Client("IRIS")
 from matplotlib.patches import Rectangle
 from matplotlib.offsetbox import AnchoredText
 import matplotlib.patches
 from matplotlib.pyplot import cm
 from matplotlib import cycler
 from matplotlib.gridspec import GridSpec
+from scipy import signal
+from obspy import read
+from obspy.core.trace import Trace, Stats
+from obspy.core.stream import Stream
+from obspy import UTCDateTime
+from obspy.clients.fdsn import Client
+from obspy.clients.fdsn.header import FDSNNoServiceException
+client = None
+def _get_fdsn_client():
+    """Cria o cliente FDSN apenas quando uma função de download for chamada."""
+    global client
+    if client is not None:
+        return client
+    last_err = None
+    for provider in ("EARTHSCOPE", "IRIS"):
+        try:
+            client = Client(provider)
+            return client
+        except Exception as e:
+            last_err = e
+    raise FDSNNoServiceException(
+        f"No FDSN services could be discovered (EARTHSCOPE/IRIS). Last error: {last_err}"
+    )
+
 
 def waveforms(start, end, adjtime):
-    st = client.get_waveforms("XB", "ELYSE", "02", "BH*", start-(adjtime/2), end+adjtime, attach_response=True)
+    st = _get_fdsn_client().get_waveforms("XB", "ELYSE", "02", "BH*", start-(adjtime/2), end+adjtime, attach_response=True)
     st_rawc = st.copy()
     return st_rawc
 
 def waveformd(start, end, adjtime):
-    st = client.get_waveforms("XB", "ELYSE", "02", "BH*", start-(adjtime/2), end+adjtime, attach_response=True)
+    st = _get_fdsn_client().get_waveforms("XB", "ELYSE", "02", "BH*", start-(adjtime/2), end+adjtime, attach_response=True)
     st_disp = st.copy()
     st_disp.remove_response(output='DISP')
     return st_disp
 
 def waveform1(start, end, adjtime):
-    st = client.get_waveforms("XB", "ELYSE", "02", "BH*", start-(adjtime/2), end+adjtime, attach_response=True)
+    st = _get_fdsn_client().get_waveforms("XB", "ELYSE", "02", "BH*", start-(adjtime/2), end+adjtime, attach_response=True)
     st_flt1 = st.copy()
     st_flt1.filter('bandpass', freqmin=0.3, freqmax=0.9, zerophase=True)
     return st_flt1
 
 def waveform2(start, end, adjtime):
-    st = client.get_waveforms("XB", "ELYSE", "02", "BH*", start-(adjtime/2), end+adjtime, attach_response=True)
+    st = _get_fdsn_client().get_waveforms("XB", "ELYSE", "02", "BH*", start-(adjtime/2), end+adjtime, attach_response=True)
     st_flt2 = st.copy()
     st_flt2.filter('bandpass', freqmin=0.5, freqmax=0.9, zerophase=True)
     return st_flt2

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from obspy.taup import TauPyModel
 from obspy import Stream, read, UTCDateTime
 from dsmpy import seismicmodel_Mars
-from areswave.synthetics_function import generate_synthetics, apply_filter
+from areswave.synthetics_function import generate_synthetics, apply_filter, apply_filter3
 from dsmpy.event_Mars import Event, MomentTensor
 from dsmpy.station_Mars import Station
 from areswave.denoising import polarization_filter
@@ -11,24 +11,31 @@ from scipy.signal import correlate
 import os
 
 # EVENT
-event_id = 'mqs2019kxjd'
-name = 'S0185a'
-latitude = 41.6
-longitude = 90.1
-distance = 59.8
-baz = 92.0
-magnitude = 3.1
-depth = 30.37 #30
-time_p = UTCDateTime("2019-06-05T02:13:48")
-time_s = UTCDateTime("2019-06-05T02:19:47")
-centroid_time = UTCDateTime((time_p.timestamp + time_s.timestamp) / 2)
+event_id = 'mqs2019jpyu'
+name = 'S0167b'
+latitude = 4.5
+longitude = -135.6
+distance = 60.3
+baz = 107.0
+magnitude = 2.9
+depth = 16.84
+time_p = UTCDateTime("2019-05-17T19:31:38")
+time_s = UTCDateTime("2019-05-17T19:37:29")
+centroid_time = UTCDateTime("2019-05-17 19:27:04")
 
-Mrr = -4.1e13 #3.04e20
-Mrt = -2.5e13 #-2.16e19
-Mrp = 2.5e13 #-3.26e20
-Mtt = -2.9e12 #-1.21e20
-Mtp = 1.16e13 #-1.23e20
-Mpp = 4.37e13 #-7.31e19
+#Mrr = -4.1e13 #3.04e20
+#Mrt = -2.5e13 #-2.16e19
+#Mrp = 2.5e13 #-3.26e20
+#Mtt = -2.9e12 #-1.21e20
+#Mtp = 1.16e13 #-1.23e20
+#Mpp = 4.37e13 #-7.31e19
+
+Mrr=1.58E+19
+Mtt=3.67E+20
+Mpp=-3.83E+20
+Mrt=8.19E+19
+Mrp=-5.18E+19
+Mtp=9.07E+19
 mt = MomentTensor(Mrr, Mrt, Mrp, Mtt, Mtp, Mpp)
 
 event = Event(
@@ -48,16 +55,16 @@ stations = [
 
 # SEISMIC MODEL
 seismic_model = seismicmodel_Mars.SeismicModel.test2()
+nspc = 1152  #1256
 tlen = 1276.8
-nspc = 1256
 sampling_hz = 20
 
 # REAL DATA
 sac_folder_path = '/home/lyara/areswave/SAC'
 sac_files = [
-    os.path.join(sac_folder_path, 'S0185a_trlq_denois03.Z.sac'),
-    os.path.join(sac_folder_path, 'S0185a_trlq_denois04.T.sac'),
-    os.path.join(sac_folder_path, 'S0185a_trlq_denois05.R.sac')
+    os.path.join(sac_folder_path, 'S0167b_trlq_denois03.R.sac'),
+    os.path.join(sac_folder_path, 'S0167b_trlq_denois04.T.sac'),
+    os.path.join(sac_folder_path, 'S0167b_trlq_denois05.Z.sac')
 ]
 
 if not all(os.path.exists(f) for f in sac_files):
@@ -98,9 +105,9 @@ u_Z_ELYSE_XB = u_Z_ELYSE_XB[:max_idx]
 u_R_ELYSE_XB = u_R_ELYSE_XB[:max_idx]
 u_T_ELYSE_XB = u_T_ELYSE_XB[:max_idx]
 
-u_Z_ELYSE_XB_filtered = apply_filter(u_Z_ELYSE_XB, sampling_hz)
-u_R_ELYSE_XB_filtered = apply_filter(u_R_ELYSE_XB, sampling_hz)
-u_T_ELYSE_XB_filtered = apply_filter(u_T_ELYSE_XB, sampling_hz)
+u_Z_ELYSE_XB_filtered = apply_filter3(u_Z_ELYSE_XB, sampling_hz)
+u_R_ELYSE_XB_filtered = apply_filter3(u_R_ELYSE_XB, sampling_hz)
+u_T_ELYSE_XB_filtered = apply_filter3(u_T_ELYSE_XB, sampling_hz)
 
 synthetic_data = [u_Z_ELYSE_XB_filtered, u_R_ELYSE_XB_filtered, u_T_ELYSE_XB_filtered]
 synthetic_data = polarization_filter(synthetic_data, sampling_hz)
@@ -123,7 +130,7 @@ for tr in real_data_list:
     shift_real_s = (time_s - trace_start_time)
     tr.times_shifted_p = tr.times() - shift_real_p
     tr.times_shifted_s = tr.times() - shift_real_s
-    tr.data = apply_filter(tr.data, sampling_hz)
+    tr.data = apply_filter3(tr.data, sampling_hz)
 
 real_data_dict = {
     'R': real_data_list[0],
@@ -177,12 +184,12 @@ for i, (comp, synthetic, real_data) in enumerate(zip(components, synthetics, rea
     #axs[i, 2].axvline(x=0, linestyle='--', color='black', label='P-wave')
     #axs[i, 2].axvline(x=shift_real_s - shift_real_p, linestyle='--', color='black', label='S-wave')
     axs[i, 2].set_xlim([-10, 10])
-    axs[i, 2].set_ylim(-0.1, 0.1)
+    axs[i, 2].set_ylim(-0.5, 0.5)
     axs[i, 2].set_title(f'Cross Correlation ({comp})\nCorr: {corr_zoom:.2f}')
     #axs[i, 2].legend(loc='lower right')
 
     # Zoom - S arrival
-    xlim_min, xlim_max = 355, 370
+    xlim_min, xlim_max = 346, 361
     idx_min = max(0, int((xlim_min - ts_adjusted[0]) / (ts_adjusted[1] - ts_adjusted[0])))
     idx_max = min(len(ts_adjusted), int((xlim_max - ts_adjusted[0]) / (ts_adjusted[1] - ts_adjusted[0])))
     corr_zoom = np.corrcoef(synthetic_norm[idx_min:idx_max], real_data_norm[idx_min:idx_max])[0, 1]
@@ -190,12 +197,12 @@ for i, (comp, synthetic, real_data) in enumerate(zip(components, synthetics, rea
     axs[i, 3].plot(real_data.times_shifted_p, real_data_norm, color='red', alpha=0.7)
     axs[i, 3].axvspan(xlim_min, xlim_max, color='gray', alpha=0.2)
     #axs[i, 3].axvline(x=0, linestyle='--', color='black', label='P-wave')
-    #axs[i, 3].axvline(x=shift_real_s - shift_real_p, linestyle='--', color='black', label='S-wave')
-    axs[i, 3].set_xlim([350, 380])
+    #axs[i, 3].axvline(x=shift_real_s - shift_real_p, linestyle='--', colork='black', label='S-wave')
+    axs[i, 3].set_xlim([340, 370])
     axs[i, 3].set_ylim(-0.5, 0.5)
     axs[i, 3].set_title(f'Detail View ({comp})\nCorr: {corr_zoom:.2f}')
     #axs[i, 3].legend(loc='lower right')
 
 plt.subplots_adjust(hspace=0.4, wspace=0.3)
 plt.tight_layout()
-plt.savefig('/home/lyara/areswave/figs/output_cross_correlation.png')
+plt.savefig('/home/lyara/areswave/figs/output_cross_correlation_S0167b3l.png')

@@ -1,0 +1,8 @@
+Best-fitting MTZ discontinuities (from TOTAL misfit)
+N_DISC = 4
+fun = 1.462793
+
+disc_1: depth_km = 1035.153   width_km = 54.573
+disc_2: depth_km = 1052.249   width_km = 78.753
+disc_3: depth_km = 1115.406   width_km = 49.014
+disc_4: depth_km = 1154.086   width_km = 23.981

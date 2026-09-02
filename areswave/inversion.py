@@ -1,394 +1,1117 @@
 import os
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+from obspy import read, Stream
+from scipy.optimize import differential_evolution, curve_fit
+from tqdm import tqdm
 import logging
-from obspy import read
-from obspy.signal.filter import bandpass
-from scipy.signal import correlate
-from scipy.signal.windows import tukey
+from synthetics_function import generate_synthetics, apply_filter
+from denoising import polarization_filter
+from dsmpy.seismicmodel_Mars import SeismicModel
+from dsmpy.station_Mars import Station
+from dsmpy.event_Mars import Event, MomentTensor
+from scipy.interpolate import griddata, RegularGridInterpolator
+from obspy import Trace, Stream, read, UTCDateTime
 
-# --- módulos corretos do seu ambiente ---
-from dsmpy import dsm_Mars as dsm
-from dsmpy import seismicmodel_Mars as seismicmodel_mod
-
-# ================================================================
-# CONFIGURAÇÃO DE LOGGING E DIRETÓRIOS
-# ================================================================
-BASE_DIR = os.getcwd()
-DATA_DIR = "/home/lyara/areswave/SAC"
-OUTPUTS_DIR = os.path.join(BASE_DIR, "outputs")
-FIGS_DIR = os.path.join(BASE_DIR, "figs")
-
-for d in [OUTPUTS_DIR, FIGS_DIR]:
-    os.makedirs(d, exist_ok=True)
-
+# === LOGGING ===
+COST_HISTORY = []
+PARAM_HISTORY = []
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     datefmt="%H:%M:%S"
 )
-logger = logging.getLogger("MarsInversion")
+logger = logging.getLogger(__name__)
 
-# ================================================================
-# UTILITÁRIOS DE LEITURA DE DADOS
-# ================================================================
-def load_arrivals(csv_path: str):
-    """
-    Carrega tabela de tempos de chegada e momento sísmico de cada evento.
-    Espera colunas: event_id, p_sec, s_sec, Mrr, Mtt, Mpp, Mrt, Mrp, Mtp, depth, lat, lon
-    """
-    df = pd.read_csv(csv_path)
-    df = df.dropna(subset=["event_id"])
-    arrivals = {}
-    for _, row in df.iterrows():
-        arrivals[row["event_id"]] = {
-            "p_sec": row.get("p_sec", np.nan),
-            "s_sec": row.get("s_sec", np.nan),
-            "Mrr": row.get("Mrr", 0.0),
-            "Mtt": row.get("Mtt", 0.0),
-            "Mpp": row.get("Mpp", 0.0),
-            "Mrt": row.get("Mrt", 0.0),
-            "Mrp": row.get("Mrp", 0.0),
-            "Mtp": row.get("Mtp", 0.0),
-            "source_depth_km": row.get("depth", 50.0),
-            "lat": row.get("lat", 0.0),
-            "lon": row.get("lon", 0.0),
-            "distance_deg": row.get("distance_deg", 20.0)
-        }
-    logger.info(f"{len(arrivals)} eventos carregados de {csv_path}")
-    return arrivals
+DATA_DIR = "/home/lyara/areswave/SAC1/"
+CSV_FILE = "data/arrivals_S0185a.csv"
+OUTPUT_DIR = "/home/lyara/areswave/outputs/"
+FIG_DIR = "/home/lyara/areswave/figs/"
+FS = 20.0  # Hz
 
 
-def group_traces_by_event(data_dir: str):
-    """Lê waveforms .SAC (Z,R,T) e agrupa por evento"""
-    events = {}
-    for fname in os.listdir(data_dir):
-        if not fname.lower().endswith(".sac"):
-            continue
-        parts = fname.split("_")
-        if len(parts) < 2:
-            continue
-        event_id = parts[0]
-        comp = parts[-1].split(".")[0].upper()  # Z, R, T
-        tr = read(os.path.join(data_dir, fname))[0]
-        tr.detrend("demean")
-        tr.filter("bandpass", freqmin=0.05, freqmax=1.0, corners=4, zerophase=True)
-        events.setdefault(event_id, {})[comp] = tr
-    logger.info(f"{len(events)} eventos com waveforms agrupados de {data_dir}")
-    return events
+# ---------------------------------------------------------------------------
+# CONFIGURAÇÃO DO MAPEAMENTO EM PROFUNDIDADE
+# ---------------------------------------------------------------------------
+# Profundidade aqui é medida a partir da superfície (km).
+DEPTH_START_KM = 700.0
+DEPTH_END_KM   = 1800.0
+STEP_KM        = 20.0
 
-# ================================================================
-# MODELO FÍSICO: Vp / Vs / DENSIDADE 1D DE MARTE
-# ================================================================
-class ModelParam:
-    """
-    Representa um modelo 1D paramétrico de Marte.
-    Vp, Vs variam linearmente com profundidade + descontinuidades gaussianas.
-    """
-    def __init__(self, vp_top, vp_bot, vs_top, vs_bot,
-                 d_shallow=800, d1000=1000, d_deep=1200, d_layer=1600,
-                 w1000=80):
-        self.vp_top = vp_top
-        self.vp_bot = vp_bot
-        self.vs_top = vs_top
-        self.vs_bot = vs_bot
-        self.d_shallow = d_shallow
-        self.d1000 = d1000
-        self.d_deep = d_deep
-        self.d_layer = d_layer
-        self.w1000 = w1000
-
-    def get_velocity_profiles(self, depths_km):
-        """Gera perfis Vp e Vs com gradiente e descontinuidades gaussianas."""
-        z = np.asarray(depths_km)
-        frac = (z - z.min()) / (z.max() - z.min())
-        vp = self.vp_top + frac * (self.vp_bot - self.vp_top)
-        vs = self.vs_top + frac * (self.vs_bot - self.vs_top)
-        for d in [self.d_shallow, self.d1000, self.d_deep, self.d_layer]:
-            amp_vp = 0.2 * np.sin(d / 300.0)
-            amp_vs = 0.15 * np.cos(d / 400.0)
-            vp += amp_vp * np.exp(-0.5 * ((z - d) / self.w1000) ** 2)
-            vs += amp_vs * np.exp(-0.5 * ((z - d) / self.w1000) ** 2)
-        return vp, vs
-
-# ================================================================
-# CONSTRUÇÃO DE MODELO DSMpy (compatível com dsmpy)
-# ================================================================
-def build_dsm_model(depths_km, vp, vs):
-    """
-    Cria um modelo compatível com dsmpy.seismicmodel_Mars.SeismicModel.
-    """
-    sm = seismicmodel_mod.SeismicModel.tayak()  # modelo base de Marte
-    z = np.asarray(depths_km, dtype=float)
-    sm.z = z
-    sm.vpv = vp.copy()
-    sm.vph = vp.copy()
-    sm.vsv = vs.copy()
-    sm.vsh = vs.copy()
-    sm.eta = np.ones_like(vp)
-    sm.rho = np.clip(1.6612 * vp - 0.4721, 2.0, None)
-    sm.qmu = np.full_like(vp, 10000.0)
-    sm.qkappa = np.full_like(vp, 10000.0)
-    if hasattr(sm, "build"):
-        sm.build()
-    return sm
-
-# ================================================================
-# FUNÇÃO DE SÍNTESE SISMOGRÁFICA (dsmpy + fallback Ricker)
-# ================================================================
-def synthesize_event_traces(depths, vp, vs, arr, obs_trs,
-                            duration=1200.0, fs=20.0):
-    """
-    Gera traços sintéticos (Z, R, T) via DSMpy (versão Mars compatível).
-    Se falhar, usa fallback Ricker.
-    """
+# Importante: abaixo do CMB já é núcleo. Se você estiver mirando apenas o manto,
+# deixe ALLOW_BELOW_CMB = False e ajuste CORE_RADIUS_KM conforme seu modelo.
+CORE_RADIUS_KM   = 1830.0   # InSight (valor clássico); alguns trabalhos sugerem 1650–1700 km
+ALLOW_BELOW_CMB  = False    # True => permite alterar também camadas abaixo do CMB (cuidado!)
+# ---------------------------------------------------------------------------
+# MONKEY PATCH
+# ---------------------------------------------------------------------------
+def _update_mantle(self, vpv, vph, vsv, vsh, depth_min=700, depth_max=1800,
+                 core_radius_km=CORE_RADIUS_KM, allow_below_cmb=ALLOW_BELOW_CMB):
     try:
-        import numpy as np
-        from obspy import UTCDateTime
-        from dsmpy import seismicmodel_Mars
-        from dsmpy.event_Mars import Event, MomentTensor
-        from dsmpy.station_Mars import Station
-        from synthetics_function import generate_synthetics, apply_filter
+        vrmin = self._vrmin
+        vrmax = self._vrmax
 
-        # Modelo sísmico marciano
-        sm = seismicmodel_Mars.SeismicModel.tayak()
+        R = float(vrmax[-1])
 
-        # Tensor de momento do arrivals.csv
+        # ---- opcional: não deixar a atualização atravessar o CMB ----
+        # Se core_radius_km for fornecido, estimamos depth_cmb = R - Rc.
+        # Com ALLOW_BELOW_CMB=False, recortamos a camada para ficar no manto.
+        try:
+            if (core_radius_km is not None) and (not allow_below_cmb):
+                depth_cmb = float(R - float(core_radius_km))
+            else:
+                depth_cmb = None
+        except Exception:
+            depth_cmb = None
+
+        dmin = float(min(depth_min, depth_max))
+        dmax = float(max(depth_min, depth_max))
+
+        if (depth_cmb is not None) and (not allow_below_cmb):
+            # se a janela estiver totalmente abaixo do CMB, não atualiza nada
+            if dmin >= depth_cmb:
+                return
+            # recorta a parte profunda no CMB
+            dmax = min(dmax, depth_cmb)
+
+        r_shallow = R - dmin
+        r_deep    = R - dmax
+
+        r_low  = min(r_shallow, r_deep)
+        r_high = max(r_shallow, r_deep)
+
+        for i, (zmin, zmax) in enumerate(zip(vrmin, vrmax)):
+            if (zmax >= r_low) and (zmin <= r_high):
+                if np.ndim(vpv) == 0:
+                    self._vpv[:, i] = np.full_like(self._vpv[:, i], vpv)
+                    self._vph[:, i] = np.full_like(self._vph[:, i], vph)
+                    self._vsv[:, i] = np.full_like(self._vsv[:, i], vsv)
+                    self._vsh[:, i] = np.full_like(self._vsh[:, i], vsh)
+                else:
+                    self._vpv[:, i] = vpv
+                    self._vph[:, i] = vph
+                    self._vsv[:, i] = vsv
+                    self._vsh[:, i] = vsh
+
+    except Exception as e:
+        logger.error(f"Erro em _update_mantle (depth {depth_min}-{depth_max} km): {e}")
+
+setattr(SeismicModel, "update_mantle", _update_mantle)
+
+# ---------------------------------------------------------------------------
+# FUNÇÕES AUXILIARES
+# ---------------------------------------------------------------------------
+def load_event_catalog(csv_path):
+    df = pd.read_csv(csv_path)
+    df.columns = df.columns.str.strip().str.lower()
+    logger.info(f"{len(df)} eventos carregados de {csv_path}")
+    return df
+
+def load_observed_waveforms(event_id):
+    base_event_path = os.path.join(DATA_DIR, event_id)
+    if not os.path.exists(base_event_path):
+        base_event_path = DATA_DIR
+    st = Stream()
+    for fname in os.listdir(base_event_path):
+        if fname.endswith(".sac"):
+            st += read(os.path.join(base_event_path, fname))
+    if len(st) == 0:
+        logger.warning(f"[{event_id}] No data found in {base_event_path}")
+        return None
+    st.detrend("demean")
+    st.filter("bandpass", freqmin=0.3, freqmax=0.9, zerophase=True)
+    logger.info(f"[{event_id}] {len(st)} traces loaded from {base_event_path}")
+    return st
+
+def synthesize_event_traces(event_row, model, duration=2000, components=("Z", "R", "T")):
+    try:
         mt = MomentTensor(
-            arr.get("Mrr", 0.0),
-            arr.get("Mrt", 0.0),
-            arr.get("Mrp", 0.0),
-            arr.get("Mtt", 0.0),
-            arr.get("Mtp", 0.0),
-            arr.get("Mpp", 0.0)
+            Mrr=event_row["mrr"],
+            Mtt=event_row["mtt"],
+            Mpp=event_row["mpp"],
+            Mrt=event_row["mrt"],
+            Mrp=event_row["mrp"],
+            Mtp=event_row["mtp"]
         )
 
-        # Cria evento DSM
+        try:
+            centroid_time = UTCDateTime(event_row.get("time_p", UTCDateTime()))
+        except Exception:
+            centroid_time = UTCDateTime()
+
         event = Event(
-            event_id=str(arr.get("event_id", "EVT")),
-            latitude=arr.get("lat", 0.0),
-            longitude=arr.get("lon", 0.0),
-            depth=arr.get("source_depth_km", 30.0),
+            event_id=str(event_row["event_id"]),
+            latitude=event_row["latitude"],
+            longitude=event_row["longitude"],
+            depth=event_row["depth"],
             mt=mt,
-            centroid_time=UTCDateTime().timestamp,
+            centroid_time=centroid_time,
             source_time_function=None
         )
 
-        # Define estação
-        station = Station(
-            name="ELYSE",
-            network="XB",
-            latitude=4.502384,
-            longitude=135.623447
-        )
+        stations = [Station(name='ELYSE', network='XB', latitude=4.502384, longitude=135.623447)]
 
-        # Gera sintéticos usando função dareswave (DSMpy integrado)
         output = generate_synthetics(
-            event, [station], sm,
+            event,
+            stations,
+            model,
             tlen=duration,
-            nspc=1256,
-            sampling_hz=fs
+            nspc=256,
+            sampling_hz=FS
         )
 
-        ts = output.ts
-        syn_dict = {
-            "Z": apply_filter(output["Z", "ELYSE_XB"], fs),
-            "R": apply_filter(output["R", "ELYSE_XB"], fs),
-            "T": apply_filter(output["T", "ELYSE_XB"], fs)
-        }
+        us = output.us  # (3, nr, tlen)
+        st_syn = Stream()
+        for i, comp in enumerate(components):
+            tr = Trace(data=us[i, 0, :])
+            tr.stats.delta = 1.0 / FS
+            tr.stats.channel = comp
+            st_syn += tr
 
-        logger.info("✅ DSMpy (areswave) executado com sucesso com MomentTensor real.")
-        return syn_dict
+        for tr in st_syn:
+            tr.data = apply_filter(tr.data, FS)
+        z, r, t = [tr.data for tr in st_syn]
+        zf, rf, tf = polarization_filter([z, r, t], FS)
+        for tr, data in zip(st_syn, [zf, rf, tf]):
+            tr.data = data
+
+        logger.info(f"[{event_row['event_id']}] Sintéticos gerados com DSMpy.")
+        return st_syn
 
     except Exception as e:
-        logger.warning(f"⚠️ DSMpy (areswave) falhou, usando fallback Ricker ({e})")
-        t = np.arange(0, duration, 1 / fs)
+        logger.error(f"[{event_row['event_id']}] Erro em synthesize_event_traces(): {e}")
+        return None
 
-        def ricker(t, f):
-            return (1 - 2 * (np.pi * f * (t - 1/f))**2) * np.exp(-(np.pi * f * (t - 1/f))**2)
+def compute_misfit(obs_st, syn_st):
+    try:
+        common_channels = set(tr.stats.channel[-1] for tr in obs_st) & \
+                          set(tr.stats.channel[-1] for tr in syn_st)
+        if not common_channels:
+            return np.inf
 
-        wave = ricker(t, 0.2)
-        syn = {c: obs_trs[c].copy() for c in ["Z", "R", "T"]}
-        for c in ["Z", "R", "T"]:
-            syn[c].data = np.convolve(syn[c].data, wave, mode="same")
-        return syn
+        misfits = []
+        for ch in common_channels:
+            o = obs_st.select(channel=f"*{ch}")
+            s = syn_st.select(channel=f"*{ch}")
+            if len(o) == 0 or len(s) == 0:
+                continue
 
-# ================================================================
-# CONTINUAÇÃO — INVERSÃO E AVALIAÇÃO (COMPATÍVEL COM dsmpy)
-# ================================================================
-from scipy.optimize import differential_evolution
-from itertools import product
-from tqdm import tqdm
-import matplotlib.pyplot as plt
+            obs = o[0].data.astype(float)
+            syn = s[0].data.astype(float)
+            n = min(len(obs), len(syn))
+            obs, syn = obs[:n], syn[:n]
 
-# ================================================================
-# MÉTRICAS DE AJUSTE
-# ================================================================
-def misfit_metric(obs, syn, normalize=True):
+            if np.max(np.abs(obs)) > 0:
+                obs = obs / np.max(np.abs(obs))
+            if np.max(np.abs(syn)) > 0:
+                syn = syn / np.max(np.abs(syn))
+
+            obs -= np.mean(obs)
+            syn -= np.mean(syn)
+
+            diff = obs - syn
+            misfit = np.sqrt(np.mean(diff ** 2))  # entre 0 e 2
+            misfit = min(misfit / 2, 1.0)  # reescala 0–1
+
+            misfits.append(misfit)
+
+        mean_misfit = np.mean(misfits) if misfits else np.inf
+        logger.debug(f"[DEBUG] Misfit normalizado (Mars-style): {mean_misfit:.4f}")
+        return mean_misfit
+
+    except Exception as e:
+        logger.error(f"Erro em compute_misfit(): {e}")
+        return np.nan
+
+def total_cost(params, events, depth_min, depth_max):
+    try:
+        vpv, vph, vsv, vsh = params
+        p = np.array(params, dtype=float)
+        if np.any(p <= 0.0) or np.any(p > 12.0):
+            return 999.0, 999.0, 999.0
+
+        model = SeismicModel.test2()
+        model.update_mantle(
+            vpv=vpv,
+            vph=vph,
+            vsv=vsv,
+            vsh=vsh,
+            depth_min=depth_min,
+            depth_max=depth_max,
+        )
+
+        total_misfit_vp, total_misfit_vs, valid = 0.0, 0.0, 0
+
+        for _, evt in events.iterrows():
+            event_id = str(evt["event_id"]).strip()
+            obs_st = load_observed_waveforms(event_id)
+            syn_st = synthesize_event_traces(evt, model)
+            if syn_st is None or obs_st is None:
+                continue
+
+            # P in Z + R
+            obs_vp = obs_st.select(channel="*Z") + obs_st.select(channel="*R")
+            syn_vp = syn_st.select(channel="*Z") + syn_st.select(channel="*R")
+
+            # S in Z + T
+            obs_vs = obs_st.select(channel="*Z") + obs_st.select(channel="*T")
+            syn_vs = syn_st.select(channel="*Z") + syn_st.select(channel="*T")
+
+            m_vp = compute_misfit(obs_vp, syn_vp)
+            m_vs = compute_misfit(obs_vs, syn_vs)
+
+            if np.isfinite(m_vp) and np.isfinite(m_vs):
+                total_misfit_vp += m_vp
+                total_misfit_vs += m_vs
+                valid += 1
+
+        if valid == 0:
+            return 999.0, 999.0, 999.0
+
+        mean_vp = total_misfit_vp / valid
+        mean_vs = total_misfit_vs / valid
+        mean_total = 0.5 * (mean_vp + mean_vs)
+
+        global COST_HISTORY, PARAM_HISTORY
+        COST_HISTORY.append(mean_total)
+        PARAM_HISTORY.append(params)
+
+        logger.info(
+            f"[Iteração camada {depth_min:.0f}-{depth_max:.0f} km] "
+            f"vpv={vpv:.2f}, vsv={vsv:.2f} | "
+            f"Misfit Vp={mean_vp:.6f}, Vs={mean_vs:.6f}, Total={mean_total:.6f}"
+        )
+
+        return mean_total, mean_vp, mean_vs
+
+    except Exception as e:
+        logger.error(f"Erro em total_cost() para camada {depth_min}-{depth_max}: {e}")
+        return 999.0, 999.0, 999.0
+
+def total_cost_scalar(params, events, depth_min, depth_max):
+    mean_total, mean_vp, mean_vs = total_cost(params, events, depth_min, depth_max)
+    return float(mean_total)
+
+# ---------------------------------------------------------------------------
+# HEATMAP OF MISFIT
+# ---------------------------------------------------------------------------
+def misfit_vs_depth_heatmap(events, depth_min=700.0, depth_max=1800.0):
+    """Heatmap simples de misfit (Vp×Vs) para UMA janela de profundidade.
+
+    Nota: a versão anterior chamava total_cost_scalar com argumentos errados.
+    Aqui usamos o pipeline padrão: total_cost_scalar((vp,vp,vs,vs), events, depth_min, depth_max).
     """
-    Calcula o misfit entre traços observados e sintéticos.
-    Usa correlação cruzada normalizada como métrica de semelhança.
-    """
-    obs = np.nan_to_num(obs)
-    syn = np.nan_to_num(syn)
-    if normalize:
-        if np.max(np.abs(obs)) > 0:
-            obs /= np.max(np.abs(obs))
-        if np.max(np.abs(syn)) > 0:
-            syn /= np.max(np.abs(syn))
+    vp_values = np.linspace(7.0, 10.8, 20)
+    vs_values = np.linspace(3.5, 6.1, 20)
+    misfit_grid = np.zeros((len(vs_values), len(vp_values)))
 
-    corr = correlate(obs, syn, mode="valid")
-    corr_val = np.max(np.abs(corr)) / len(obs)
-    misfit = 1.0 - corr_val
-    return misfit
+    logger.info(f"Calculating misfit map for depth window {depth_min:.0f}-{depth_max:.0f} km...")
+    for i, vs in enumerate(tqdm(vs_values)):
+        for j, vp in enumerate(vp_values):
+            m = total_cost_scalar((vp, vp, vs, vs), events, depth_min, depth_max)
+            misfit_grid[i, j] = m
 
-
-def window_trace(trace, center, width, fs):
-    """Aplica janela Tukey ao redor do tempo central 'center' (s)."""
-    npts = int(width * fs)
-    start = int(center * fs - npts // 2)
-    end = start + npts
-    if start < 0 or end > len(trace):
-        return np.zeros(npts)
-    w = tukey(npts, 0.2)
-    return trace[start:end] * w
-
-# ================================================================
-# GRID SEARCH — FASE 1 (EXPLORATÓRIA)
-# ================================================================
-def grid_search_inversion(events, arrivals, vp_range, vs_range,
-                          depths=np.linspace(700, 1800, 56),
-                          fs=20.0, duration=1200.0):
-    """
-    Varredura inicial para achar regiões promissoras de Vp/Vs.
-    Retorna DataFrame com misfit médio.
-    """
-    results = []
-    for vp_t, vp_b, vs_t, vs_b in tqdm(product(vp_range, vp_range, vs_range, vs_range),
-                                       desc="Grid search"):
-        model = ModelParam(vp_t, vp_b, vs_t, vs_b)
-        vp_prof, vs_prof = model.get_velocity_profiles(depths)
-        costs = []
-        for ev_id, obs_trs in events.items():
-            arr = arrivals.get(ev_id, {})
-            try:
-                syn = synthesize_event_traces(depths, vp_prof, vs_prof, arr, obs_trs, duration, fs)
-                tP = arr.get("p_sec", 300.0)
-                tS = arr.get("s_sec", 600.0)
-                obsP = window_trace(obs_trs["Z"].data, tP, 20, fs)
-                synP = window_trace(syn["Z"].data, tP, 20, fs)
-                obsS = window_trace(obs_trs["R"].data, tS, 30, fs)
-                synS = window_trace(syn["R"].data, tS, 30, fs)
-                cost = misfit_metric(obsP, synP) + misfit_metric(obsS, synS)
-                costs.append(cost)
-            except Exception as e:
-                logger.debug(f"[{ev_id}] Grid falhou: {e}")
-        mean_cost = np.mean(costs) if costs else 999
-        results.append(dict(vp_top=vp_t, vp_bot=vp_b, vs_top=vs_t, vs_bot=vs_b, misfit=mean_cost))
-
-    df = pd.DataFrame(results)
-    df.to_csv(os.path.join(OUTPUTS_DIR, "grid_results.csv"), index=False)
-    logger.info("Grid search concluída.")
-    return df
-
-
-# ================================================================
-# DIFFERENTIAL EVOLUTION — FASE 2 (REFINAMENTO)
-# ================================================================
-def differential_refinement(events, arrivals,
-                            depths=np.linspace(700, 1800, 56),
-                            fs=20.0, duration=1200.0):
-    """
-    Refina o modelo inicial usando differential evolution.
-    """
-    def cost_function(params):
-        vp_t, vp_b, vs_t, vs_b = params
-        model = ModelParam(vp_t, vp_b, vs_t, vs_b)
-        vp_prof, vs_prof = model.get_velocity_profiles(depths)
-        total_costs = []
-        for ev_id, obs_trs in events.items():
-            arr = arrivals.get(ev_id, {})
-            try:
-                syn = synthesize_event_traces(depths, vp_prof, vs_prof, arr, obs_trs, duration, fs)
-                tP = arr.get("p_sec", 300.0)
-                tS = arr.get("s_sec", 600.0)
-                obsP = window_trace(obs_trs["Z"].data, tP, 20, fs)
-                synP = window_trace(syn["Z"].data, tP, 20, fs)
-                obsS = window_trace(obs_trs["R"].data, tS, 30, fs)
-                synS = window_trace(syn["R"].data, tS, 30, fs)
-                c = misfit_metric(obsP, synP) + misfit_metric(obsS, synS)
-                total_costs.append(c)
-            except Exception as e:
-                logger.debug(f"Falha DE {ev_id}: {e}")
-                total_costs.append(999)
-        return np.mean(total_costs)
-
-    bounds = [(6.5, 9.5), (8.0, 10.0), (3.5, 5.0), (4.0, 5.5)]
-    result = differential_evolution(
-        cost_function,
-        bounds,
-        strategy="best1bin",
-        maxiter=20,
-        popsize=8,
-        seed=42,
-        tol=0.02,
-        disp=True
+    fig, ax = plt.subplots(figsize=(8, 6))
+    c = ax.imshow(
+        misfit_grid,
+        extent=[vp_values.min(), vp_values.max(), vs_values.max(), vs_values.min()],
+        aspect="auto",
+        cmap="viridis_r"
     )
-    logger.info(f"Melhor resultado DE: {result.x}, custo={result.fun:.4f}")
-    return result
+    plt.colorbar(c, ax=ax, label="Misfit médio")
+    ax.set_xlabel("Vp (km/s)")
+    ax.set_ylabel("Vs (km/s)")
+    os.makedirs(FIG_DIR, exist_ok=True)
+    out = os.path.join(FIG_DIR, "misfit_heatmap.png")
+    fig.savefig(out, dpi=300)
+    plt.close(fig)
+    logger.info(f"Mapa salvo em {out}")
 
+def compute_layer_misfit(events, vp, vs, depth_min, depth_max):
+    """
+    Retorna (mean_total, mean_vp, mean_vs) para a camada depth_min-depth_max,
+    onde:
+      - mean_vp usa componentes Z+R (proxy de P)
+      - mean_vs usa componentes Z+T (proxy de S)
+      - mean_total = 0.5*(mean_vp + mean_vs)
 
-# ================================================================
-# UTILITÁRIOS E EXPORT
-# ================================================================
-def ensure_dirs():
-    for d in [OUTPUTS_DIR, FIGS_DIR]:
-        os.makedirs(d, exist_ok=True)
+    Obs: Mantém a mesma lógica do seu pipeline; a diferença é só expor
+    os misfits separados, para que possamos:
+      (i) fazer Fig. 3A com misfit de P (Vp),
+      (ii) Fig. 3B com misfit de S (Vs),
+      (iii) ajustar um modelo "completo" com descontinuidades.
+    """
+    try:
+        model_layer = SeismicModel.test2()
+        model_layer.update_mantle(
+            vpv=vp,
+            vph=vp,
+            vsv=vs,
+            vsh=vs,
+            depth_min=depth_min,
+            depth_max=depth_max,
+        )
 
+        total_misfit_vp, total_misfit_vs, valid = 0.0, 0.0, 0
 
-def save_best_model(result, depths, filename="best_model.csv"):
-    vp_t, vp_b, vs_t, vs_b = result.x
-    model = ModelParam(vp_t, vp_b, vs_t, vs_b)
-    vp_prof, vs_prof = model.get_velocity_profiles(depths)
-    df = pd.DataFrame({"depth_km": depths, "Vp": vp_prof, "Vs": vs_prof})
-    df.to_csv(os.path.join(OUTPUTS_DIR, filename), index=False)
-    logger.info(f"Modelo salvo em {filename}.")
-    return df
+        for _, evt in events.iterrows():
+            event_id = str(evt["event_id"]).strip()
+            obs_st = load_observed_waveforms(event_id)
+            syn_st = synthesize_event_traces(evt, model_layer)
+            if syn_st is None or obs_st is None:
+                continue
 
+            # P in Z + R
+            obs_vp = obs_st.select(channel="*Z") + obs_st.select(channel="*R")
+            syn_vp = syn_st.select(channel="*Z") + syn_st.select(channel="*R")
 
+            # S in Z + T
+            obs_vs = obs_st.select(channel="*Z") + obs_st.select(channel="*T")
+            syn_vs = syn_st.select(channel="*Z") + syn_st.select(channel="*T")
 
-# ================================================================
-# VISUALIZAÇÃO (RÁPIDA)
-# ================================================================
-def plot_model(df_model):
-    plt.figure(figsize=(6, 6))
-    plt.plot(df_model["Vp"], df_model["depth_km"], label="Vp", lw=2)
-    plt.plot(df_model["Vs"], df_model["depth_km"], label="Vs", lw=2)
-    plt.gca().invert_yaxis()
-    plt.xlabel("Velocity (km/s)")
-    plt.ylabel("Depth (km)")
-    plt.title("Best-fit Vp/Vs Model — Mars Interior")
-    plt.legend()
-    plt.grid(alpha=0.3)
+            m_vp = compute_misfit(obs_vp, syn_vp)
+            m_vs = compute_misfit(obs_vs, syn_vs)
+
+            if np.isfinite(m_vp) and np.isfinite(m_vs):
+                total_misfit_vp += m_vp
+                total_misfit_vs += m_vs
+                valid += 1
+
+        if valid == 0:
+            return 999.0, 999.0, 999.0
+
+        mean_vp = total_misfit_vp / valid
+        mean_vs = total_misfit_vs / valid
+        mean_total = 0.5 * (mean_vp + mean_vs)
+
+        return float(mean_total), float(mean_vp), float(mean_vs)
+
+    except Exception as e:
+        logger.error(
+            f"Erro em compute_layer_misfit(Vp={vp:.3f}, Vs={vs:.3f}, "
+            f"depth={depth_min}-{depth_max}): {e}"
+        )
+        return 999.0, 999.0, 999.0
+
+def pnas_like_normalize_misfit(misfit_grid, q_clip=0.70, gamma=0.60, eps=1e-12):
+    """
+    Normaliza misfit para ficar estilo PNAS:
+      - valores acima do quantil q_clip ficam ~1 (branco, com Blues_r)
+      - valores próximos ao mínimo ficam escuros
+      - gamma < 1 deixa o fundo ainda mais branco (puxa valores pra cima)
+    """
+    import numpy as np
+
+    g = np.asarray(misfit_grid, dtype=float)
+    g = np.where(np.isfinite(g), g, np.nan)
+
+    mn = np.nanmin(g)
+    qv = np.nanquantile(g, q_clip)
+
+    denom = (qv - mn) if (qv - mn) > eps else eps
+    x = (g - mn) / denom
+    x = np.clip(x, 0.0, 1.0)
+
+    # gamma < 1 => “branqueia” a maior parte do mapa
+    if gamma is not None and gamma > 0:
+        x = np.power(x, gamma)
+
+    # substitui NaNs por 1 (branco)
+    x = np.where(np.isfinite(x), x, 1.0)
+    return x
+
+def plot_layered_fig3_heatmaps(
+    depth_windows,
+    step,
+    vp_values,
+    vs_values,
+    misfit_grid_vp,   # esperado: (n_depth, n_vp) já marginalizado (min em Vs)
+    misfit_grid_vs,   # esperado: (n_depth, n_vs) já marginalizado (min em Vp)
+    fig_dir,
+    q_clip=0.70,
+    gamma=0.60,
+    vp_curve=None,    # arrays (zfine, vp(zfine)) ou None
+    vs_curve=None,    # arrays (zfine, vs(zfine)) ou None
+    # --- melhorias visuais (não mudam a inversão; só a figura) ---
+    smooth=True,              # suaviza/remealha o heatmap (remove “quadriculado”)
+    sigma=0.9,                # suavização (em “células”)
+    upsample=4,               # fator de reamostragem (4x dá um look bem PNAS)
+    add_valley_contour=True,  # desenha um contorno do “vale” de misfit
+    valley_percentile=7.0,    # contorno no percentil baixo do misfit normalizado
+    contour_color="#00AEEF",  # azul/ciano (curva bem delimitada)
+    contour_lw=2.2,
+):
+    """
+    Fig. 3A/3B estilo PNAS (heatmap com fundo branco + linha do best-fitting full model).
+
+    Nota importante sobre o “quadriculado”:
+      - O grid (depth×Vp ou depth×Vs) é discreto (camadas de 20 km e ~21 valores de Vp/Vs).
+      - Mesmo com shading="auto", pcolormesh mostra “pixels”.
+      - Para ter um visual como no paper (curva bem delimitada), a prática é:
+          (i) normalizar → (ii) suavizar levemente → (iii) reamostrar para plot
+        Sem mexer nos resultados da inversão (só na renderização).
+
+    A curva vermelha tracejada (quando fornecida) deve vir do ajuste “modelo completo”.
+    O contorno azul (opcional) destaca o vale de menor misfit.
+    """
+    import os
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+    os.makedirs(fig_dir, exist_ok=True)
+
+    depth_windows = np.asarray(depth_windows, dtype=float)
+    vp_values = np.asarray(vp_values, dtype=float)
+    vs_values = np.asarray(vs_values, dtype=float)
+
+    # ---- EDGES (camadas são [dmin, dmin+step]) ----
+    depth_edges = np.append(depth_windows, depth_windows[-1] + step)
+
+    dvp = vp_values[1] - vp_values[0]
+    vp_edges = np.concatenate(([vp_values[0] - 0.5 * dvp], vp_values + 0.5 * dvp))
+
+    dvs = vs_values[1] - vs_values[0]
+    vs_edges = np.concatenate(([vs_values[0] - 0.5 * dvs], vs_values + 0.5 * dvs))
+
+    # ---- Normalização estilo PNAS (fundo branco) ----
+    misfit_vp_norm = pnas_like_normalize_misfit(misfit_grid_vp, q_clip=q_clip, gamma=gamma)
+    misfit_vs_norm = pnas_like_normalize_misfit(misfit_grid_vs, q_clip=q_clip, gamma=gamma)
+
+    def _prep_for_plot(M):
+        """Suaviza e reamostra (se possível) sem alterar o conteúdo físico."""
+        if not smooth:
+            return M, None, None  # sem reamostragem
+        try:
+            from scipy.ndimage import gaussian_filter, zoom
+            Mm = gaussian_filter(M, sigma=(sigma, sigma), mode="nearest")
+            if upsample and int(upsample) > 1:
+                Mm = zoom(Mm, (int(upsample), int(upsample)), order=3)
+            return Mm, None, None
+        except Exception:
+            # fallback: só imshow com interpolação do matplotlib (sem scipy)
+            return M, None, None
+
+    def _imshow_heatmap(x_edges, y_edges, M, xlabel, cbar_label, panel_letter):
+        Mplot, _, _ = _prep_for_plot(M)
+
+        # extent = [left, right, bottom, top]
+        extent = [float(x_edges[0]), float(x_edges[-1]), float(y_edges[-1]), float(y_edges[0])]
+        plt.imshow(
+            Mplot,
+            extent=extent,
+            aspect="auto",
+            cmap="Blues_r",
+            interpolation="bicubic" if smooth else "nearest",
+        )
+
+        if add_valley_contour:
+            try:
+                # coordenadas (centros) compatíveis com Mplot
+                x = np.linspace(float(x_edges[0]), float(x_edges[-1]), Mplot.shape[1])
+                y = np.linspace(float(y_edges[0]), float(y_edges[-1]), Mplot.shape[0])
+                X, Y = np.meshgrid(x, y)
+                level = np.percentile(Mplot, float(valley_percentile))
+                plt.contour(X, Y, Mplot, levels=[level], colors=[contour_color], linewidths=contour_lw)
+            except Exception:
+                pass
+
+        plt.xlabel(xlabel)
+        plt.ylabel("Profundidade (km)")
+        plt.text(0.04, 0.06, panel_letter, transform=plt.gca().transAxes, fontweight="bold", fontsize=16)
+
+        cb = plt.colorbar()
+        cb.set_label(cbar_label)
+
+    # =======================
+    # Painel A: Vp (P)
+    # =======================
+    plt.figure(figsize=(4.5, 7))
+    _imshow_heatmap(vp_edges, depth_edges, misfit_vp_norm, "Vp (km/s)", "Misfit (P) normalizado", "A")
+
+    if vp_curve is not None:
+        zfine, vpfine = vp_curve
+        plt.plot(vpfine, zfine, "r--", lw=2.8)
+
+    outA = os.path.join(fig_dir, "vp_layered_fig3A.png")
     plt.tight_layout()
-    plt.savefig(os.path.join(FIGS_DIR, "vp_vs_profile.png"), dpi=250)
+    plt.savefig(outA, dpi=300)
     plt.close()
 
+    # =======================
+    # Painel B: Vs (S)
+    # =======================
+    plt.figure(figsize=(4.5, 7))
+    _imshow_heatmap(vs_edges, depth_edges, misfit_vs_norm, "Vs (km/s)", "Misfit (S) normalizado", "B")
 
-# ================================================================
-# BLOCO DE TESTE LOCAL
-# ================================================================
+    if vs_curve is not None:
+        zfine, vsfine = vs_curve
+        plt.plot(vsfine, zfine, "r--", lw=2.8)
+
+    outB = os.path.join(fig_dir, "vs_layered_fig3B.png")
+    plt.tight_layout()
+    plt.savefig(outB, dpi=300)
+    plt.close()
+
+    return outA, outB
+def plot_pnas_style_transition(
+    depths_center,
+    vp_best_list,
+    vs_best_list,
+    output_dir,
+    w_bounds=(40.0, 400.0),
+    d0_bounds=None,
+):
+    """
+    Figura adicional (2 painéis) estilo PNAS:
+      - pontos: resultado por camada (layered inversion)
+      - linha: modelo logístico suave (Vp e Vs juntos) com mesmo d0 e mesma largura w
+
+    Ajuste conjunto: [vp_low, vp_high, vs_low, vs_high, d0, w]
+    """
+    import os
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from scipy.optimize import curve_fit
+
+    os.makedirs(output_dir, exist_ok=True)
+
+    z = np.asarray(depths_center, float)
+    vp_obs = np.asarray(vp_best_list, float)
+    vs_obs = np.asarray(vs_best_list, float)
+
+    # --- logístico ---
+    def logistic(z, v_low, v_high, d0, w):
+        return v_low + (v_high - v_low) / (1.0 + np.exp(-(z - d0) / w))
+
+    # --- modelo conjunto (mesmo d0 e w) ---
+    def joint_model(z_concat, vp_low, vp_high, vs_low, vs_high, d0, w):
+        z1 = z_concat[: len(z)]
+        z2 = z_concat[len(z) :]
+        return np.concatenate(
+            [logistic(z1, vp_low, vp_high, d0, w),
+             logistic(z2, vs_low, vs_high, d0, w)]
+        )
+
+    z_concat = np.concatenate([z, z])
+    v_concat = np.concatenate([vp_obs, vs_obs])
+
+    # chute inicial mais estável: transição onde a derivada do "médio" é maior
+    vmean = 0.5 * (vp_obs / (np.nanmax(vp_obs) + 1e-12) + vs_obs / (np.nanmax(vs_obs) + 1e-12))
+    dv = np.gradient(vmean)
+    d0_guess = z[int(np.nanargmax(np.abs(dv)))]
+    w_guess = 120.0
+
+    p0 = [
+        float(np.nanmin(vp_obs)), float(np.nanmax(vp_obs)),
+        float(np.nanmin(vs_obs)), float(np.nanmax(vs_obs)),
+        float(d0_guess), float(w_guess),
+    ]
+
+    # bounds (evita w ~ 0 -> degrau vertical)
+    if d0_bounds is None:
+        d0_bounds = (float(np.nanmin(z)) - 50.0, float(np.nanmax(z)) + 50.0)
+
+    lower = [
+        float(np.nanmin(vp_obs) - 2.0), float(np.nanmin(vp_obs) - 2.0),
+        float(np.nanmin(vs_obs) - 2.0), float(np.nanmin(vs_obs) - 2.0),
+        float(d0_bounds[0]), float(w_bounds[0]),
+    ]
+    upper = [
+        float(np.nanmax(vp_obs) + 2.0), float(np.nanmax(vp_obs) + 2.0),
+        float(np.nanmax(vs_obs) + 2.0), float(np.nanmax(vs_obs) + 2.0),
+        float(d0_bounds[1]), float(w_bounds[1]),
+    ]
+
+    popt, _ = curve_fit(
+        joint_model,
+        z_concat,
+        v_concat,
+        p0=p0,
+        bounds=(lower, upper),
+        maxfev=40000,
+    )
+
+    vp_low, vp_high, vs_low, vs_high, d0, w = popt
+
+    zfine = np.linspace(z.min(), z.max(), 600)
+    vp_smooth = logistic(zfine, vp_low, vp_high, d0, w)
+    vs_smooth = logistic(zfine, vs_low, vs_high, d0, w)
+
+    # --- figura ---
+    fig, axes = plt.subplots(1, 2, figsize=(8, 7), sharey=True)
+
+    ax = axes[0]
+    ax.scatter(vp_obs, z, c="k", s=28, label="Layered inversion")
+    ax.plot(vp_smooth, zfine, "r--", lw=2.5, label="PNAS-style logistic model")
+    ax.invert_yaxis()
+    ax.set_xlabel("Vp (km/s)")
+    ax.set_ylabel("Depth (km)")
+    ax.text(0.02, 0.05, "A", transform=ax.transAxes, fontweight="bold")
+
+    ax = axes[1]
+    ax.scatter(vs_obs, z, c="k", s=28, label="Layered inversion")
+    ax.plot(vs_smooth, zfine, "r--", lw=2.5, label="PNAS-style logistic model")
+    ax.invert_yaxis()
+    ax.set_xlabel("Vs (km/s)")
+    ax.text(0.02, 0.05, "B", transform=ax.transAxes, fontweight="bold")
+
+    for ax in axes:
+        ax.legend(loc="lower right", frameon=True)
+
+    plt.tight_layout()
+    out = os.path.join(output_dir, "vp_vs_pnas_style_transition.png")
+    plt.savefig(out, dpi=300)
+    plt.close()
+
+    return out, {"vp_low": vp_low, "vp_high": vp_high, "vs_low": vs_low, "vs_high": vs_high, "d0": d0, "w": w}
+
+
+# ---------------------------------------------------------------------------
+# AJUSTE "MODELO COMPLETO" COM DESCONTINUIDADES (MTZ)
+# ---------------------------------------------------------------------------
+def _sigmoid(z, d0, w):
+    z = np.asarray(z, float)
+    return 1.0 / (1.0 + np.exp(-(z - d0) / w))
+
+def multistep_profile(z, v0, deltas, d_list, w_list):
+    """
+    Perfil do tipo soma de sigmoides (multi-step):
+        v(z) = v0 + Σ Δ_k * sigmoid(z, d_k, w_k)
+
+    d_k: profundidades das descontinuidades
+    w_k: larguras (km) das transições
+    """
+    z = np.asarray(z, float)
+    d_list = np.asarray(d_list, float)
+    w_list = np.asarray(w_list, float)
+    deltas = np.asarray(deltas, float)
+
+    v = np.full_like(z, float(v0), dtype=float)
+    for dk, wk, dv in zip(d_list, w_list, deltas):
+        v += dv * _sigmoid(z, dk, wk)
+    return v
+
+def build_layer_interpolators(vp_values, vs_values, misfit_cube, fill_value=999.0):
+    """
+    Constrói um interpolador (RegularGridInterpolator) por camada.
+    misfit_cube: (n_depth, n_vp, n_vs)
+    """
+    vp_values = np.asarray(vp_values, float)
+    vs_values = np.asarray(vs_values, float)
+    interps = []
+    for i in range(misfit_cube.shape[0]):
+        g = np.asarray(misfit_cube[i], float)
+        interps.append(
+            RegularGridInterpolator(
+                (vp_values, vs_values),
+                g,
+                bounds_error=False,
+                fill_value=float(fill_value),
+            )
+        )
+    return interps
+
+def fit_discontinuities_from_cube(
+    depths_center,
+    vp_values,
+    vs_values,
+    cube_target,
+    n_disc=3,
+    depth_bounds=None,
+    w_bounds=(5.0, 120.0),
+    vpad=1.0,
+    maxiter=250,
+    popsize=25,
+    seed=0,
+):
+    """
+    Ajusta um modelo global (perfil completo) com n_disc descontinuidades
+    diretamente sobre um cubo de misfit por camada (Vp×Vs).
+
+    Retorna:
+      - dict com parâmetros (vp0, vs0, deltas_vp, deltas_vs, d, w),
+      - curvas (zfine, vp(zfine), vs(zfine)),
+      - custo final.
+    """
+    z = np.asarray(depths_center, float)
+    zmin, zmax = float(np.min(z)), float(np.max(z))
+
+    if depth_bounds is None:
+        depth_bounds = (zmin, zmax)
+    d_lo, d_hi = float(depth_bounds[0]), float(depth_bounds[1])
+
+    vp_values = np.asarray(vp_values, float)
+    vs_values = np.asarray(vs_values, float)
+    vp_lo, vp_hi = float(vp_values.min() - vpad), float(vp_values.max() + vpad)
+    vs_lo, vs_hi = float(vs_values.min() - vpad), float(vs_values.max() + vpad)
+
+    interps = build_layer_interpolators(vp_values, vs_values, cube_target)
+
+    # parâmetros: [vp0, vs0, dvp_1..K, dvs_1..K, d_1..K, w_1..K]
+    K = int(n_disc)
+    bounds = []
+    bounds.append((vp_lo, vp_hi))  # vp0
+    bounds.append((vs_lo, vs_hi))  # vs0
+
+    # deltas
+    for _ in range(K):
+        bounds.append((-2.5, 2.5))  # dvp
+    for _ in range(K):
+        bounds.append((-2.0, 2.0))  # dvs
+
+    # d_k
+    for _ in range(K):
+        bounds.append((d_lo, d_hi))
+
+    # w_k
+    for _ in range(K):
+        bounds.append((float(w_bounds[0]), float(w_bounds[1])))
+
+    def unpack(p):
+        vp0 = float(p[0]); vs0 = float(p[1])
+        dvp = np.asarray(p[2:2+K], float)
+        dvs = np.asarray(p[2+K:2+2*K], float)
+        d = np.asarray(p[2+2*K:2+3*K], float)
+        w = np.asarray(p[2+3*K:2+4*K], float)
+
+        # ordena por profundidade (mantém o modelo identificável)
+        order = np.argsort(d)
+        d = d[order]
+        w = w[order]
+        dvp = dvp[order]
+        dvs = dvs[order]
+        return vp0, vs0, dvp, dvs, d, w
+
+    def objective(p):
+        vp0, vs0, dvp, dvs, d, w = unpack(p)
+
+        vp_pred = multistep_profile(z, vp0, dvp, d, w)
+        vs_pred = multistep_profile(z, vs0, dvs, d, w)
+
+        # penaliza sair do grid (evita soluções não físicas/fora do domínio)
+        pen = 0.0
+        if np.any(vp_pred < vp_values.min()) or np.any(vp_pred > vp_values.max()):
+            pen += 50.0
+        if np.any(vs_pred < vs_values.min()) or np.any(vs_pred > vs_values.max()):
+            pen += 50.0
+
+        pts = np.column_stack([vp_pred, vs_pred])
+        cost = 0.0
+        for i, interp in enumerate(interps):
+            cost += float(interp(pts[i]))
+        return cost + pen
+
+    res = differential_evolution(
+        objective,
+        bounds=bounds,
+        strategy="best1bin",
+        maxiter=int(maxiter),
+        popsize=int(popsize),
+        tol=1e-6,
+        seed=int(seed),
+        polish=True,
+        updating="deferred",
+        workers=1,
+    )
+
+    vp0, vs0, dvp, dvs, d, w = unpack(res.x)
+
+    zfine = np.linspace(zmin, zmax, 800)
+    vp_fine = multistep_profile(zfine, vp0, dvp, d, w)
+    vs_fine = multistep_profile(zfine, vs0, dvs, d, w)
+
+    out = {
+        "vp0": vp0, "vs0": vs0,
+        "dvp": dvp, "dvs": dvs,
+        "d": d, "w": w,
+        "fun": float(res.fun),
+        "success": bool(res.success),
+        "message": str(res.message),
+    }
+    curves = (zfine, vp_fine, vs_fine)
+    return out, curves
+
+def plot_transition_with_discontinuities(
+    depths_center,
+    vp_best_list,
+    vs_best_list,
+    model_curves,   # (zfine, vp_fine, vs_fine)
+    disc_depths,    # array d_k
+    output_dir,
+    filename="vp_vs_pnas_style_transition.png",
+):
+    import os
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+    os.makedirs(output_dir, exist_ok=True)
+
+    z = np.asarray(depths_center, float)
+    vp_obs = np.asarray(vp_best_list, float)
+    vs_obs = np.asarray(vs_best_list, float)
+
+    zfine, vp_fine, vs_fine = model_curves
+    d = np.asarray(disc_depths, float)
+
+    fig, axes = plt.subplots(1, 2, figsize=(8, 7), sharey=True)
+
+    ax = axes[0]
+    ax.scatter(vp_obs, z, c="k", s=28, label="Layered inversion")
+    ax.plot(vp_fine, zfine, "r--", lw=2.5, label="Best-fitting full model")
+    for dk in d:
+        ax.axhline(dk, color="r", lw=1.2, alpha=0.55)
+    ax.invert_yaxis()
+    ax.set_xlabel("Vp (km/s)")
+    ax.set_ylabel("Depth (km)")
+    ax.text(0.02, 0.05, "A", transform=ax.transAxes, fontweight="bold")
+
+    ax = axes[1]
+    ax.scatter(vs_obs, z, c="k", s=28, label="Layered inversion")
+    ax.plot(vs_fine, zfine, "r--", lw=2.5, label="Best-fitting full model")
+    for dk in d:
+        ax.axhline(dk, color="r", lw=1.2, alpha=0.55)
+    ax.invert_yaxis()
+    ax.set_xlabel("Vs (km/s)")
+    ax.text(0.02, 0.05, "B", transform=ax.transAxes, fontweight="bold")
+
+    for ax in axes:
+        ax.legend(loc="lower right", frameon=True)
+
+    plt.tight_layout()
+    out = os.path.join(output_dir, filename)
+    plt.savefig(out, dpi=300)
+    plt.close()
+    return out
+
+# ---------------------------------------------------------------------------
+# PRINCIPAL
+# ---------------------------------------------------------------------------
+def main():
+    logger.info("=== Iniciando inversão camada a camada (step = 20 km) ===")
+
+    # ------------------------------------------------------------------
+    # 1) Carrega eventos
+    # ------------------------------------------------------------------
+    events = load_event_catalog(CSV_FILE)
+    events = events.dropna(subset=["event_id", "latitude", "longitude", "depth"])
+    events.reset_index(drop=True, inplace=True)
+    logger.info(f"{len(events)} eventos válidos após limpeza.")
+
+    # ------------------------------------------------------------------
+    # 2) Modelo base (apenas referência)
+    # ------------------------------------------------------------------
+    base_model = SeismicModel.test2()
+    logger.info("Modelo sísmico base carregado (SeismicModel.test2).")
+
+    # ------------------------------------------------------------------
+    # 3) Profundidades (camadas) + grid de busca
+    # ------------------------------------------------------------------
+    step = float(STEP_KM)
+    # Determina profundidade do CMB a partir do raio do modelo (R) e CORE_RADIUS_KM.
+    R = float(base_model._vrmax[-1])
+    depth_cmb = float(R - CORE_RADIUS_KM)
+    depth_end_eff = float(DEPTH_END_KM)
+    if not ALLOW_BELOW_CMB:
+        depth_end_eff = min(depth_end_eff, depth_cmb)
+    depth_windows = np.arange(float(DEPTH_START_KM), depth_end_eff, step)
+    depths_center = depth_windows + 0.5 * step
+
+    n_vp = 21
+    n_vs = 21
+    vp_values = np.linspace(6.5, 10.8, n_vp)
+    vs_values = np.linspace(3.5, 6.1, n_vs)
+
+    # ------------------------------------------------------------------
+    # 4) Saídas da inversão por camada
+    # ------------------------------------------------------------------
+    vp_best_list = []
+    vs_best_list = []
+    misfit_best_list = []
+
+    # Mapas estilo Fig. 3A/3B (já marginalizados)
+    #   - Fig 3A (Vp): misfit_P marginalizado em Vs  -> shape (n_depth, n_vp)
+    #   - Fig 3B (Vs): misfit_S marginalizado em Vp  -> shape (n_depth, n_vs)
+    misfit_grid_vp = np.zeros((len(depth_windows), n_vp))
+    misfit_grid_vs = np.zeros((len(depth_windows), n_vs))
+
+    # Cubos completos por camada (Vp×Vs), necessários para ajustar "modelo completo"
+    misfit_cube_total = np.zeros((len(depth_windows), n_vp, n_vs))
+    misfit_cube_vp = np.zeros((len(depth_windows), n_vp, n_vs))  # P (Z+R)
+    misfit_cube_vs = np.zeros((len(depth_windows), n_vp, n_vs))  # S (Z+T)
+
+    # ------------------------------------------------------------------
+    # 5) Loop camada a camada
+    # ------------------------------------------------------------------
+    for i, dmin in enumerate(depth_windows):
+        dmax = dmin + step
+        logger.info(f"--- Invertendo camada {dmin:.0f}-{dmax:.0f} km (grid search) ---")
+
+        misfit_layer_total = np.zeros((n_vp, n_vs))
+        misfit_layer_vp = np.zeros((n_vp, n_vs))
+        misfit_layer_vs = np.zeros((n_vp, n_vs))
+
+        for i_vp, vp in enumerate(vp_values):
+            for i_vs, vs in enumerate(vs_values):
+                m_tot, m_vp, m_vs = compute_layer_misfit(events, vp, vs, dmin, dmax)
+                misfit_layer_total[i_vp, i_vs] = m_tot
+                misfit_layer_vp[i_vp, i_vs] = m_vp
+                misfit_layer_vs[i_vp, i_vs] = m_vs
+
+        # guarda cubos completos (para o "modelo completo")
+        misfit_cube_total[i, :, :] = misfit_layer_total
+        misfit_cube_vp[i, :, :] = misfit_layer_vp
+        misfit_cube_vs[i, :, :] = misfit_layer_vs
+
+        # Fig. 3A/3B: "vale" de misfit (marginalização)
+        # Vp x depth (P): min em Vs
+        misfit_grid_vp[i, :] = np.min(misfit_layer_vp, axis=1)
+
+        # Vs x depth (S): min em Vp
+        misfit_grid_vs[i, :] = np.min(misfit_layer_vs, axis=0)
+
+        # pontos pretos: melhor Vp e Vs (a partir dos vetores marginalizados)
+        vp_best = vp_values[int(np.argmin(misfit_grid_vp[i, :]))]
+        vs_best = vs_values[int(np.argmin(misfit_grid_vs[i, :]))]
+
+        # misfit_total_min da camada (global 2D)
+        idx_min = np.unravel_index(np.argmin(misfit_layer_total), misfit_layer_total.shape)
+        misfit_best = float(misfit_layer_total[idx_min])
+
+        vp_best_list.append(vp_best)
+        vs_best_list.append(vs_best)
+        misfit_best_list.append(misfit_best)
+
+        logger.info(
+            f"Camada {dmin:.0f}-{dmax:.0f} km | "
+            f"Vp*={vp_best:.2f} km/s, Vs*={vs_best:.2f} km/s, misfit_total_min={misfit_best:.4f}"
+        )
+
+    # Converte listas para arrays numpy
+    vp_best_list = np.asarray(vp_best_list, float)
+    vs_best_list = np.asarray(vs_best_list, float)
+    misfit_best_list = np.asarray(misfit_best_list, float)
+
+    # ------------------------------------------------------------------
+    # 6) Ajuste "modelo completo" com descontinuidades (multi-step)
+    # ------------------------------------------------------------------
+    # Se você quer X + top + intermediate + bottom => 4 descontinuidades:
+    N_DISC = 4
+
+    logger.info("Ajustando modelo completo com descontinuidades (multi-step)...")
+    depth_bounds = (float(depth_windows.min()), float(depth_windows.max() + step))
+
+    # Best-fitting para P e S (para Fig. 3A e Fig. 3B separadamente, como no paper)
+    best_P, curves_P = fit_discontinuities_from_cube(
+        depths_center=depths_center,
+        vp_values=vp_values,
+        vs_values=vs_values,
+        cube_target=misfit_cube_vp,
+        n_disc=N_DISC,
+        depth_bounds=depth_bounds,
+        w_bounds=(5.0, 120.0),
+        maxiter=260,
+        popsize=24,
+        seed=1,
+    )
+
+    best_S, curves_S = fit_discontinuities_from_cube(
+        depths_center=depths_center,
+        vp_values=vp_values,
+        vs_values=vs_values,
+        cube_target=misfit_cube_vs,
+        n_disc=N_DISC,
+        depth_bounds=depth_bounds,
+        w_bounds=(5.0, 120.0),
+        maxiter=260,
+        popsize=24,
+        seed=2,
+    )
+
+    # Best-fitting global (TOTAL) para estimar as descontinuidades principais
+    best_TOT, curves_TOT = fit_discontinuities_from_cube(
+        depths_center=depths_center,
+        vp_values=vp_values,
+        vs_values=vs_values,
+        cube_target=misfit_cube_total,
+        n_disc=N_DISC,
+        depth_bounds=depth_bounds,
+        w_bounds=(5.0, 120.0),
+        maxiter=320,
+        popsize=28,
+        seed=3,
+    )
+
+    logger.info(f"Best P fun={best_P['fun']:.4f} | d={np.round(best_P['d'],1)}")
+    logger.info(f"Best S fun={best_S['fun']:.4f} | d={np.round(best_S['d'],1)}")
+    logger.info(f"Best TOT fun={best_TOT['fun']:.4f} | d={np.round(best_TOT['d'],1)}")
+
+    # ------------------------------------------------------------------
+    # 7) Figuras Fig. 3A/3B estilo PNAS (heatmaps) + transição com linhas
+    # ------------------------------------------------------------------
+    os.makedirs(FIG_DIR, exist_ok=True)
+
+    # Fig. 3A: Vp heatmap (misfit_P) + curva do best_P (Vp)
+    vp_curve = (curves_P[0], curves_P[1])
+    # Fig. 3B: Vs heatmap (misfit_S) + curva do best_S (Vs)
+    vs_curve = (curves_S[0], curves_S[2])
+
+    plot_layered_fig3_heatmaps(
+        depth_windows=depth_windows,
+        step=step,
+        vp_values=vp_values,
+        vs_values=vs_values,
+        misfit_grid_vp=misfit_grid_vp,
+        misfit_grid_vs=misfit_grid_vs,
+        fig_dir=FIG_DIR,
+        q_clip=0.70,
+        gamma=0.60,
+        vp_curve=vp_curve,
+        vs_curve=vs_curve,
+    )
+
+    # Figura adicional: pontos pretos + best_TOT + linhas nas descontinuidades
+    plot_transition_with_discontinuities(
+        depths_center=depths_center,
+        vp_best_list=vp_best_list,
+        vs_best_list=vs_best_list,
+        model_curves=curves_TOT,
+        disc_depths=best_TOT["d"],
+        output_dir=FIG_DIR,
+        filename="vp_vs_pnas_style_transition.png",
+    )
+
+    # ------------------------------------------------------------------
+    # 8) Salva resultados (CSV + TXT de descontinuidades)
+    # ------------------------------------------------------------------
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+    disc_txt = os.path.join(OUTPUT_DIR, "mtz_discontinuities_bestTOT.txt")
+    with open(disc_txt, "w") as f:
+        f.write("Best-fitting MTZ discontinuities (from TOTAL misfit)\n")
+        f.write(f"N_DISC = {N_DISC}\n")
+        f.write(f"fun = {best_TOT['fun']:.6f}\n\n")
+        for k, (dk, wk) in enumerate(zip(best_TOT["d"], best_TOT["w"]), start=1):
+            f.write(f"disc_{k}: depth_km = {dk:.3f}   width_km = {wk:.3f}\n")
+
+    df = pd.DataFrame(
+        {
+            "depth_min_km": depth_windows,
+            "depth_max_km": depth_windows + step,
+            "depth_center_km": depths_center,
+            "vp_best_kms": vp_best_list,
+            "vs_best_kms": vs_best_list,
+            "misfit_total_min": misfit_best_list,
+        }
+    )
+    out_csv = os.path.join(OUTPUT_DIR, "layered_inversion_results.csv")
+    df.to_csv(out_csv, index=False)
+    logger.info(f"Resultados por camada salvos em {out_csv}")
+    logger.info(f"Descontinuidades (TOTAL) salvas em {disc_txt}")
+
+    logger.info("=== End of inversion ===")
+
+
 if __name__ == "__main__":
-    arrivals = load_arrivals("/home/lyara/areswave/data/arrivals.csv")
-    events = group_traces_by_event("/home/lyara/areswave/SAC")
-    ensure_dirs()
+    main()
 
-    # Etapa 1 — Grid Search
-    vp_range = np.linspace(7.0, 9.0, 3)
-    vs_range = np.linspace(4.0, 5.0, 3)
-    df_grid = grid_search_inversion(events, arrivals, vp_range, vs_range)
-
-    # Etapa 2 — Refinamento Differential Evolution
-    result = differential_refinement(events, arrivals)
-    df_model = save_best_model(result, np.linspace(700, 1800, 56))
-    plot_model(df_model)
