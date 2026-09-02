@@ -23,3 +23,8 @@ areswave-venv/
 
 # Temporary repository inventory
 areswave_inventory.txt
+
+# Python packaging artifacts
+build/
+dist/
+*.egg-info/
